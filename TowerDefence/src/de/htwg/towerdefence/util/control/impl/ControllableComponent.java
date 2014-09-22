@@ -10,5 +10,5 @@ public abstract class ControllableComponent implements IControllableComponent{
 	/**
 	 * Update the Component
 	 */
-	public abstract void update();
+	public abstract void update(long dt);
 }

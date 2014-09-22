@@ -9,5 +9,5 @@ public interface IControllableComponent {
 	/**
 	 * Update the Component
 	 */
-	public void update();
+	public void update(long dt);
 }
