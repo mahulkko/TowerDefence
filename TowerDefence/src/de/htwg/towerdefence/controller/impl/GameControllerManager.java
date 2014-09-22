@@ -1,0 +1,41 @@
+package de.htwg.towerdefence.controller.impl;
+
+import de.htwg.towerdefence.util.control.IControllableComponent;
+
+/**
+ * @author Christoph Knetschke and Martin Hulkkonen
+ * <br>
+ * <b>GameControllerManager</b>
+ */
+public class GameControllerManager {
+
+	/**
+	 * Standard constructor from the game controller manager
+	 */
+	public GameControllerManager() {
+		// Nothing to do in here right now
+	}
+	
+	/**
+	 * Register new component for updates
+	 * @param component - Component where should be updated
+	 */
+	public void registerComponent(IControllableComponent component) {
+		// Nothing to do in here right now
+	}
+	
+	/**
+	 * Unregister component for stop updating
+	 * @param component - Component where the updates should stop
+	 */
+	public void unregisterComponent(IControllableComponent component) {
+		// Nothing to do in here right now
+	}
+	
+	/**
+	 * Runs the update cycles from every registered component
+	 */
+	private void run() {
+		// Nothing to do in here right now
+	}
+}
