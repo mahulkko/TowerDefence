@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.htwg.towerdefence.util.control.IControllableComponent;
 
-/**
+/** 
  * @author Christoph Knetschke and Martin Hulkkonen
  * <br>
  * <b>GameControllerManager</b>
