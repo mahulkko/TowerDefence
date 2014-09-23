@@ -25,9 +25,7 @@ public class TowerDefence {
 	     */
 	    BasicConfigurator.configure();
 	    
-	    GameControllerManager controller = new GameControllerManager();
-	    controller.registerComponent(new Test(1000,"Hallo"));
-	    controller.registerComponent(new Test(1000,"BlaBla"));
+	    GameControllerManager controller = new GameControllerManager();	    
 	    
 	}
 }

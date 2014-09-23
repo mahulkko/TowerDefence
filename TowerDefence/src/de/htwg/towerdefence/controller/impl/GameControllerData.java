@@ -9,6 +9,10 @@ import de.htwg.towerdefence.util.control.IControllableComponent;
  */
 public class GameControllerData {
 
+	/************************************************************
+	 * Private variables
+	 ***********************************************************/
+	
 	/**
 	 * IControllableComponent
 	 * Saves one component to update
@@ -19,6 +23,11 @@ public class GameControllerData {
 	 * Time when the component was the last time updated
 	 */
 	private long lastTime; 
+	
+	
+	/************************************************************
+	 * Public methods
+	 ***********************************************************/
 	
 	/**
 	 * Standard constructor from the game controller data
