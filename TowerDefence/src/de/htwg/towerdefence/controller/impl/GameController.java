@@ -8,5 +8,11 @@ import de.htwg.towerdefence.controller.IGameController;
  * <b>GameController</b>
  */
 public class GameController implements IGameController {
-
+	
+	@SuppressWarnings("unused")
+	private GameControllerManager manager;
+	
+	public GameController() {
+		manager = new GameControllerManager();
+	}
 }
