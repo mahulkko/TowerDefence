@@ -19,7 +19,7 @@ public class GameContext implements IGameContext {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Tower");
+    private static Logger log = Logger.getLogger("TowerDefence.Model.GameContext");
     
     /** Current player */
     private IPlayer player;
@@ -36,7 +36,7 @@ public class GameContext implements IGameContext {
 	 * Default constructor
 	 */
 	public GameContext() {
-		// Nothing to do in here right now
+		log.info("Created new GameContext...");
 	}
 	
 	@Override
@@ -46,6 +46,7 @@ public class GameContext implements IGameContext {
 
 	@Override
 	public void setPlayer(IPlayer player) {
+		log.info("Set new Player in GameContext...");
 		this.player = player;
 	}
 
@@ -56,6 +57,7 @@ public class GameContext implements IGameContext {
 
 	@Override
 	public void setPlayingfield(IPlayingField playingField) {
+		log.info("Set new PlayingField in GameContext...");
 		this.playingField = playingField;
 	}
 
