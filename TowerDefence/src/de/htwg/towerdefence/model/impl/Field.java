@@ -111,14 +111,19 @@ public class Field {
 		return false;
 	}
 	
-	//----------------------------------------------------
-	
  	/**
 	 * <b>Returns the mob on the field</b>
 	 * @return Returns the mob instance or null pointer
 	 */
 	public IMob getMob(IMob mob) {
- 		// implement me
+		for (int i = 0; i < this.mobs.size(); ++i) {
+			IMob m = this.mobs.get(i);
+			if (m == mob) {
+				log.info("Found Mob on the field");
+				return m;
+			}
+		}
+		log.info("Can't find the Mob on the field");
  		return null;
  	}
 	
@@ -127,7 +132,15 @@ public class Field {
 	 * @return Returns the mob instance or null pointer
 	 */
 	public IMob deleteMob(IMob mob) {
- 		// implement me
+		for (int i = 0; i < this.mobs.size(); ++i) {
+			IMob m = this.mobs.get(i);
+			if (m == mob) {
+				this.mobs.remove(i);
+				log.info("Found Mob on the field and deleted it");
+				return m;
+			}
+		}
+		log.info("Can't find the Mob on the field so nothing to delete");
  		return null;
  	}
  	
@@ -136,11 +149,8 @@ public class Field {
 	 * @return Returns true when there is set the mob otherwise false 
 	 */
 	public boolean isSetMob(IMob mob) {
- 		// implement me
- 		return false;
+ 		return this.mobs.contains(mob);
  	}
-	
-	//----------------------------------------------------
 	
 	/**
 	 * <b>Set a whole list of mobs on the field</b>
