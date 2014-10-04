@@ -98,5 +98,19 @@ public class FieldTest extends TestCase {
 		
 		assertEquals(true, field.setListMob(list));
 		assertEquals(list, field.getMobs());
+		
+		assertEquals(true, field.deleteAllMobs());
+		
+		assertEquals(true, field.setMob(mob));
+		assertEquals(true, field.setMob(mob2));
+		assertEquals(true, field.isSetMob(mob2));
+		
+		assertEquals(mob2, field.getMob(mob2));
+		assertEquals(mob2, field.deleteMob(mob2));
+		assertEquals(null, field.deleteMob(mob2));
+		assertEquals(false, field.isSetMob(mob2));
+		assertEquals(null, field.getMob(mob2));
+		assertEquals(mob, field.getMob(mob));
+		
 	}
 }
