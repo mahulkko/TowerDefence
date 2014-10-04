@@ -2,7 +2,9 @@ package de.htwg.towerdefence.model.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.enums.FieldType;
@@ -108,6 +110,37 @@ public class Field {
 		log.info("Can't set a new mob on the field - Field is not empty");
 		return false;
 	}
+	
+	//----------------------------------------------------
+	
+ 	/**
+	 * <b>Returns the mob on the field</b>
+	 * @return Returns the mob instance or null pointer
+	 */
+	public IMob getMob(IMob mob) {
+ 		// implement me
+ 		return null;
+ 	}
+	
+	/**
+	 * <b>Delete the mob on the field</b>
+	 * @return Returns the mob instance or null pointer
+	 */
+	public IMob deleteMob(IMob mob) {
+ 		// implement me
+ 		return null;
+ 	}
+ 	
+	/**
+	 * <b>Checks if there is set the mob in the field</b>
+	 * @return Returns true when there is set the mob otherwise false 
+	 */
+	public boolean isSetMob(IMob mob) {
+ 		// implement me
+ 		return false;
+ 	}
+	
+	//----------------------------------------------------
 	
 	/**
 	 * <b>Set a whole list of mobs on the field</b>

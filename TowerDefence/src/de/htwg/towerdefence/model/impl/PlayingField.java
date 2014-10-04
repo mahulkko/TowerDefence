@@ -152,6 +152,42 @@ public class PlayingField implements IPlayingField {
  		log.error("Can't add a new mob on field: " + x + " | " + y + " - Size is out of the playing field");
 		return false;
 	}
+ 	
+ 	@Override
+ 	/**
+	 * <b>Returns the mob on the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns the mob instance or null pointer
+	 */
+	public IMob getMob(int x, int y, IMob mob) {
+ 		// implement me
+ 		return null;
+ 	}
+	
+ 	@Override
+	/**
+	 * <b>Delete the mob on the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns the mob instance or null pointer
+	 */
+	public IMob deleteMob(int x, int y, IMob mob) {
+ 		// implement me
+ 		return null;
+ 	}
+ 	
+ 	@Override
+	/**
+	 * <b>Checks if there is set the mob in the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns true when there is set the mob otherwise false 
+	 */
+	public boolean isSetMob(int x, int y, IMob mob) {
+ 		// implement me
+ 		return false;
+ 	}
 	
  	@Override
 	/**

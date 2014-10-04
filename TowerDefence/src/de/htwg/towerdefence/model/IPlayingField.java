@@ -59,6 +59,30 @@ public interface IPlayingField {
 	boolean setMob(int x, int y, IMob mob);
 	
 	/**
+	 * <b>Returns the mob on the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns the mob instance or null pointer
+	 */
+	IMob getMob(int x, int y, IMob mob);
+	
+	/**
+	 * <b>Delete the mob on the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns the mob instance or null pointer
+	 */
+	IMob deleteMob(int x, int y, IMob mob);
+	
+	/**
+	 * <b>Checks if there is set the mob in the selected playing field</b>
+	 * @param x - X coordinate of the selected playing field
+	 * @param y - Y coordinate of the selected playing field
+	 * @return Returns true when there is set the mob otherwise false 
+	 */
+	boolean isSetMob(int x, int y, IMob mob);
+	
+	/**
 	 * <b>Set a list of mobs on the selected playing field</b>
 	 * @param x - X coordinate of the selected playing field
 	 * @param y - Y coordinate of the selected playing field
