@@ -106,6 +106,24 @@ public class PlayingFieldTest extends TestCase {
 		assertEquals(FieldType.UNDEFINED ,this.f.getTypeOf(1, 11));
 		assertEquals(FieldType.UNDEFINED ,this.f.getTypeOf(11, 1));
 		assertEquals(FieldType.NONE ,this.f.getTypeOf(1, 1));
+		
+		assertEquals(true, this.f.setMob(1, 1, mob1));
+		assertEquals(false, this.f.isSetMob(1, 1, mob2));
+		assertEquals(false, this.f.isSetMob(11, 1, mob2));
+		assertEquals(false, this.f.isSetMob(1, 11, mob2));
+		assertEquals(true, this.f.setMob(1, 1, mob2));
+		assertEquals(true, this.f.isSetMob(1, 1, mob2));
+		
+		assertEquals(mob2, this.f.getMob(1, 1, mob2));
+		assertEquals(null, this.f.getMob(11, 1, mob2));
+		assertEquals(null, this.f.getMob(1, 11, mob2));
+		
+		assertEquals(mob2, this.f.deleteMob(1, 1, mob2));
+		assertEquals(null, this.f.deleteMob(11, 1, mob2));
+		assertEquals(null, this.f.deleteMob(1, 11, mob2));
+		
+		
+		
 	}
 }
 

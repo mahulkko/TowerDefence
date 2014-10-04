@@ -161,8 +161,12 @@ public class PlayingField implements IPlayingField {
 	 * @return Returns the mob instance or null pointer
 	 */
 	public IMob getMob(int x, int y, IMob mob) {
- 		// implement me
- 		return null;
+ 		if (checkSize(x, y)) {
+ 			log.info("Get mob on field: " + x + " | " + y);
+		    return this.field[y][x].getMob(mob);
+		}
+ 		log.error("Can't get mob on field: " + x + " | " + y + " - Size is out of the playing field");
+		return null;
  	}
 	
  	@Override
@@ -173,8 +177,12 @@ public class PlayingField implements IPlayingField {
 	 * @return Returns the mob instance or null pointer
 	 */
 	public IMob deleteMob(int x, int y, IMob mob) {
- 		// implement me
- 		return null;
+ 		if (checkSize(x, y)) {
+ 			log.info("Delete mob on field: " + x + " | " + y);
+		    return this.field[y][x].deleteMob(mob);
+		}
+ 		log.error("Can't delete mob on field: " + x + " | " + y + " - Size is out of the playing field");
+		return null;
  	}
  	
  	@Override
@@ -185,8 +193,12 @@ public class PlayingField implements IPlayingField {
 	 * @return Returns true when there is set the mob otherwise false 
 	 */
 	public boolean isSetMob(int x, int y, IMob mob) {
- 		// implement me
- 		return false;
+ 		if (checkSize(x, y)) {
+ 			log.info("Search mob on field: " + x + " | " + y);
+		    return this.field[y][x].isSetMob(mob);
+		}
+ 		log.error("Can't find mob on field: " + x + " | " + y + " - Size is out of the playing field");
+		return false;
  	}
 	
  	@Override
