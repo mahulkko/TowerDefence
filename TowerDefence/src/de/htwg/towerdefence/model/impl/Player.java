@@ -120,7 +120,8 @@ public class Player extends ControllableComponent implements IPlayer {
 	 ***********************************************************/
 	
 	@Override
-	public void update(long dt) {
+	public boolean update(long dt) {
+		return false;
 		// TODO Auto-generated method stub
 	}
 }

@@ -26,6 +26,9 @@ public class Mob extends ControllableComponent implements IMob {
 	/** Speed of the mob */
 	private int speed;
 	
+	// Remove me later again only for testing
+	private boolean test = true;
+	
 	
 	/************************************************************
 	 * Public constructor
@@ -105,7 +108,13 @@ public class Mob extends ControllableComponent implements IMob {
 	 ***********************************************************/
 	
 	@Override
-	public void update(long dt) {
+	public boolean update(long dt) {
+		
+		if(test) {
+			test = false;
+			return true;
+		}
+		return false;
 		// TODO Auto-generated method stub
 	}
 }

@@ -186,7 +186,8 @@ public class Tower extends ControllableComponent implements ITower {
 	 ***********************************************************/
 	
 	@Override
-	public void update(long dt) {
+	public boolean update(long dt) {
+		return false;
 		// TODO Auto-generated method stub
 	}
 }

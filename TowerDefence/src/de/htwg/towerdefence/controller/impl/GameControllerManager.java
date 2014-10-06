@@ -90,20 +90,29 @@ public class GameControllerManager implements IObservable{
 	
 	public class updateComponents implements Runnable {
 		
+		/** Check for changes */
+		boolean check;
+		
 		/**
 		 * Runs the update cycles from every registered component
 		 */
 		public void run() {
 			log.info("Started the update prozess of the registered components");
 			while (true) {
+				check = false;
 				synchronized(sync) {
 					for (int i = 0; i < controllableComponents.size(); ++i) {
 						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
-		                controllableComponents.get(i).getComponent().update(dt);
+		                if (controllableComponents.get(i).getComponent().update(dt)) {
+		                	check = true;
+		                }
 		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
 		            }
 				}
-				notifyObservers();
+				
+				if (check) {
+					notifyObservers();
+				}
 			}
 		}
 	}

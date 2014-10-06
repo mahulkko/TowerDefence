@@ -10,7 +10,8 @@ public class ControllableComponentTest implements IControllableComponent {
 	}
 	
 	@Override
-	public void update(long dt) {
+	public boolean update(long dt) {
+		return false;
 		// Nothing to do in here
 		// Only for testing
 	}
