@@ -2,6 +2,7 @@ package de.htwg.towerdefence.TowerDefence;
 
 import org.apache.log4j.BasicConfigurator;
 import de.htwg.towerdefence.controller.impl.GameController;
+import de.htwg.towerdefence.tui.TowerdefenceTui;
 
 /**
  * @author Christoph Knetschke and Martin Hulkkonen
@@ -28,8 +29,18 @@ public class TowerDefence {
 	    /**
 	     * GameController
 	     */
-	    @SuppressWarnings("unused")
 		GameController controller;
+		
+		/**
+		 * TUI
+		 */
+		TowerdefenceTui tui;
+		
+		
+		//---------------------------------
+		controller = new GameController();
+		tui = new TowerdefenceTui(controller);
+		controller.addObserver(tui);
 	}
 }
 
