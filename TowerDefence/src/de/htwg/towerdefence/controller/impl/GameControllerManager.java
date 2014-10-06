@@ -4,13 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import de.htwg.towerdefence.util.control.IControllableComponent;
+import de.htwg.towerdefence.util.control.IObservable;
+import de.htwg.towerdefence.util.control.IObserver;
 
 /** 
  * @author Christoph Knetschke and Martin Hulkkonen
  * <br>
  * <b>GameControllerManager</b>
  */
-public class GameControllerManager {
+public class GameControllerManager implements IObservable{
 	
 	/************************************************************
 	 * Private variables
@@ -23,6 +25,11 @@ public class GameControllerManager {
 	 * List of all controllableComponents saved in the GameControllData
 	 */
 	private List<GameControllerData> controllableComponents;
+	
+	/**
+	 * List of all Observer who wants to be updated
+	 */
+	private List<IObserver> observer;
 	
 	/**
 	 * Object for synchronisation
@@ -41,6 +48,7 @@ public class GameControllerManager {
 		log.info("Started the GameControllerManager...");
 		sync = new Object();
 		controllableComponents = new LinkedList<GameControllerData>();
+		observer = new LinkedList<IObserver>();
 		Thread update = new Thread(new updateComponents());
 		update.start();
 	}
@@ -89,13 +97,44 @@ public class GameControllerManager {
 			log.info("Started the update prozess of the registered components");
 			while (true) {
 				synchronized(sync) {
-					for (int i = 0; i < controllableComponents.size(); i++) {
+					for (int i = 0; i < controllableComponents.size(); ++i) {
 						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
 		                controllableComponents.get(i).getComponent().update(dt);
 		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
 		            }
 				}
+				notifyObservers();
 			}
+		}
+	}
+
+	
+	/************************************************************
+	 * Methods for the observable implementation
+	 ***********************************************************/
+
+	@Override
+	public void addObserver(IObserver s) {
+		observer.add(s);
+	}
+
+
+	@Override
+	public void removeObserver(IObserver s) {
+		observer.remove(s);
+	}
+
+
+	@Override
+	public void removeAllObservers() {
+		observer.clear();
+	}
+
+
+	@Override
+	public void notifyObservers() {
+		for (int i = 0; i < observer.size(); ++i) {
+			observer.get(i).update();
 		}
 	}
 }
