@@ -30,7 +30,7 @@ public class MobTest extends TestCase {
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
 		mob = new Mob(gameContext, 0, 0);
-		mob2 = new Mob(gameContext, 100, 10);
+		mob2 = new Mob(gameContext, 0, 0, 100, 10);
 	}
 	
 	/**

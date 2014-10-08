@@ -106,8 +106,6 @@ public class GameControllerManager implements IObservable{
 					for (int i = 0; i < controllableComponents.size(); ++i) {
 						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
 		                if (controllableComponents.get(i).getComponent().update(dt)) {
-		                	log.info("System current millis:" + System.currentTimeMillis());
-		                	log.info("Last Time:" + controllableComponents.get(i).getLastTime());
 		                	check = true;
 		                }
 		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
@@ -115,7 +113,6 @@ public class GameControllerManager implements IObservable{
 				}
 				
 				if (check) {
-					log.info("Some components changed, notify the observers");
 					notifyObservers();
 				}
 			}
