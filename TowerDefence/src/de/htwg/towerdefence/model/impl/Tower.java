@@ -1,7 +1,9 @@
 package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.gameSettings.GameSettings;
+import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.GameHelper;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
@@ -42,6 +44,9 @@ public class Tower extends ControllableComponent implements ITower {
 	/** Hitrate of the tower. Hitrate is the change to deal a hit with max damage. */
 	private double hitrate; 
 	
+	/** Context of the game */
+	private IGameContext gameContext;
+	
 	
 	/************************************************************
 	 * Public constructor
@@ -50,12 +55,13 @@ public class Tower extends ControllableComponent implements ITower {
 	/**
 	 * Default constructor - initialize a tower with the default values
 	 */
-	public Tower() {
+	public Tower(IGameContext gameContext) {
 		this.damage = GameSettings.getTowerDamage();
 		this.range = GameSettings.getTowerRange();
 		this.speed = GameSettings.getTowerSpeed();
 		this.numberShoot = GameSettings.getTowerNumberOfShoot();
 		this.hitrate = GameSettings.getTowerHitRate();
+		this.gameContext = gameContext;
 		log.info("Added new tower with default values from GameSettings");
 	}
 	

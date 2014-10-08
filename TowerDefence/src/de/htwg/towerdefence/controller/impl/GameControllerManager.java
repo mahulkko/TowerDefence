@@ -2,7 +2,9 @@ package de.htwg.towerdefence.controller.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObservable;
 import de.htwg.towerdefence.util.control.IObserver;
@@ -104,6 +106,8 @@ public class GameControllerManager implements IObservable{
 					for (int i = 0; i < controllableComponents.size(); ++i) {
 						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
 		                if (controllableComponents.get(i).getComponent().update(dt)) {
+		                	log.info("System current millis:" + System.currentTimeMillis());
+		                	log.info("Last Time:" + controllableComponents.get(i).getLastTime());
 		                	check = true;
 		                }
 		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
@@ -111,6 +115,7 @@ public class GameControllerManager implements IObservable{
 				}
 				
 				if (check) {
+					log.info("Some components changed, notify the observers");
 					notifyObservers();
 				}
 			}

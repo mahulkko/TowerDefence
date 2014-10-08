@@ -2,6 +2,7 @@ package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
 import de.htwg.towerdefence.gameSettings.GameSettings;
+import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 
@@ -18,18 +19,27 @@ public class Mob extends ControllableComponent implements IMob {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Tower");
+    private static Logger log = Logger.getLogger("TowerDefence.Model.Mob");
     
     /** Current health of the mob */
 	private int health;	
 	
+	/** Current posx of the mob */
+	private int posX;	
+	
+	/** Current posy of the mob */
+	private int posY;	
+	
 	/** Speed of the mob */
 	private int speed;
 	
-	// Remove me later again only for testing
-	private boolean test = true;
+	/** Current tmpSpeed of the mob */
+	private long tmpSpeed;
 	
+	/** Context of the game */
+	private IGameContext gameContext;
 	
+
 	/************************************************************
 	 * Public constructor
 	 ***********************************************************/
@@ -37,9 +47,13 @@ public class Mob extends ControllableComponent implements IMob {
 	/**
 	 * Default constructor - initialize a mob with the default values
 	 */
-	public Mob() {
+	public Mob(IGameContext gameContext, int posX, int posY) {
 		this.speed = GameSettings.getMobSpeed();
 		this.health = GameSettings.getMobHealth();
+		this.posX = posX;
+		this.posY = posY;
+		this.gameContext = gameContext;
+		this.tmpSpeed = this.speed;
 		log.info("Added new mob with default values from GameSettings");
 	}
 	
@@ -48,9 +62,13 @@ public class Mob extends ControllableComponent implements IMob {
 	 * @param health - Health of the mob
 	 * @param speed - speed of the mob
 	 */
-	public Mob(int health, int speed) {
+	public Mob(IGameContext gameContext, int posX, int posY, int health, int speed) {
 		this.health = health;
 		this.speed = speed;
+		this.posX = posX;
+		this.posY = posY;
+		this.gameContext = gameContext;
+		this.tmpSpeed = this.speed;
 		log.info("Added new mob with health: " + this.health + " | Speed: " + this.speed);
 	}
 	
@@ -109,12 +127,18 @@ public class Mob extends ControllableComponent implements IMob {
 	
 	@Override
 	public boolean update(long dt) {
+		this.tmpSpeed = this.tmpSpeed - dt;
 		
-		if(test) {
-			test = false;
-			return true;
+		if (this.tmpSpeed <= 0) {
+			if (this.posX < this.gameContext.getPlayingField().getSizeX()-1) {
+				log.info("long dt: " + dt);
+				gameContext.getPlayingField().deleteMob(posX, posY, this);
+				this.posX++;
+				gameContext.getPlayingField().setMob(posX, posY, this);
+				this.tmpSpeed = this.speed;
+				return true;
+			}
 		}
 		return false;
-		// TODO Auto-generated method stub
 	}
 }

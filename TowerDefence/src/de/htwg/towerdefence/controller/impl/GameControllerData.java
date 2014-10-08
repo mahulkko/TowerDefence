@@ -26,15 +26,20 @@ public class GameControllerData {
 	
 	
 	/************************************************************
-	 * Public methods
+	 * Standard constructor
 	 ***********************************************************/
 	
 	/**
 	 * Standard constructor from the game controller data
 	 */
 	public GameControllerData() {
-		// Nothing to do in here right now
+		lastTime = 0;
 	}
+	
+	
+	/************************************************************
+	 * Public methods
+	 ***********************************************************/
 
 	/**
 	 * Gets the ControllableComponent back

@@ -2,6 +2,7 @@ package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
 
+import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import junit.framework.TestCase;
@@ -13,6 +14,9 @@ import junit.framework.TestCase;
  */
 public class TowerTest extends TestCase {
 	
+	/** GameContext - includes playing field and player */
+	IGameContext gameContext;
+	
 	/** Tower instance one */
 	ITower tower;
 	
@@ -21,8 +25,12 @@ public class TowerTest extends TestCase {
 	
 	/** Set up the test */
 	public void setUp() throws IOException {
+		gameContext = new GameContext();
+		gameContext.setPlayer(new Player());
+		gameContext.setPlayingfield(new PlayingField(10, 10));
+		
 		tower = new Tower(1, 1, 1, 1, 1.0);
-		tower2 = new Tower();
+		tower2 = new Tower(gameContext);
 	}
 	
 	/**

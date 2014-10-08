@@ -3,6 +3,7 @@ package de.htwg.towerdefence.model.impl;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
@@ -10,6 +11,9 @@ import de.htwg.towerdefence.util.enums.FieldType;
 import junit.framework.TestCase;
 
 public class PlayingFieldTest extends TestCase {
+	
+	/** GameContext - includes playing field and player */
+	IGameContext gameContext;
 	
 	IPlayingField f;
 	IPlayingField field;
@@ -19,17 +23,22 @@ public class PlayingFieldTest extends TestCase {
 	IMob mob3;
 	
 	public void setUp() throws IOException {
+		
+		gameContext = new GameContext();
+		gameContext.setPlayer(new Player());
+		gameContext.setPlayingfield(new PlayingField(10, 10));
+		
 		this.f = new PlayingField();
 		this.field = new PlayingField(10,10);
 		this.f.initPlayingField(10, 10);
 		this.tower = new Tower(1,1,1,1,1.0);
-		this.mob1 = new Mob();
+		this.mob1 = new Mob(gameContext, 0, 0);
 		this.mob1.setHealth(100);
 		this.mob1.setSpeed(2);
-		this.mob2 = new Mob();
+		this.mob2 = new Mob(gameContext, 0, 0);
 		this.mob2.setHealth(100);
 		this.mob2.setSpeed(2);
-		this.mob3 = new Mob();
+		this.mob3 = new Mob(gameContext, 0, 0);
 		this.mob3.setHealth(100);
 		this.mob3.setSpeed(2);
 	}

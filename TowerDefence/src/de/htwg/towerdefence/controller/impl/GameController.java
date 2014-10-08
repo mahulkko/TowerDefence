@@ -36,9 +36,9 @@ public class GameController implements IGameController {
 		gameContext = new GameContext();
 		gameContext.setPlayer(new Player());
 		gameContext.setPlayingfield(new PlayingField(10, 10));
-		mob = new Mob();
-		manager.registerComponent((IControllableComponent)mob);
+		mob = new Mob(gameContext, 0, 0);
 		gameContext.getPlayingField().setMob(0, 0, mob);
+		manager.registerComponent((IControllableComponent)mob);
 	}
 
 

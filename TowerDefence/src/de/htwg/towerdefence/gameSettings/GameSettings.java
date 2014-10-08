@@ -69,7 +69,7 @@ public final class GameSettings {
 	/**
 	 * Speed of the mob
 	 */
-	private static final int MOBSPEED = 10;
+	private static final int MOBSPEED = 1000;
 	
 	
 	/************************************************************
