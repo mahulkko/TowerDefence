@@ -10,6 +10,7 @@ import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * TestCase for Class field
@@ -45,9 +46,9 @@ public class FieldTest extends TestCase {
 		
 		field = new Field();
 		tower = new Tower(gameContext, 1, 1, 1, 1, 1.0);
-		mob = new Mob(gameContext, 0, 0);
-		mob2 = new Mob(gameContext, 0, 0);
-		mob3 = new Mob(gameContext, 0, 0);
+		mob = new Mob(gameContext, new Coord(0,0));
+		mob2 = new Mob(gameContext, new Coord(0,0));
+		mob3 = new Mob(gameContext, new Coord(0,0));
 	}
 	
 	/**

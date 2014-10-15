@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 
 public class TowerdefenceTui implements IObserver{
 	
@@ -11,7 +12,7 @@ public class TowerdefenceTui implements IObserver{
 	StringBuilder output;
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Tui.TowerdefenceTui");
+    private static Logger log = Logger.getLogger("TowerDefence.Tui.TowerdefenceTui"); 
 	
 	public TowerdefenceTui (IGameController controller) {
 		log.info("Started the tui");
@@ -30,9 +31,9 @@ public class TowerdefenceTui implements IObserver{
 		for(int i = 0; i < controller.getSizeYOfPlayingField(); ++i) {
 			output.append("#");
 			for(int j = 0; j < controller.getSizeXOfPlayingField(); ++j) {
-				if(controller.getTypeOfPlayingField(i, j) == FieldType.TOWER) {
+				if(controller.getTypeOfPlayingField(new Coord(i, j)) == FieldType.TOWER) {
 					output.append("-+-");
-				} else if(controller.getTypeOfPlayingField(i, j) == FieldType.MOB) {
+				} else if(controller.getTypeOfPlayingField(new Coord(i, j)) == FieldType.MOB) {
 					output.append("~%~");
 				} else {
 					output.append("   ");

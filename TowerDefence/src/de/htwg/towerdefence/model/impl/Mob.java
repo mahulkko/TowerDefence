@@ -1,10 +1,14 @@
 package de.htwg.towerdefence.model.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * <b>Mob Class</b>
@@ -24,11 +28,8 @@ public class Mob extends ControllableComponent implements IMob {
     /** Current health of the mob */
 	private int health;	
 	
-	/** Current posx of the mob */
-	private int posX;	
-	
-	/** Current posy of the mob */
-	private int posY;	
+	/** Current position of the mob */
+	Coord currendPos;
 	
 	/** Speed of the mob */
 	private int speed;
@@ -47,11 +48,10 @@ public class Mob extends ControllableComponent implements IMob {
 	/**
 	 * Default constructor - initialize a mob with the default values
 	 */
-	public Mob(IGameContext gameContext, int posX, int posY) {
+	public Mob(IGameContext gameContext, Coord position) {
 		this.speed = GameSettings.getMobSpeed();
 		this.health = GameSettings.getMobHealth();
-		this.posX = posX;
-		this.posY = posY;
+		this.currendPos = position;
 		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
 		log.info("Added new mob with default values from GameSettings");
@@ -62,11 +62,10 @@ public class Mob extends ControllableComponent implements IMob {
 	 * @param health - Health of the mob
 	 * @param speed - speed of the mob
 	 */
-	public Mob(IGameContext gameContext, int posX, int posY, int health, int speed) {
+	public Mob(IGameContext gameContext, Coord position, int health, int speed) {
 		this.health = health;
 		this.speed = speed;
-		this.posX = posX;
-		this.posY = posY;
+		this.currendPos = position;
 		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
 		log.info("Added new mob with health: " + this.health + " | Speed: " + this.speed);
@@ -126,18 +125,21 @@ public class Mob extends ControllableComponent implements IMob {
 	 ***********************************************************/
 	
 	@Override
-	public boolean update(long dt) {
+	public boolean update(long dt) {		
+		
 		this.tmpSpeed = this.tmpSpeed - dt;
 		
 		if (this.tmpSpeed <= 0) {
-			if (this.posX < this.gameContext.getPlayingField().getSizeX()-1) {
-				log.info("long dt: " + dt);
-				gameContext.getPlayingField().deleteMob(posX, posY, this);
-				this.posX++;
-				gameContext.getPlayingField().setMob(posX, posY, this);
-				this.tmpSpeed = this.speed;
-				return true;
-			}
+			gameContext.getCheckWay().existWay(this.currendPos.getX() , this.currendPos.getY(), 9, 9);
+			List<Coord> way = gameContext.getCheckWay().getShortesWay();
+			
+			gameContext.getPlayingField().deleteMob(this.currendPos.getX(), this.currendPos.getY(), this);
+			gameContext.getPlayingField().setMob(way.get(1).getX(), way.get(1).getY(), this);
+			this.currendPos.setX(way.get(1).getX());
+			this.currendPos.setY(way.get(1).getY());
+			
+			this.tmpSpeed = this.speed;
+			return true;
 		}
 		return false;
 	}

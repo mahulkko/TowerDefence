@@ -2,6 +2,7 @@ package de.htwg.towerdefence.model.way.impl;
 
 import java.io.IOException;
 import java.util.List;
+
 import de.htwg.towerdefence.model.way.IGraph;
 import de.htwg.towerdefence.model.way.impl.AdjacencyListUndirectedGraph;
 import de.htwg.towerdefence.model.way.impl.DijkstraShortestPath;

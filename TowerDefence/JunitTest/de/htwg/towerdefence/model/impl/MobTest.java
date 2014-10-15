@@ -5,6 +5,7 @@ import java.io.IOException;
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
+import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;
 
 /**
@@ -29,8 +30,8 @@ public class MobTest extends TestCase {
 		gameContext.setPlayer(new Player());
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
-		mob = new Mob(gameContext, 0, 0);
-		mob2 = new Mob(gameContext, 0, 0, 100, 10);
+		mob = new Mob(gameContext, new Coord(0,0));
+		mob2 = new Mob(gameContext, new Coord(0,0), 100, 10);
 	}
 	
 	/**

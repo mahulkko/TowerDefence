@@ -1,5 +1,7 @@
 package de.htwg.towerdefence.model;
 
+import de.htwg.towerdefence.model.way.ICheckWay;
+
 /**
  * <b>Interface IGameContext</b>
  * @author Christoph Knetschke and Martin Hulkkonen
@@ -26,4 +28,13 @@ public interface IGameContext {
 	 */
 	void setPlayingfield(IPlayingField playingField);
 	
+	/**
+	 * @return Returns the checkWay instance
+	 */
+	ICheckWay getCheckWay();
+	
+	/**
+	 * @param checkWay Set the checkWay instance
+	 */
+	void setCheckWay(ICheckWay checkWay);	
 }

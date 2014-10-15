@@ -1,5 +1,7 @@
 package de.htwg.towerdefence.controller.impl;
 
+import java.util.List;
+
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
@@ -7,9 +9,11 @@ import de.htwg.towerdefence.model.impl.GameContext;
 import de.htwg.towerdefence.model.impl.Mob;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
+import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * @author Christoph Knetschke and Martin Hulkkonen
@@ -36,8 +40,19 @@ public class GameController implements IGameController {
 		gameContext = new GameContext();
 		gameContext.setPlayer(new Player());
 		gameContext.setPlayingfield(new PlayingField(10, 10));
-		mob = new Mob(gameContext, 0, 0);
+		gameContext.setCheckWay(new CheckWay());
+		gameContext.getCheckWay().initWayPoints(10, 10);
+		
+		mob = new Mob(gameContext, new Coord(0,0));
 		gameContext.getPlayingField().setMob(0, 0, mob);
+		manager.registerComponent((IControllableComponent)mob);
+		
+		mob = new Mob(gameContext, new Coord(0,1));
+		gameContext.getPlayingField().setMob(0, 1, mob);
+		manager.registerComponent((IControllableComponent)mob);
+		
+		mob = new Mob(gameContext, new Coord(0,2));
+		gameContext.getPlayingField().setMob(0, 2, mob);
 		manager.registerComponent((IControllableComponent)mob);
 	}
 
@@ -47,8 +62,8 @@ public class GameController implements IGameController {
 	 ***********************************************************/
 	
 	@Override
-	public FieldType getTypeOfPlayingField(int x, int y) {
-		return gameContext.getPlayingField().getTypeOf(x, y);
+	public FieldType getTypeOfPlayingField(Coord coord) {
+		return gameContext.getPlayingField().getTypeOf(coord.getX(), coord.getY());
 	}
 
 	@Override

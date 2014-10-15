@@ -8,6 +8,7 @@ import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;
 
 public class PlayingFieldTest extends TestCase {
@@ -32,13 +33,13 @@ public class PlayingFieldTest extends TestCase {
 		this.field = new PlayingField(10,10);
 		this.f.initPlayingField(10, 10);
 		this.tower = new Tower(gameContext,1,1,1,1,1.0);
-		this.mob1 = new Mob(gameContext, 0, 0);
+		this.mob1 = new Mob(gameContext, new Coord(0,0));
 		this.mob1.setHealth(100);
 		this.mob1.setSpeed(2);
-		this.mob2 = new Mob(gameContext, 0, 0);
+		this.mob2 = new Mob(gameContext, new Coord(0,0));
 		this.mob2.setHealth(100);
 		this.mob2.setSpeed(2);
-		this.mob3 = new Mob(gameContext, 0, 0);
+		this.mob3 = new Mob(gameContext, new Coord(0,0));
 		this.mob3.setHealth(100);
 		this.mob3.setSpeed(2);
 	}

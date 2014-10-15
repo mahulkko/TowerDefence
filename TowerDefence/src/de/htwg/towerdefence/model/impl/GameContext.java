@@ -1,9 +1,11 @@
 package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
+import de.htwg.towerdefence.model.way.ICheckWay;
 
 /**
  * <b>Mob Class</b>
@@ -26,6 +28,9 @@ public class GameContext implements IGameContext {
     
     /** Current playing field */
     private IPlayingField playingField;
+    
+    /** Current instance of check way */
+    private ICheckWay checkWay;
     
 	
 	/************************************************************
@@ -59,6 +64,17 @@ public class GameContext implements IGameContext {
 	public void setPlayingfield(IPlayingField playingField) {
 		log.info("Set new PlayingField in GameContext...");
 		this.playingField = playingField;
+	}
+
+	@Override
+	public ICheckWay getCheckWay() {
+		return checkWay;
+	}
+
+	@Override
+	public void setCheckWay(ICheckWay checkWay) {
+		log.info("Set new CheckWay instance in GameContext...");
+		this.checkWay = checkWay;
 	}
 
 }
