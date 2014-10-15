@@ -29,7 +29,7 @@ public class TowerTest extends TestCase {
 		gameContext.setPlayer(new Player());
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
-		tower = new Tower(1, 1, 1, 1, 1.0);
+		tower = new Tower(gameContext,1, 1, 1, 1, 1.0);
 		tower2 = new Tower(gameContext);
 	}
 	

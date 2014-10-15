@@ -73,12 +73,13 @@ public class Tower extends ControllableComponent implements ITower {
 	 * @param numberShoot - Number of shoot from the tower. With this parameter the tower can deal splash damage on each round.
 	 * @param hitrate - Hitrate of the tower. Hitrate is the change to deal a hit with max damage.
 	 */
-	public Tower(int damage, int range, int speed, int numberShoot, double hitrate) {
+	public Tower(IGameContext gameContext, int damage, int range, int speed, int numberShoot, double hitrate) {
 		this.damage = damage;
 		this.range = range;
 		this.speed = speed;
 		this.numberShoot = numberShoot;
 		this.hitrate = hitrate;
+		this.gameContext = gameContext;
 		log.info("Added new tower with damage: " + this.damage + " | Range: " + this.range + " | Speed: " 
 				+ this.speed + " | Number of Shoot: " + this.numberShoot + " | Hitrate: " + this.hitrate);
 	}
