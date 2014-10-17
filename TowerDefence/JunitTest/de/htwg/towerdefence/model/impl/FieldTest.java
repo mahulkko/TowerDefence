@@ -45,7 +45,7 @@ public class FieldTest extends TestCase {
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
 		field = new Field();
-		tower = new Tower(gameContext, 1, 1, 1, 1, 1.0);
+		tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0);
 		mob = new Mob(gameContext, new Coord(0,0));
 		mob2 = new Mob(gameContext, new Coord(0,0));
 		mob3 = new Mob(gameContext, new Coord(0,0));

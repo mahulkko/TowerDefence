@@ -101,6 +101,7 @@ public class GameControllerManager implements IObservable{
 		public void run() {
 			log.info("Started the update prozess of the registered components");
 			while (true) {
+				
 				check = false;
 				synchronized(sync) {
 					for (int i = 0; i < controllableComponents.size(); ++i) {

@@ -1,14 +1,14 @@
 package de.htwg.towerdefence.controller.impl;
 
-import java.util.List;
-
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
+import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.model.impl.GameContext;
 import de.htwg.towerdefence.model.impl.Mob;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
+import de.htwg.towerdefence.model.impl.Tower;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObserver;
@@ -33,6 +33,7 @@ public class GameController implements IGameController {
 	IGameContext gameContext;
 	
 	IMob mob;
+	ITower tower;
 	
 	
 	public GameController() {
@@ -43,17 +44,24 @@ public class GameController implements IGameController {
 		gameContext.setCheckWay(new CheckWay());
 		gameContext.getCheckWay().initWayPoints(10, 10);
 		
-		mob = new Mob(gameContext, new Coord(0,0));
+		mob = new Mob(gameContext, new Coord(0, 0));
+		mob.setSpeed(2000);
 		gameContext.getPlayingField().setMob(0, 0, mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
-		mob = new Mob(gameContext, new Coord(0,1));
+		mob = new Mob(gameContext, new Coord(0, 1));
 		gameContext.getPlayingField().setMob(0, 1, mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
-		mob = new Mob(gameContext, new Coord(0,2));
+		mob = new Mob(gameContext, new Coord(0, 2));
 		gameContext.getPlayingField().setMob(0, 2, mob);
 		manager.registerComponent((IControllableComponent)mob);
+		
+		tower = new Tower(gameContext, new Coord(0, 2));
+		tower.setRange(5);
+		tower.setSpeed(2000);
+		gameContext.getPlayingField().setTower(2, 2, tower);
+		manager.registerComponent((IControllableComponent)tower);
 	}
 
 
