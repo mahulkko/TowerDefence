@@ -133,12 +133,10 @@ public class Mob extends ControllableComponent implements IMob {
 			gameContext.getCheckWay().existWay(this.currendPos.getX() , this.currendPos.getY(), 9, 9);
 			List<Coord> way = gameContext.getCheckWay().getShortesWay();
 			
-			if (gameContext.getPlayingField().deleteMob(this.currendPos.getX(), this.currendPos.getY(), this) != null){
-				gameContext.getPlayingField().deleteMob(this.currendPos.getX(), this.currendPos.getY(), this);
-				gameContext.getPlayingField().setMob(way.get(1).getX(), way.get(1).getY(), this);
-				this.currendPos.setX(way.get(1).getX());
-				this.currendPos.setY(way.get(1).getY());
-			}
+			gameContext.getPlayingField().deleteMob(this.currendPos.getX(), this.currendPos.getY(), this);
+			gameContext.getPlayingField().setMob(way.get(1).getX(), way.get(1).getY(), this);
+			this.currendPos.setX(way.get(1).getX());
+			this.currendPos.setY(way.get(1).getY());
 			
 			this.tmpSpeed = this.speed;
 			return true;

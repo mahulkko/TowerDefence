@@ -9,6 +9,7 @@ import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.GameHelper;
+import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
 
@@ -235,7 +236,9 @@ public class Tower extends ControllableComponent implements ITower {
 						log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
 						if (mobs.get(0).isDead()) {
 							log.info("Mob is dead so delete it from the playingfield");
-							this.gameContext.getPlayingField().deleteMob(x, y, mobs.get(0));
+							//this.gameContext.getPlayingField().deleteMob(x, y, mobs.get(0));
+							IControllableComponent component = (IControllableComponent)mobs.get(0);
+							component.unregisterSelf();
 						}
 						return;
 					}

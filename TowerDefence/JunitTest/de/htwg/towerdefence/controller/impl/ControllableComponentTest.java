@@ -15,4 +15,14 @@ public class ControllableComponentTest implements IControllableComponent {
 		// Nothing to do in here
 		// Only for testing
 	}
+
+	@Override
+	public boolean getUpdateStatus() {
+		return false;
+	}
+
+	@Override
+	public void unregisterSelf() {
+		
+	}
 }

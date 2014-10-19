@@ -7,6 +7,16 @@ package de.htwg.towerdefence.util.control;
 public interface IControllableComponent {
 	
 	/**
+	 * @return Gets the update status of this component
+	 */
+	public boolean getUpdateStatus();
+	
+	/**
+	 * Unregister this component for the update cycles
+	 */
+	public void unregisterSelf();
+	
+	/**
 	 * Update the Component
 	 */
 	public boolean update(long dt);

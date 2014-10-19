@@ -2,9 +2,7 @@ package de.htwg.towerdefence.controller.impl;
 
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObservable;
 import de.htwg.towerdefence.util.control.IObserver;
@@ -104,13 +102,25 @@ public class GameControllerManager implements IObservable{
 				
 				check = false;
 				synchronized(sync) {
+					
+					// Check for components that should be unregistered
+					List<GameControllerData> copyControllableComponents = new LinkedList<GameControllerData>(controllableComponents);
+					for (int i = 0; i < controllableComponents.size(); ++i) {
+						if (controllableComponents.get(i).getComponent().getUpdateStatus() == false) {
+							copyControllableComponents.remove(controllableComponents.get(i));
+						}
+					}
+					controllableComponents = copyControllableComponents;
+					
+					
+					// Update the components
 					for (int i = 0; i < controllableComponents.size(); ++i) {
 						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
 		                if (controllableComponents.get(i).getComponent().update(dt)) {
 		                	check = true;
 		                }
 		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
-		            }
+					}
 				}
 				
 				if (check) {
