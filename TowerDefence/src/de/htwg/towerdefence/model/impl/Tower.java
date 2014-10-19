@@ -207,14 +207,19 @@ public class Tower extends ControllableComponent implements ITower {
 	
 	@Override
 	public boolean update(long dt) {
-		this.tmpSpeed = this.tmpSpeed - dt;
 		
+		boolean check = false;
+		
+		this.tmpSpeed = this.tmpSpeed - dt;
 		if (this.tmpSpeed <= 0) {
 			for(int i = 0; i < this.numberShoot; ++i) {
-				shootOnMob();
+				if (shootOnMob())
+				{
+					check = true;
+				}
 			}
 			this.tmpSpeed = this.speed;
-			return true;
+			return check;
 		}
 		return false;
 	}
@@ -226,7 +231,7 @@ public class Tower extends ControllableComponent implements ITower {
 	/**
 	 * Private Helper method
 	 */
-	private void shootOnMob() {
+	private boolean shootOnMob() {
 		for(int y = this.position.getY() - this.getRange(); y < this.position.getY() + this.getRange(); ++y) {
 			for(int x = this.position.getX() - this.getRange(); x < this.position.getX() + this.getRange(); ++x) {
 				List<IMob> mobs = this.gameContext.getPlayingField().getMobs(x, y);
@@ -236,14 +241,15 @@ public class Tower extends ControllableComponent implements ITower {
 						log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
 						if (mobs.get(0).isDead()) {
 							log.info("Mob is dead so delete it from the playingfield");
-							//this.gameContext.getPlayingField().deleteMob(x, y, mobs.get(0));
+							this.gameContext.getPlayingField().deleteMob(x, y, mobs.get(0));
 							IControllableComponent component = (IControllableComponent)mobs.get(0);
 							component.unregisterSelf();
 						}
-						return;
+						return true;
 					}
 				}
 			}
 		}
+		return false;
 	}
 }
