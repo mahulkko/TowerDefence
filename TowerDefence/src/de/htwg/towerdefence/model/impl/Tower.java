@@ -51,6 +51,9 @@ public class Tower extends ControllableComponent implements ITower {
 	
 	/** Position of the tower */
 	Coord position;
+	
+	/** Temporary Coord for request */
+	Coord tmpCoord;
 
 	/** Hitrate of the tower. Hitrate is the change to deal a hit with max damage. */
 	private double hitrate; 
@@ -74,6 +77,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.hitrate = GameSettings.getTowerHitRate();
 		this.gameContext = gameContext;
 		this.position = position;
+		this.tmpCoord = new Coord();
 		log.info("Added new tower with default values from GameSettings");
 	}
 	
@@ -93,6 +97,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.hitrate = hitrate;
 		this.gameContext = gameContext;
 		this.position = position;
+		this.tmpCoord = new Coord();
 		log.info("Added new tower with damage: " + this.damage + " | Range: " + this.range + " | Speed: " 
 				+ this.speed + " | Number of Shoot: " + this.numberShoot + " | Hitrate: " + this.hitrate);
 	}
@@ -234,14 +239,20 @@ public class Tower extends ControllableComponent implements ITower {
 	private boolean shootOnMob() {
 		for(int y = this.position.getY() - this.getRange(); y < this.position.getY() + this.getRange(); ++y) {
 			for(int x = this.position.getX() - this.getRange(); x < this.position.getX() + this.getRange(); ++x) {
-				List<IMob> mobs = this.gameContext.getPlayingField().getMobs(x, y);
+				
+				if (x >= 0 && y >= 0) {
+					this.tmpCoord.setX(x);
+					this.tmpCoord.setY(y);
+				}
+				
+				List<IMob> mobs = this.gameContext.getPlayingField().getMobs(this.tmpCoord);
 				if (mobs != null && mobs.size() > 0) {
 					if (mobs.get(0) != null) {
 						mobs.get(0).setHealth(mobs.get(0).getHealth() - this.calcDamage());
 						log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
 						if (mobs.get(0).isDead()) {
 							log.info("Mob is dead so delete it from the playingfield");
-							this.gameContext.getPlayingField().deleteMob(x, y, mobs.get(0));
+							this.gameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
 							IControllableComponent component = (IControllableComponent)mobs.get(0);
 							component.unregisterSelf();
 						}

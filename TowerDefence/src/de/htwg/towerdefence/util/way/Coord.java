@@ -66,7 +66,6 @@ public class Coord {
 	 */
 	public boolean setX(int x) {
 		if (x >= 0) {
-			log.info("Changed coordinate x from " + this.x + " to " + x);
 			this.x = x;
 			return true;
 		}
@@ -89,7 +88,6 @@ public class Coord {
 	 */
 	public boolean setY(int y) {
 		if (y >= 0) {
-			log.info("Changed coordinate y from " + this.y + " to " + y);
 			this.y = y;
 			return true;
 		}

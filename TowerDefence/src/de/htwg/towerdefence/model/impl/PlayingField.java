@@ -1,11 +1,14 @@
 package de.htwg.towerdefence.model.impl;
 
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * <b>PlayingField Class</b>
@@ -83,12 +86,12 @@ public class PlayingField implements IPlayingField {
      * @param tower - Tower where to set
      * @return Returns <b>true</b> when the tower is set or <b>false</b> when the tower can't be set
      */
-	public boolean setTower(int x, int y, ITower tower) {
- 		if (checkSize(x, y)) {
- 			log.info("Added a new tower on field: " + x + " | " + y);
- 			return this.field[y][x].setTower(tower);
+	public boolean setTower(Coord coord, ITower tower) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Added a new tower on field: " + coord.getX() + " | " + coord.getY());
+ 			return this.field[coord.getY()][coord.getX()].setTower(tower);
 		}
- 		log.error("Can't add a new tower on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't add a new tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 	    return false;
 	}
 	
@@ -99,9 +102,9 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the tower instance or null pointer
 	 */
-	public ITower getTower(int x, int y) {
- 		if (checkSize(x, y)) {
-		    return this.field[y][x].getTower();
+	public ITower getTower(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+		    return this.field[coord.getY()][coord.getX()].getTower();
 		}
 		return null;
 	}
@@ -113,12 +116,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the tower instance or null pointer
 	 */
-	public ITower deleteTower(int x, int y) {
- 		if (checkSize(x, y)) {
- 			log.info("Deleted tower on field: " + x + " | " + y);
-		    return this.field[y][x].deleteTower();
+	public ITower deleteTower(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Deleted tower on field: " + coord.getX() + " | " + coord.getY());
+		    return this.field[coord.getY()][coord.getX()].deleteTower();
 		}
- 		log.error("Can't delete tower on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't delete tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
 	}
 	
@@ -129,9 +132,9 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns true when there is set a tower otherwise false 
 	 */
-	public boolean isSetTower(int x, int y) {
- 		if (checkSize(x, y)) {
- 			  return this.field[y][x].isSetTower();
+	public boolean isSetTower(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			  return this.field[coord.getY()][coord.getX()].isSetTower();
  		}
  		return false;
 	}
@@ -144,12 +147,12 @@ public class PlayingField implements IPlayingField {
 	 * @param mob - Instance of the mob where to set
 	 * @return Returns true when the mob is set on the playing field otherwise false
 	 */
-	public boolean setMob(int x, int y, IMob mob) {
- 		if (checkSize(x, y)) {
- 			log.info("Added a new mob on field: " + x + " | " + y);
-		    return this.field[y][x].setMob(mob);
+	public boolean setMob(Coord coord, IMob mob) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Added a new mob on field: " + coord.getX() + " | " + coord.getY());
+		    return this.field[coord.getY()][coord.getX()].setMob(mob);
 		}
- 		log.error("Can't add a new mob on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't add a new mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return false;
 	}
  	
@@ -160,12 +163,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the mob instance or null pointer
 	 */
-	public IMob getMob(int x, int y, IMob mob) {
- 		if (checkSize(x, y)) {
- 			log.info("Get mob on field: " + x + " | " + y);
-		    return this.field[y][x].getMob(mob);
+	public IMob getMob(Coord coord, IMob mob) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Get mob on field: " + coord.getX() + " | " + coord.getY());
+		    return this.field[coord.getY()][coord.getX()].getMob(mob);
 		}
- 		log.error("Can't get mob on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't get mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
  	}
 	
@@ -176,12 +179,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the mob instance or null pointer
 	 */
-	public IMob deleteMob(int x, int y, IMob mob) {
- 		if (checkSize(x, y)) {
- 			log.info("Delete mob on field: " + x + " | " + y);
-		    return this.field[y][x].deleteMob(mob);
+	public IMob deleteMob(Coord coord, IMob mob) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Delete mob on field: " + coord.getX() + " | " + coord.getY());
+		    return this.field[coord.getY()][coord.getX()].deleteMob(mob);
 		}
- 		log.error("Can't delete mob on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't delete mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
  	}
  	
@@ -192,12 +195,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns true when there is set the mob otherwise false 
 	 */
-	public boolean isSetMob(int x, int y, IMob mob) {
- 		if (checkSize(x, y)) {
- 			log.info("Search mob on field: " + x + " | " + y);
-		    return this.field[y][x].isSetMob(mob);
+	public boolean isSetMob(Coord coord, IMob mob) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Search mob on field: " + coord.getX() + " | " + coord.getY());
+		    return this.field[coord.getY()][coord.getX()].isSetMob(mob);
 		}
- 		log.error("Can't find mob on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't find mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return false;
  	}
 	
@@ -209,12 +212,12 @@ public class PlayingField implements IPlayingField {
 	 * @param mobs - List of mob instances where to set
 	 * @return Returns true when the list of mob can be set on the playing field otherwise false
 	 */
-	public boolean setListMob(int x, int y, List<IMob> mobs) {
- 		if (checkSize(x, y)) {
- 			log.info("Added a new list of mobs on field: " + x + " | " + y);
- 			return this.field[y][x].setListMob(mobs);
+	public boolean setListMob(Coord coord, List<IMob> mobs) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Added a new list of mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			return this.field[coord.getY()][coord.getX()].setListMob(mobs);
  		}
- 		log.error("Can't add a new list of mobs on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't add a new list of mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -225,9 +228,9 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns a list of mobs
 	 */
-	public List<IMob> getMobs(int x, int y) {
- 		if (checkSize(x, y)) {
-		    return this.field[y][x].getMobs();
+	public List<IMob> getMobs(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+		    return this.field[coord.getY()][coord.getX()].getMobs();
 		}
 		return null;
 	}
@@ -239,9 +242,9 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the number of mobs
 	 */
-	public int getNumberOfMobs(int x, int y) {
- 		if (checkSize(x, y)) {
- 			  return this.field[y][x].getNumberOfMobs();
+	public int getNumberOfMobs(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			  return this.field[coord.getY()][coord.getX()].getNumberOfMobs();
  		}
  		return -1;
 	}
@@ -253,12 +256,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns true when there was something to delete otherwise false
 	 */
-	public boolean deleteAllMobs(int x, int y) {
- 		if (checkSize(x, y)) {
- 			log.info("Delete all mobs on field: " + x + " | " + y);
- 			return this.field[y][x].deleteAllMobs();
+	public boolean deleteAllMobs(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Delete all mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			return this.field[coord.getY()][coord.getX()].deleteAllMobs();
  		}
- 		log.error("Can't delete all mobs on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't delete all mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -269,12 +272,12 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns true when there was something to delete otherwise false
 	 */
-	public boolean deleteDeadMobs(int x, int y) {
- 		if (checkSize(x, y)) {
- 			log.info("Delete all dead mobs on field: " + x + " | " + y);
- 			return this.field[y][x].deleteDeadMobs();
+	public boolean deleteDeadMobs(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			log.info("Delete all dead mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			return this.field[coord.getY()][coord.getX()].deleteDeadMobs();
  		}
- 		log.error("Can't delete all dead mobs on field: " + x + " | " + y + " - Size is out of the playing field");
+ 		log.error("Can't delete all dead mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -285,9 +288,9 @@ public class PlayingField implements IPlayingField {
 	 * @param y - Y coordinate of the selected playing field
 	 * @return Returns the type of the field and what's standing on it.
 	 */
-	public FieldType getTypeOf(int x, int y) {
- 		if (checkSize(x, y)) {
- 			return this.field[y][x].getTypeOf();
+	public FieldType getTypeOf(Coord coord) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			return this.field[coord.getY()][coord.getX()].getTypeOf();
  		}
  		return FieldType.UNDEFINED;
 	}

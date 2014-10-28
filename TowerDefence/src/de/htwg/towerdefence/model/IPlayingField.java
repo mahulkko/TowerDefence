@@ -2,6 +2,7 @@ package de.htwg.towerdefence.model;
 
 import java.util.List;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * <b>Interface IPlayingField</b>
@@ -18,118 +19,104 @@ public interface IPlayingField {
     
     /**
      * <b>Set a new tower on the playing field</b>
-     * @param x - X coordinate of the tower
-     * @param y - Y coordinate of the tower
+     * @param coord - Coordinates of the tower
      * @param tower - Tower where to set
      * @return Returns <b>true</b> when the tower is set or <b>false</b> when the tower can't be set
      */
-	boolean setTower(int x, int y, ITower tower);
+	boolean setTower(Coord coord, ITower tower);
 	
 	/**
 	 * <b>Returns the tower on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the tower instance or null pointer
 	 */
-	ITower getTower(int x, int y);
+	ITower getTower(Coord coord);
 	
 	/**
 	 * <b>Delete the tower on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the tower instance or null pointer
 	 */
-	ITower deleteTower(int x, int y);
+	ITower deleteTower(Coord coord);
 	
 	/**
 	 * <b>Checks if there is set a tower in the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns true when there is set a tower otherwise false 
 	 */
-	boolean isSetTower(int x, int y);
+	boolean isSetTower(Coord coord);
 	
 	/**
 	 * <b>Set a mob on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @param mob - Instance of the mob where to set
 	 * @return Returns true when the mob is set on the playing field otherwise false
 	 */
-	boolean setMob(int x, int y, IMob mob);
+	boolean setMob(Coord coord, IMob mob);
 	
 	/**
 	 * <b>Returns the mob on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the mob instance or null pointer
 	 */
-	IMob getMob(int x, int y, IMob mob);
+	IMob getMob(Coord coord, IMob mob);
 	
 	/**
 	 * <b>Delete the mob on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the mob instance or null pointer
 	 */
-	IMob deleteMob(int x, int y, IMob mob);
+	IMob deleteMob(Coord coord, IMob mob);
 	
 	/**
 	 * <b>Checks if there is set the mob in the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns true when there is set the mob otherwise false 
 	 */
-	boolean isSetMob(int x, int y, IMob mob);
+	boolean isSetMob(Coord coord, IMob mob);
 	
 	/**
 	 * <b>Set a list of mobs on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @param mobs - List of mob instances where to set
 	 * @return Returns true when the list of mob can be set on the playing field otherwise false
 	 */
-	boolean setListMob(int x, int y, List<IMob> mobs);
+	boolean setListMob(Coord coord, List<IMob> mobs);
 	
 	/**
 	 * <b>Returns a list of all mobs where are on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns a list of mobs
 	 */
-	List<IMob> getMobs(int x, int y);
+	List<IMob> getMobs(Coord coord);
 	
 	/**
 	 * <b>Returns the number of mobs on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the number of mobs
 	 */
-	int getNumberOfMobs(int x, int y);
+	int getNumberOfMobs(Coord coord);
 	
 	/**
 	 * <b>Deletes all mobs on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns true when there was something to delete otherwise false
 	 */
-	boolean deleteAllMobs(int x, int y);
+	boolean deleteAllMobs(Coord coord);
 	
 	/**
 	 * <b>Deletes all dead mobs on the selected playing field</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns true when there was something to delete otherwise false
 	 */
-	boolean deleteDeadMobs(int x, int y);
+	boolean deleteDeadMobs(Coord coord);
 	
 	/**
 	 * <b>Returns the type of the selected playing field.</b>
-	 * @param x - X coordinate of the selected playing field
-	 * @param y - Y coordinate of the selected playing field
+     * @param coord - Coordinates of the tower
 	 * @return Returns the type of the field and what's standing on it.
 	 */
-	FieldType getTypeOf(int x, int y);
+	FieldType getTypeOf(Coord coord);
 	
 	/**
 	 * @return Returns the x size of the initialized playing field

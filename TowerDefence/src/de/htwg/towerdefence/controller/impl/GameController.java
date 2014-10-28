@@ -46,21 +46,21 @@ public class GameController implements IGameController {
 		
 		mob = new Mob(gameContext, new Coord(0, 0));
 		mob.setSpeed(2000);
-		gameContext.getPlayingField().setMob(0, 0, mob);
+		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
 		mob = new Mob(gameContext, new Coord(0, 1));
-		gameContext.getPlayingField().setMob(0, 1, mob);
-		manager.registerComponent((IControllableComponent)mob);
+		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
+		manager.registerComponent((IControllableComponent)mob); 
 		
 		mob = new Mob(gameContext, new Coord(0, 2));
-		gameContext.getPlayingField().setMob(0, 2, mob);
+		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
 		tower = new Tower(gameContext, new Coord(0, 2));
-		tower.setRange(1);
+		tower.setRange(3);
 		tower.setSpeed(500);
-		gameContext.getPlayingField().setTower(2, 2, tower);
+		gameContext.getPlayingField().setTower(new Coord(2,2), tower);
 		manager.registerComponent((IControllableComponent)tower);
 	}
 
@@ -71,7 +71,7 @@ public class GameController implements IGameController {
 	
 	@Override
 	public FieldType getTypeOfPlayingField(Coord coord) {
-		return gameContext.getPlayingField().getTypeOf(coord.getX(), coord.getY());
+		return gameContext.getPlayingField().getTypeOf(coord);
 	}
 
 	@Override
