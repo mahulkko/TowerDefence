@@ -1,7 +1,9 @@
 package de.htwg.towerdefence.TowerDefence;
 
 import org.apache.log4j.BasicConfigurator;
+
 import de.htwg.towerdefence.controller.impl.GameController;
+import de.htwg.towerdefence.gui.TowerdefenceGui;
 import de.htwg.towerdefence.tui.TowerdefenceTui;
 
 /**
@@ -36,11 +38,17 @@ public class TowerDefence {
 		 */
 		TowerdefenceTui tui;
 		
+		/**
+		 * GUI
+		 */
+		TowerdefenceGui gui;
+		
 		
 		//---------------------------------
-		controller = new GameController();
-		tui = new TowerdefenceTui(controller);
-		controller.addObserver(tui);
+		//controller = new GameController();
+		//tui = new TowerdefenceTui(controller);
+		gui = new TowerdefenceGui();
+		//controller.addObserver(tui);
 	}
 }
 

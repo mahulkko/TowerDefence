@@ -1,0 +1,14 @@
+TODO
+=================================================
+Refaktroing der Tower schießen Methode im Tower
+Nicht sehr schön aufgebaut
+=================================================
+Alle Models serializable machen
+=================================================
+Alle models von Component erben lassen.
+Alle componenten können logicen beinhalten, die
+das verhalten der componente steuern.
+=================================================
+Controller weitere schnittstellen anbieten sodass
+die gui und wui laufen kann.
+=================================================
