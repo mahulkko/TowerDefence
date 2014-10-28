@@ -11,7 +11,6 @@ public class TowerdefenceGui {
 		frame.setSize(700, 500);
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		frame.add(pgui);
-		frame.addMouseListener(pgui);
 		frame.setVisible(true);
 	}
 }
