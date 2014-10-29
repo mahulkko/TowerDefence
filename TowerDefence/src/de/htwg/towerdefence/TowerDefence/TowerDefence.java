@@ -45,10 +45,11 @@ public class TowerDefence {
 		
 		
 		//---------------------------------
-		//controller = new GameController();
-		//tui = new TowerdefenceTui(controller);
-		gui = new TowerdefenceGui();
-		//controller.addObserver(tui);
+		controller = new GameController();
+		tui = new TowerdefenceTui(controller);
+		gui = new TowerdefenceGui(controller);
+		controller.addObserver(tui);
+		controller.addObserver(gui);
 	}
 }
 

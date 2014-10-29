@@ -57,10 +57,10 @@ public class GameController implements IGameController {
 		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
-		tower = new Tower(gameContext, new Coord(0, 2));
-		tower.setRange(3);
+		tower = new Tower(gameContext, new Coord(2, 5));
+		tower.setRange(1);
 		tower.setSpeed(500);
-		gameContext.getPlayingField().setTower(new Coord(2,2), tower);
+		gameContext.getPlayingField().setTower(new Coord(2,5), tower);
 		manager.registerComponent((IControllableComponent)tower);
 	}
 

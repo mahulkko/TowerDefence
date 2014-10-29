@@ -60,9 +60,9 @@ public class TowerdefenceTui implements IObserver{
 		for(int i = 0; i < controller.getSizeYOfPlayingField(); ++i) {
 			output.append("#");
 			for(int j = 0; j < controller.getSizeXOfPlayingField(); ++j) {
-				if(controller.getTypeOfPlayingField(new Coord(i, j)) == FieldType.TOWER) {
+				if(controller.getTypeOfPlayingField(new Coord(j, i)) == FieldType.TOWER) {
 					output.append("-+-");
-				} else if(controller.getTypeOfPlayingField(new Coord(i, j)) == FieldType.MOB) {
+				} else if(controller.getTypeOfPlayingField(new Coord(j, i)) == FieldType.MOB) {
 					output.append("~%~");
 				} else {
 					output.append("   ");
