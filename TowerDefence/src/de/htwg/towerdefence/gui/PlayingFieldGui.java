@@ -16,6 +16,8 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 4166754566794976199L;
 	
 	private IGameController controller;
+	Coord coord = new Coord();
+    Coord coord2 = new Coord();
 	
 	public PlayingFieldGui(IGameController controller) {
 		this.controller = controller;
@@ -27,28 +29,33 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
 	    g.fillRect(20*coord.getX(),20*coord.getY(),20,20);
 	    g.setColor(Color.black);
 	}
+	
+	public void paintPlayingField(Graphics g) {
+		for (int i = 1; i <= controller.getSizeYOfPlayingField()+1; ++i) {
+	    	g.drawLine( 20 * i, 20, 20 * i, 20 * (controller.getSizeYOfPlayingField()+1));
+	    }
+		
+		for (int i = 1; i <= controller.getSizeXOfPlayingField()+1; ++i) {
+	    	g.drawLine( 20, 20 * i, 20 * (controller.getSizeXOfPlayingField()+1), 20 * i );
+	    }
+	}
 
 	@Override
 	  protected void paintComponent( Graphics g )
 	  {
 	    super.paintComponent( g );
-	    for (int i = 1; i < controller.getSizeYOfPlayingField(); ++i) {
-	    	g.drawLine( 20*i, 20, 20*i, 200 );
-	    }
+	    paintPlayingField(g);
 	    
-	    for (int i = 1; i < controller.getSizeXOfPlayingField(); ++i) {
-	    	g.drawLine( 20, 20*i, 200, 20*i );
-	    }
-	    
-	    Coord coord = new Coord();
 	    for (int y = 0; y < controller.getSizeYOfPlayingField(); ++y) {
 	    	for (int x = 0; x < controller.getSizeXOfPlayingField(); ++x) {
 	    		coord.setX(x);
 	    		coord.setY(y);
+	    		coord2.setX(x+1);
+	    		coord2.setY(y+1);
 	    		if (controller.getTypeOfPlayingField(coord) == FieldType.MOB) {
-	    			paintFilledRec(g, coord, Color.blue);
+	    			paintFilledRec(g, coord2, Color.blue);
 	    		} else if (controller.getTypeOfPlayingField(coord) == FieldType.TOWER) {
-	    			paintFilledRec(g, coord, Color.red);
+	    			paintFilledRec(g, coord2, Color.red);
 	    		}
 	    	}
 	    }

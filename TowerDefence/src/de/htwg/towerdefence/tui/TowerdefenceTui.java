@@ -22,6 +22,9 @@ public class TowerdefenceTui implements IObserver{
 	/** StringBuilder */
 	private StringBuilder output;
 	
+	/** Coord */
+	private Coord coord;
+	
 	/** Logger for log4j connection */
     private static Logger log = Logger.getLogger("TowerDefence.Tui.TowerdefenceTui"); 
 	
@@ -38,6 +41,7 @@ public class TowerdefenceTui implements IObserver{
 		log.info("Started the tui");
 		this.controller = controller;
 		output = new StringBuilder();
+		coord = new Coord();
 	}
 	
 	
@@ -60,9 +64,11 @@ public class TowerdefenceTui implements IObserver{
 		for(int i = 0; i < controller.getSizeYOfPlayingField(); ++i) {
 			output.append("#");
 			for(int j = 0; j < controller.getSizeXOfPlayingField(); ++j) {
-				if(controller.getTypeOfPlayingField(new Coord(j, i)) == FieldType.TOWER) {
+				coord.setX(j);
+				coord.setY(i);
+				if(controller.getTypeOfPlayingField(coord) == FieldType.TOWER) {
 					output.append("-+-");
-				} else if(controller.getTypeOfPlayingField(new Coord(j, i)) == FieldType.MOB) {
+				} else if(controller.getTypeOfPlayingField(coord) == FieldType.MOB) {
 					output.append("~%~");
 				} else {
 					output.append("   ");
