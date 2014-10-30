@@ -45,22 +45,22 @@ public class GameController implements IGameController {
 		gameContext.getCheckWay().initWayPoints(10, 10);
 		
 		mob = new Mob(gameContext, new Coord(0, 0));
-		mob.setSpeed(2000);
+		mob.setSpeed(1000);
 		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
 		mob = new Mob(gameContext, new Coord(0, 1));
-		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
+		gameContext.getPlayingField().setMob(new Coord(0,1), mob);
 		manager.registerComponent((IControllableComponent)mob); 
 		
 		mob = new Mob(gameContext, new Coord(0, 2));
-		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
+		gameContext.getPlayingField().setMob(new Coord(0,2), mob);
 		manager.registerComponent((IControllableComponent)mob);
 		
-		tower = new Tower(gameContext, new Coord(2, 5));
-		tower.setRange(1);
-		tower.setSpeed(2000);
-		gameContext.getPlayingField().setTower(new Coord(2,5), tower);
+		tower = new Tower(gameContext, new Coord(5, 5));
+		tower.setRange(3);
+		tower.setSpeed(1000);
+		gameContext.getPlayingField().setTower(new Coord(5,5), tower);
 		manager.registerComponent((IControllableComponent)tower);
 	}
 
