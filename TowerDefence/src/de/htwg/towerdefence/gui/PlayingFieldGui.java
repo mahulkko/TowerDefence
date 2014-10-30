@@ -58,39 +58,31 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
 	    			paintFilledRec(g, coord2, Color.red);
 	    		}
 	    	}
-	    }
-	    //paintFilledRec(g, new Coord(x,y), Color.blue);   
+	    }  
 	  }
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {		
-//		this.x = (arg0.getX())/20;
-//		this.y = (arg0.getY())/20; 
-//		this.repaint();
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
-
 }
