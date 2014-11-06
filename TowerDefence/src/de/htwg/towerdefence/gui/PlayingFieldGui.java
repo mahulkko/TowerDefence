@@ -16,27 +16,38 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
 	private static final long serialVersionUID = 4166754566794976199L;
 	
 	private IGameController controller;
-	Coord coord = new Coord();
-    Coord coord2 = new Coord();
+	private Coord coord;
+    private Coord coord2;
+    private int width;
+    private int height;
+    private int spaceHeight;
+    private int spaceWidth;
 	
-	public PlayingFieldGui(IGameController controller) {
+	public PlayingFieldGui(IGameController controller, int width, int height) {
 		this.controller = controller;
+		coord = new Coord();
+		coord2 = new Coord();
+		this.width = width;
+		this.height = height;
+		spaceHeight = this.height / controller.getSizeYOfPlayingField();
+		spaceWidth = this.width / controller.getSizeXOfPlayingField();
 		addMouseListener(this);
 	}
 	
 	public void paintFilledRec(Graphics g, Coord coord, Color color) {
 		g.setColor(color);
-	    g.fillRect(20*coord.getX(),20*coord.getY(),20,20);
+	    g.fillRect(spaceWidth*(coord.getX()-1), spaceHeight*(coord.getY()-1), spaceWidth, spaceHeight);
 	    g.setColor(Color.black);
 	}
 	
 	public void paintPlayingField(Graphics g) {
+		
 		for (int i = 1; i <= controller.getSizeYOfPlayingField()+1; ++i) {
-	    	g.drawLine( 20 * i, 20, 20 * i, 20 * (controller.getSizeYOfPlayingField()+1));
+	    	g.drawLine( spaceWidth * i, 0, spaceWidth * i, spaceHeight * (controller.getSizeYOfPlayingField()));
 	    }
 		
 		for (int i = 1; i <= controller.getSizeXOfPlayingField()+1; ++i) {
-	    	g.drawLine( 20, 20 * i, 20 * (controller.getSizeXOfPlayingField()+1), 20 * i );
+	    	g.drawLine( 0, spaceHeight * i, spaceWidth * (controller.getSizeXOfPlayingField()), spaceHeight * i );
 	    }
 	}
 

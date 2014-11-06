@@ -40,9 +40,9 @@ public class GameController implements IGameController {
 		manager = new GameControllerManager();
 		gameContext = new GameContext();
 		gameContext.setPlayer(new Player());
-		gameContext.setPlayingfield(new PlayingField(10, 10));
+		gameContext.setPlayingfield(new PlayingField(11, 11));
 		gameContext.setCheckWay(new CheckWay());
-		gameContext.getCheckWay().initWayPoints(10, 10);
+		gameContext.getCheckWay().initWayPoints(11, 11);
 		
 		mob = new Mob(gameContext, new Coord(0, 0));
 		mob.setSpeed(1000);
