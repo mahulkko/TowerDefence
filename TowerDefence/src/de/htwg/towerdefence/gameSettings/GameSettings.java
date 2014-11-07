@@ -11,19 +11,13 @@ public final class GameSettings {
 	 * Player Values
 	 ***********************************************************/
 	
-	/**
-	 * Life of the player
-	 */
+	/** Life of the player */
 	private static final int PLAYERLIFE = 10;
 	
-	/**
-	 * Money of the player
-	 */
+	/** Money of the player */
 	private static final int PLAYERMONEY = 1000;
 	
-	/**
-	 * Name of the player
-	 */
+	/**  Name of the player */
 	private static final String PLAYERNAME = "Player";
 	
 	
@@ -31,29 +25,19 @@ public final class GameSettings {
 	 * Tower Values
 	 ***********************************************************/
 	
-	/**
-	 * Damage of the tower
-	 */
+	/** Damage of the tower */
 	private static final int TOWERDAMAGE = 10;
 	
-	/**
-	 * Range of the tower
-	 */
+	/** Range of the tower */
 	private static final int TOWERRANGE = 10;
 	
-	/**
-	 * Speed of the tower
-	 */
+	/** Speed of the tower */
 	private static final int TOWERSPEED = 10;
 	
-	/**
-	 * NumberOfShoot of the tower
-	 */
+	/** NumberOfShoot of the tower */
 	private static final int TOWERNUMBEROFSHOOT = 10;
 	
-	/**
-	 * Hitrate of the tower
-	 */
+	/** Hitrate of the tower */
 	private static final double TOWERHITRATE = 1.0;
 	
 	
@@ -61,14 +45,10 @@ public final class GameSettings {
 	 * Mob Values
 	 ***********************************************************/
 	
-	/**
-	 * Health of the mob
-	 */
+	/** Health of the mob */
 	private static final int MOBHEALTH = 100;
 	
-	/**
-	 * Speed of the mob
-	 */
+	/** Speed of the mob */
 	private static final int MOBSPEED = 1000;
 	
 	
@@ -146,6 +126,7 @@ public final class GameSettings {
 	public static double getTowerHitRate() {
 		return TOWERHITRATE;
 	}
+	
 	
 	/************************************************************
 	 * Getter of the mob values
