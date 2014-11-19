@@ -88,6 +88,7 @@ public class PlayingField implements IPlayingField {
      */
 	public boolean setTower(Coord coord, ITower tower) {
  		if (checkSize(coord.getX(), coord.getY())) {
+ 		// TODO Check if way is free to set a Tower
  			log.info("Added a new tower on field: " + coord.getX() + " | " + coord.getY());
  			return this.field[coord.getY()][coord.getX()].setTower(tower);
 		}
@@ -187,6 +188,25 @@ public class PlayingField implements IPlayingField {
  		log.error("Can't delete mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
  	}
+ 	
+ 	@Override
+ 	/**
+	 * <b>Check if the mob is on the end of the playing field</b>
+	 * @param coord - Coordinates of the mob
+	 * @param mob - Instance of the mob
+	 * @return Returns true when the mob is at the end otherwise false
+	 */
+ 	public boolean isMobAtEndOfPlayingfield(Coord coord, IMob mob) {
+ 		if (checkSize(coord.getX(), coord.getY())) {
+ 			if (coord.getX() == (this.sizeX-1) && coord.getY() == (this.sizeY-1)) {
+ 				log.info("Mob is on the end of playingfield: " + coord.getX() + " | " + coord.getY());
+ 	 			return true;
+ 			}
+ 			return false;
+ 		}
+ 		log.error("Can't check if mob is on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+		return false;
+	}
  	
  	@Override
 	/**

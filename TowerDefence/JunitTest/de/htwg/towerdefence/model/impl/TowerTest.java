@@ -30,7 +30,7 @@ public class TowerTest extends TestCase {
 		gameContext.setPlayer(new Player());
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
-		tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0);
+		tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
 		tower2 = new Tower(gameContext, new Coord(0,0));
 	}
 	
@@ -54,6 +54,10 @@ public class TowerTest extends TestCase {
 		// Set and Get HitRate
 		tower.setHitRate(1.0);
 		assertEquals(1.0,tower.getHitRate());
+		
+		// Set and Get Cost
+		tower.setCost(100);;
+	    assertEquals(100, tower.getCost());
 		
 		// CalcDamage 
 		assertEquals(1,tower.calcDamage());

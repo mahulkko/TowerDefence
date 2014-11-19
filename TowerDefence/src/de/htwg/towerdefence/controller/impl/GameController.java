@@ -44,27 +44,7 @@ public class GameController implements IGameController {
 		gameContext.setCheckWay(new CheckWay());
 		gameContext.getCheckWay().initWayPoints(11, 11);
 		
-		mob = new Mob(gameContext, new Coord(0, 0));
-		mob.setSpeed(1000);
-		gameContext.getPlayingField().setMob(new Coord(0,0), mob);
-		manager.registerComponent((IControllableComponent)mob);
 		
-		mob = new Mob(gameContext, new Coord(0, 1));
-		gameContext.getPlayingField().setMob(new Coord(0,1), mob);
-		manager.registerComponent((IControllableComponent)mob); 
-		
-		mob = new Mob(gameContext, new Coord(0, 2));
-		gameContext.getPlayingField().setMob(new Coord(0,2), mob);
-		manager.registerComponent((IControllableComponent)mob);
-		
-		tower = new Tower(gameContext, new Coord(2, 3));
-		tower.setRange(5);
-		tower.setSpeed(500);
-		tower.setHitRate(1);
-		tower.setDamage(10);
-		tower.setNumberOfShoot(5);
-		gameContext.getPlayingField().setTower(new Coord(2,3), tower);
-		manager.registerComponent((IControllableComponent)tower);
 	}
 
 
@@ -95,5 +75,46 @@ public class GameController implements IGameController {
 	@Override
 	public void removeObserver(IObserver s) {
 		manager.removeObserver(s);
+	}
+
+
+	@Override
+	public String setPlayerName(String playerName) {
+		gameContext.getPlayer().setName(playerName);
+		return gameContext.getPlayer().getName();
+	}
+
+
+	@Override
+	public int setPlayerMoney(int playerMoney) {
+		gameContext.getPlayer().setMoney(playerMoney);
+		return gameContext.getPlayer().getMoney();
+	}
+
+
+	@Override
+	public int setPlayerLife(int playerLife) {
+		gameContext.getPlayer().setLife(playerLife);
+		return gameContext.getPlayer().getLife();
+	}
+
+
+	@Override
+	public void setTowerToPostion(int x, int y) {
+		tower = new Tower(gameContext, new Coord(x, y));
+		// Check if Player has money for building 
+		if (gameContext.getPlayer().getMoney() >=  tower.getCost()) {
+			gameContext.getPlayingField().setTower(new Coord(x, y), tower);
+			manager.registerComponent((IControllableComponent)tower);
+			// Reduce Player Money for building one tower
+			gameContext.getPlayer().setMoney(gameContext.getPlayer().getMoney() - tower.getCost());
+		}
+	}
+
+	@Override
+	public void sendNewMobFromStart() {
+		mob = new Mob(gameContext, new Coord(0, 0));
+		gameContext.getPlayingField().setMob(new Coord(0, 0), mob);
+		manager.registerComponent((IControllableComponent)mob);
 	}
 }

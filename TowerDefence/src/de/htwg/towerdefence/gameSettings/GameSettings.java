@@ -29,16 +29,19 @@ public final class GameSettings {
 	private static final int TOWERDAMAGE = 10;
 	
 	/** Range of the tower */
-	private static final int TOWERRANGE = 10;
+	private static final int TOWERRANGE = 3;
 	
 	/** Speed of the tower */
 	private static final int TOWERSPEED = 10;
 	
 	/** NumberOfShoot of the tower */
-	private static final int TOWERNUMBEROFSHOOT = 10;
+	private static final int TOWERNUMBEROFSHOOT = 5;
 	
 	/** Hitrate of the tower */
 	private static final double TOWERHITRATE = 1.0;
+	
+	/** Coast of the tower */
+	private static final int TOWERCOST = 100;
 	
 	
 	/************************************************************
@@ -50,6 +53,9 @@ public final class GameSettings {
 	
 	/** Speed of the mob */
 	private static final int MOBSPEED = 1000;
+	
+	/** Money the mob get*/
+	private static final int MOBMONEY = 50;
 	
 	
 	/************************************************************
@@ -127,6 +133,13 @@ public final class GameSettings {
 		return TOWERHITRATE;
 	}
 	
+	/**
+	 * @return Returns the default cost of the tower
+	 */
+	public static int getTowerCost() {
+		return TOWERCOST;
+	}
+	
 	
 	/************************************************************
 	 * Getter of the mob values
@@ -144,5 +157,12 @@ public final class GameSettings {
 	 */
 	public static int getMobSpeed() {
 		return MOBSPEED;
+	}
+
+	 /**
+     * @return - Returns the default money the mob get
+	 */
+	public static int getMobMoney() {
+		return MOBMONEY;
 	}
 }

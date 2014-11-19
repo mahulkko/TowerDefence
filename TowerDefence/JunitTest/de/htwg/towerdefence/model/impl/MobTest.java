@@ -31,7 +31,7 @@ public class MobTest extends TestCase {
 		gameContext.setPlayingfield(new PlayingField(10, 10));
 		
 		mob = new Mob(gameContext, new Coord(0,0));
-		mob2 = new Mob(gameContext, new Coord(0,0), 100, 10);
+		mob2 = new Mob(gameContext, new Coord(0,0), 100, 10, 50);
 	}
 	
 	/**
@@ -46,6 +46,11 @@ public class MobTest extends TestCase {
 		// get and set speed
 		mob.setSpeed(2);
 		assertEquals(2, mob.getSpeed());
+		
+		// get and set speed
+		mob.setMoneyValue(100);;
+		assertEquals(100, mob.getMoneyValue());
+		
 		
 		// Check the function isDead
 		assertEquals(false, mob.isDead());

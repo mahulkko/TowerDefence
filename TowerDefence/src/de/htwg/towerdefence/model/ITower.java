@@ -57,6 +57,16 @@ public interface ITower {
     void setSpeed(int speed);
     
     /**
+     * @return Returns the Coast to building one tower
+     */
+    int getCost();
+
+    /**
+     * @param cost - Set the money that one tower coast
+     */
+	void setCost(int cost);
+    
+    /**
      * @return Returns a calculated damage from all parameters
      */
     int calcDamage();

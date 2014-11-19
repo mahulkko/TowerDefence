@@ -27,6 +27,16 @@ public interface IMob {
 	void setSpeed(int speed);
 	
 	/**
+	 * @param moneyValue - the money that the mob brings
+	 */
+	void setMoneyValue(int moneyValue);
+	
+	/**
+	 * @return Return the money that you get when the mob is dead
+	 */
+	public int getMoneyValue();
+	
+	/**
 	 * @return Returns true when the mob is dead
 	 */
 	boolean isDead();	

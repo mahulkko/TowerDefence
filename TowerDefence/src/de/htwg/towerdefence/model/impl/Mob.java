@@ -37,6 +37,9 @@ public class Mob extends ControllableComponent implements IMob {
 	/** Current tmpSpeed of the mob */
 	private long tmpSpeed;
 	
+	/** Money the mob get*/
+	private int money;
+	
 	/** Context of the game */
 	private IGameContext gameContext;
 	
@@ -51,6 +54,7 @@ public class Mob extends ControllableComponent implements IMob {
 	public Mob(IGameContext gameContext, Coord position) {
 		this.speed = GameSettings.getMobSpeed();
 		this.health = GameSettings.getMobHealth();
+		this.money = GameSettings.getMobMoney();
 		this.currendPos = position;
 		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
@@ -62,9 +66,10 @@ public class Mob extends ControllableComponent implements IMob {
 	 * @param health - Health of the mob
 	 * @param speed - speed of the mob
 	 */
-	public Mob(IGameContext gameContext, Coord position, int health, int speed) {
+	public Mob(IGameContext gameContext, Coord position, int health, int speed, int money) {
 		this.health = health;
 		this.speed = speed;
+		this.money = money;
 		this.currendPos = position;
 		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
@@ -108,6 +113,20 @@ public class Mob extends ControllableComponent implements IMob {
 		this.speed = speed;
 	}
 	
+	/**
+	 * @return Return the money that you get when the mob is dead
+	 */
+	public int getMoneyValue() {
+		return money;
+	}
+	
+	/**
+	 * @param moneyValue - the money that the mob brings
+	 */
+	public void setMoneyValue(int moneyValue) {
+		this.money = moneyValue;
+	}
+	
 	@Override
 	/**
 	 * @return Returns true when the mob is dead
@@ -118,7 +137,6 @@ public class Mob extends ControllableComponent implements IMob {
 		}
 		return false;					
 	}
-
 	
 	/************************************************************
 	 * Public ControllableComponent methods
@@ -137,6 +155,11 @@ public class Mob extends ControllableComponent implements IMob {
 			gameContext.getPlayingField().setMob(way.get(1), this);
 			this.currendPos.setX(way.get(1).getX());
 			this.currendPos.setY(way.get(1).getY());
+			// Check if Mob has reached end of Playingfield, delete him and lost life
+			if (gameContext.getPlayingField().isMobAtEndOfPlayingfield(way.get(1), this)) {
+				gameContext.getPlayingField().deleteMob(way.get(1), this);
+				gameContext.getPlayer().setLife(gameContext.getPlayer().getLife() - 1);
+			}
 			
 			this.tmpSpeed = this.speed;
 			return true;

@@ -49,6 +49,9 @@ public class Tower extends ControllableComponent implements ITower {
 	/** Number of shoots from the tower. With this parameter the tower can deal splash damage on each round. */
 	private int numberShoot;
 	
+	/** The coast to building one of the tower */
+	private int cost;
+	
 	/** Position of the tower */
 	Coord position;
 	
@@ -75,6 +78,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.speed = GameSettings.getTowerSpeed();
 		this.numberShoot = GameSettings.getTowerNumberOfShoot();
 		this.hitrate = GameSettings.getTowerHitRate();
+		this.cost = GameSettings.getTowerCost();
 		this.gameContext = gameContext;
 		this.position = position;
 		this.tmpCoord = new Coord();
@@ -89,12 +93,13 @@ public class Tower extends ControllableComponent implements ITower {
 	 * @param numberShoot - Number of shoot from the tower. With this parameter the tower can deal splash damage on each round.
 	 * @param hitrate - Hitrate of the tower. Hitrate is the change to deal a hit with max damage.
 	 */
-	public Tower(IGameContext gameContext, Coord position, int damage, int range, int speed, int numberShoot, double hitrate) {
+	public Tower(IGameContext gameContext, Coord position, int damage, int range, int speed, int numberShoot, double hitrate, int cost) {
 		this.damage = damage;
 		this.range = range;
 		this.speed = speed;
 		this.numberShoot = numberShoot;
 		this.hitrate = hitrate;
+		this.cost = cost;
 		this.gameContext = gameContext;
 		this.position = position;
 		this.tmpCoord = new Coord();
@@ -186,6 +191,22 @@ public class Tower extends ControllableComponent implements ITower {
     public void setSpeed(int speed) {
     	this.speed = speed;
     }
+
+	/**
+     * @return Returns the Coast to building one tower
+     */
+	@Override
+	public int getCost() {
+		return this.cost;
+	}
+
+	/**
+     * @param cost - Set the money that one tower coast
+     */
+	@Override
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
     
 	@Override
     /**
@@ -255,6 +276,8 @@ public class Tower extends ControllableComponent implements ITower {
 							this.gameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
 							IControllableComponent component = (IControllableComponent)mobs.get(0);
 							component.unregisterSelf();
+							//  Player get Money for Mob
+							this.gameContext.getPlayer().setMoney(this.gameContext.getPlayer().getMoney() + mobs.get(0).getMoneyValue());
 						}
 						return true;
 					}

@@ -50,6 +50,11 @@ public class TowerDefence {
 		gui = new TowerdefenceGui(controller);
 		controller.addObserver(tui);
 		controller.addObserver(gui);
+		
+		controller.setTowerToPostion(0, 7);
+		controller.setTowerToPostion(3, 7);
+		
+		controller.sendNewMobFromStart();
 	}
 }
 

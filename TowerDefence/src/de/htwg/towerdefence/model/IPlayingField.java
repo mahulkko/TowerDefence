@@ -69,6 +69,14 @@ public interface IPlayingField {
 	IMob deleteMob(Coord coord, IMob mob);
 	
 	/**
+	 * <b>Check if the mob is on the end of the playing field</b>
+	 * @param coord - Coordinates of the mob
+	 * @param mob - Instance of the mob
+	 * @return Returns true when the mob is at the end otherwise false
+	 */
+	boolean isMobAtEndOfPlayingfield(Coord coord, IMob mob);
+	
+	/**
 	 * <b>Checks if there is set the mob in the selected playing field</b>
      * @param coord - Coordinates of the tower
 	 * @return Returns true when there is set the mob otherwise false 

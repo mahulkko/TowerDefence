@@ -32,7 +32,7 @@ public class PlayingFieldTest extends TestCase {
 		this.f = new PlayingField();
 		this.field = new PlayingField(10,10);
 		this.f.initPlayingField(10, 10);
-		this.tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0);
+		this.tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
 		this.mob1 = new Mob(gameContext, new Coord(0,0));
 		this.mob1.setHealth(100);
 		this.mob1.setSpeed(2);
