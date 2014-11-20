@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
+import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
 
@@ -159,6 +160,8 @@ public class Mob extends ControllableComponent implements IMob {
 			if (gameContext.getPlayingField().isMobAtEndOfPlayingfield(way.get(1), this)) {
 				gameContext.getPlayingField().deleteMob(way.get(1), this);
 				gameContext.getPlayer().setLife(gameContext.getPlayer().getLife() - 1);
+				IControllableComponent component = (IControllableComponent)this;
+				component.unregisterSelf();
 			}
 			
 			this.tmpSpeed = this.speed;

@@ -51,8 +51,18 @@ public class TowerDefence {
 		controller.addObserver(tui);
 		controller.addObserver(gui);
 		
-		controller.setTowerToPostion(0, 7);
-		controller.setTowerToPostion(3, 7);
+		controller.setTowerToPostion(5, 0);
+		controller.setTowerToPostion(0, 6);
+		controller.setTowerToPostion(1, 6);
+		controller.setTowerToPostion(2, 6);
+		controller.setTowerToPostion(3, 6);
+		controller.setTowerToPostion(4, 6);
+		controller.setTowerToPostion(5, 6);
+		controller.setTowerToPostion(6, 6);
+		controller.setTowerToPostion(7, 6);
+		controller.setTowerToPostion(8, 6);
+		controller.setTowerToPostion(10, 6);
+		controller.setTowerToPostion(9, 6);
 		
 		controller.sendNewMobFromStart();
 	}

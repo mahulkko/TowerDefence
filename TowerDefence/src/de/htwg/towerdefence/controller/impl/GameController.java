@@ -43,8 +43,6 @@ public class GameController implements IGameController {
 		gameContext.setPlayingfield(new PlayingField(11, 11));
 		gameContext.setCheckWay(new CheckWay());
 		gameContext.getCheckWay().initWayPoints(11, 11);
-		
-		
 	}
 
 
@@ -52,10 +50,24 @@ public class GameController implements IGameController {
 	 * Public methods
 	 ***********************************************************/
 	
+	
+	/************************************************************
+	 * Observer methods
+	 ***********************************************************/
+	
 	@Override
-	public FieldType getTypeOfPlayingField(Coord coord) {
-		return gameContext.getPlayingField().getTypeOf(coord);
+	public void addObserver(IObserver s) {
+		manager.addObserver(s);
 	}
+
+	@Override
+	public void removeObserver(IObserver s) {
+		manager.removeObserver(s);
+	}
+	
+	/************************************************************
+	 * Playingfield methods
+	 ***********************************************************/
 
 	@Override
 	public int getSizeXOfPlayingField() {
@@ -66,48 +78,46 @@ public class GameController implements IGameController {
 	public int getSizeYOfPlayingField() {
 		return gameContext.getPlayingField().getSizeY();
 	}
-
+	
 	@Override
-	public void addObserver(IObserver s) {
-		manager.addObserver(s);
+	public FieldType getTypeOfPlayingField(Coord coord) {
+		return gameContext.getPlayingField().getTypeOf(coord);
 	}
-
+	
 	@Override
-	public void removeObserver(IObserver s) {
-		manager.removeObserver(s);
-	}
-
-
-	@Override
-	public String setPlayerName(String playerName) {
-		gameContext.getPlayer().setName(playerName);
-		return gameContext.getPlayer().getName();
+	public boolean isTowerOnField(int x, int y) {
+		FieldType fiedltype = gameContext.getPlayingField().getTypeOf(new Coord(x, y));
+		if (FieldType.TOWER == fiedltype) {
+			return true;
+		}
+		return false;
 	}
 
 
 	@Override
-	public int setPlayerMoney(int playerMoney) {
-		gameContext.getPlayer().setMoney(playerMoney);
-		return gameContext.getPlayer().getMoney();
+	public boolean isMobOnField(int x, int y) {
+		FieldType fiedltype = gameContext.getPlayingField().getTypeOf(new Coord(x, y));
+		if (FieldType.MOB == fiedltype) {
+			return true;
+		}
+		return false;
 	}
-
-
-	@Override
-	public int setPlayerLife(int playerLife) {
-		gameContext.getPlayer().setLife(playerLife);
-		return gameContext.getPlayer().getLife();
-	}
-
-
+	
 	@Override
 	public void setTowerToPostion(int x, int y) {
 		tower = new Tower(gameContext, new Coord(x, y));
+		tower.setDamage(0);
 		// Check if Player has money for building 
 		if (gameContext.getPlayer().getMoney() >=  tower.getCost()) {
-			gameContext.getPlayingField().setTower(new Coord(x, y), tower);
-			manager.registerComponent((IControllableComponent)tower);
-			// Reduce Player Money for building one tower
-			gameContext.getPlayer().setMoney(gameContext.getPlayer().getMoney() - tower.getCost());
+			gameContext.getCheckWay().deleteWayPoint(x, y);
+			if (gameContext.getCheckWay().existWay(0, 0, this.gameContext.getPlayingField().getSizeX()-1, this.gameContext.getPlayingField().getSizeY()-1)) {
+				gameContext.getPlayingField().setTower(new Coord(x, y), tower);
+				manager.registerComponent((IControllableComponent)tower);
+				// Reduce Player Money for building one tower
+				gameContext.getPlayer().setMoney(gameContext.getPlayer().getMoney() - tower.getCost());
+			} else {
+				gameContext.getCheckWay().addWayPoint(x, y);
+			}
 		}
 	}
 
@@ -117,4 +127,65 @@ public class GameController implements IGameController {
 		gameContext.getPlayingField().setMob(new Coord(0, 0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 	}
+
+	
+	/************************************************************
+	 * Player methods
+	 ***********************************************************/
+
+	@Override
+	public String setPlayerName(String playerName) {
+		gameContext.getPlayer().setName(playerName);
+		return gameContext.getPlayer().getName();
+	}
+
+	@Override
+	public int setPlayerMoney(int playerMoney) {
+		gameContext.getPlayer().setMoney(playerMoney);
+		return gameContext.getPlayer().getMoney();
+	}
+
+	@Override
+	public int setPlayerLife(int playerLife) {
+		gameContext.getPlayer().setLife(playerLife);
+		return gameContext.getPlayer().getLife();
+	}
+	
+	@Override
+	public String getPlayerName() {
+		return gameContext.getPlayer().getName();
+	}
+
+	@Override
+	public int getPlayerMoney() {
+		return gameContext.getPlayer().getMoney();
+	}
+
+	@Override
+	public int getPlayerLife() {
+		return gameContext.getPlayer().getLife();
+	}
+	
+	/************************************************************
+	 * Tower methods
+	 ***********************************************************/
+	
+	@Override
+	public int getTowerSpeed(int x, int y) {
+		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		return tower.getSpeed();
+	}
+
+	@Override
+	public int getTowerRange(int x, int y) {
+		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		return tower.getRange();
+	}
+
+	@Override
+	public int getTowerDamage(int x, int y) {
+		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		return tower.getDamage();
+	}
+
 }

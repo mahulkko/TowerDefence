@@ -11,9 +11,19 @@ import de.htwg.towerdefence.util.way.Coord;
  */
 public interface IGameController {
 	
-	// PlayingField
-	FieldType getTypeOfPlayingField(Coord coord);
+	// Gui and tui
+	/**
+	 * @param s - add a View Object that implements IObserver to the Controller
+	 */
+	void addObserver(IObserver s);
 	
+	/**
+	 * @param s - removes a View Object that implements IObserver from the Controller
+	 */
+	void removeObserver(IObserver s);
+	
+	
+	// PlayingField
 	/**
 	 * @return Returns the X length of the current Playingfield
 	 */
@@ -24,6 +34,37 @@ public interface IGameController {
 	 */
 	int getSizeYOfPlayingField();
 	
+	/**
+	 * @param coord - coordinate of a specific field 
+	 * @return Returns the FieldType of the field. Is there a tower or a mob
+	 */
+	FieldType getTypeOfPlayingField(Coord coord);
+	
+	/**
+	 * @param x - the X position of specific field on the playingfield
+	 * @param y - the Y position of specific field on the playingfield
+	 */
+	boolean isTowerOnField(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific field on the playingfield
+	 * @param y - the Y position of specific field on the playingfield
+	 */
+	boolean isMobOnField(int x, int y);
+	
+	/**
+	 * @param x - the X position of new Tower on the Playingfield
+	 * @param y - the Y position of new Tower on the Playingfield
+	 */
+	void setTowerToPostion(int x, int y);
+	
+	/**
+	 * Creates a new Mob on the start of the Playingfield
+	 */
+	void sendNewMobFromStart();
+	
+	
+	// Player
 	/**
 	 * @param playerName - the new name of the Player
 	 * @return Returns the name of the current Player
@@ -43,24 +84,41 @@ public interface IGameController {
 	int setPlayerLife(int playerLife);
 	
 	/**
-	 * @param x - the X position of new Tower on the Playingfield
-	 * @param y - the Y position of new Tower on the Playingfield
+	 * @return Returns the name of the current Player
 	 */
-	void setTowerToPostion(int x, int y);
+	String getPlayerName();
 	
 	/**
-	 * Creates a new Mob on the start of the Playingfield
+	 * @return Returns the current Money of the Player
 	 */
-	void sendNewMobFromStart();
-	
-	// Gui and tui
-	/**
-	 * @param s - add a View Object that implements IObserver to the Controller
-	 */
-	void addObserver(IObserver s);
+	int getPlayerMoney();
 	
 	/**
-	 * @param s - removes a View Object that implements IObserver from the Controller
+	 * @return Returns the current Life of the Player
 	 */
-	void removeObserver(IObserver s);
+	int getPlayerLife();
+	
+	
+	// Tower
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 * @return Returns the Speed of the Tower
+	 */
+	int getTowerSpeed(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 * @return Returns the Range of the Tower
+	 */
+	int getTowerRange(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 * @return Returns the Damage of the Tower
+	 */
+	int getTowerDamage(int x, int y);
+
 }
