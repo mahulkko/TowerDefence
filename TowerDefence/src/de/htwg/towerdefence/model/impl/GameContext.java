@@ -1,11 +1,13 @@
 package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 
 import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
+import de.htwg.towerdefence.model.way.impl.CheckWay;
 
 /**
  * <b>Mob Class</b>
@@ -24,12 +26,15 @@ public class GameContext implements IGameContext {
     private static Logger log = Logger.getLogger("TowerDefence.Model.GameContext");
     
     /** Current player */
+    @JsonDeserialize(as=Player.class)
     private IPlayer player;
     
     /** Current playing field */
+    @JsonDeserialize(as=PlayingField.class)
     private IPlayingField playingField;
     
     /** Current instance of check way */
+    @JsonDeserialize(as=CheckWay.class)
     private ICheckWay checkWay;
     
 	

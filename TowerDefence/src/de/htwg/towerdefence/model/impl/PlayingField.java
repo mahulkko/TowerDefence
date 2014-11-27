@@ -26,12 +26,15 @@ public class PlayingField implements IPlayingField {
     private static Logger log = Logger.getLogger("TowerDefence.Model.PlayingField");
     
     /** Playing field array */
+
  	private Field field[][];  
  	
  	/** Size x of the playing field */
+
  	private int sizeX;
  	
  	/** Size y of the playing field */
+
  	private int sizeY;
  	
  	

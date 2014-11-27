@@ -1,6 +1,7 @@
 package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
@@ -18,12 +19,15 @@ public class Player extends ControllableComponent implements IPlayer {
 	 ***********************************************************/
 	
 	/** Name of the player */
+
 	private String name;
 	
 	/** Money of the player */
+
 	private int money;
 	
 	/** Life of the player */
+
 	private int life;
 	
 	/** Logger for log4j connection */
