@@ -70,4 +70,9 @@ public interface ITower {
      * @return Returns a calculated damage from all parameters
      */
     int calcDamage();
+
+    /**
+     * Upgrade the Damage and Speed of Tower
+     */
+	void upgrade();
 }

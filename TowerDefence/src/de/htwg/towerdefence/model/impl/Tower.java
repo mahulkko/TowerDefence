@@ -61,6 +61,8 @@ public class Tower extends ControllableComponent implements ITower {
 	/** Hitrate of the tower. Hitrate is the change to deal a hit with max damage. */
 	private double hitrate; 
 	
+	boolean initTower;
+	
 	
 	/************************************************************
 	 * Public constructor
@@ -78,6 +80,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.cost = GameSettings.getTowerCost();
 		this.position = position;
 		this.tmpCoord = new Coord();
+		this.initTower = true;
 		log.info("Added new tower with default values from GameSettings");
 	}
 	
@@ -221,6 +224,12 @@ public class Tower extends ControllableComponent implements ITower {
 		}
     }
 	
+	@Override
+	public void upgrade() {
+		this.damage = (int) (this.damage * 1.5);
+		this.speed = (int) (this.speed * 1.2);
+	}
+	
 	
 	/************************************************************
 	 * Public ControllableComponent methods
@@ -230,6 +239,12 @@ public class Tower extends ControllableComponent implements ITower {
 	public boolean update(long dt) {
 		
 		boolean check = false;
+		
+		if(this.initTower)  {
+			this.initTower = false;
+			check = true;
+		}
+			
 		
 		this.tmpSpeed = this.tmpSpeed - dt;
 		if (this.tmpSpeed <= 0) {

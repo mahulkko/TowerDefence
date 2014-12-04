@@ -64,6 +64,11 @@ public class TowerTest extends TestCase {
 		tower.setNumberOfShoot(1);
 		assertEquals(1,tower.getNumberOfShoot());
 		
+		// Upgrade Tower
+		tower.setDamage(2);
+		tower.upgrade();
+		assertEquals(3,tower.getDamage());
+		
 		ControllableComponent component = (ControllableComponent) tower;
 		component.update(0);
 	}

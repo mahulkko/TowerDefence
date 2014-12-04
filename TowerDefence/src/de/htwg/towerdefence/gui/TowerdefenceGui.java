@@ -25,15 +25,17 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 	private JPanel propertiesPanel;
 	private JPanel controlPanel;
 	private JPanel playerPanel;
+	private GuiState guiState;
 
 	/**
 	 * Create the frame.
 	 */
 	public TowerdefenceGui(IGameController controller) {
+		guiState = new GuiState(); 
 		
-		playingFieldGui = new PlayingFieldGui(controller, 450, 310);
-		propertiesGui = new PropertiesGui(controller);
-		controlGui = new ControlGui(controller);
+		propertiesGui = new PropertiesGui(controller, guiState);
+		playingFieldGui = new PlayingFieldGui(controller, guiState, propertiesGui, 450, 310);
+		controlGui = new ControlGui(controller, guiState);
 		playerGui = new PlayerGui(controller);
 		
 		// Default Settings GUI
@@ -80,6 +82,7 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 
 	@Override
 	public void update() {
-		playingFieldGui.repaint();		
+		playingFieldGui.repaint();
+		playerGui.updatePlayerData();
 	}
 }

@@ -22,6 +22,11 @@ public interface IGameController {
 	 */
 	void removeObserver(IObserver s);
 	
+	/**
+	 * Stop or Starts the Game
+	 * @return
+	 */
+	public boolean pauseOrStartGame();
 	
 	// PlayingField
 	/**
@@ -55,8 +60,9 @@ public interface IGameController {
 	/**
 	 * @param x - the X position of new Tower on the Playingfield
 	 * @param y - the Y position of new Tower on the Playingfield
+	 * @return Return true if the tower was set else false
 	 */
-	void setTowerToPostion(int x, int y);
+	boolean setTowerToPostion(int x, int y);
 	
 	/**
 	 * Creates a new Mob on the start of the Playingfield
@@ -120,5 +126,40 @@ public interface IGameController {
 	 * @return Returns the Damage of the Tower
 	 */
 	int getTowerDamage(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 * @return Returns the Coast of the Tower
+	 */
+	int getTowerCoast(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 */
+	void upgradeTower(int x, int y);
+	
+	// Mob
+	/**
+	 * @param x - the X position of specific Mob on the playingfield
+	 * @param y - the Y position of specific Mob on the playingfield
+	 * @return Returns the health of the Mob
+	 */
+	int getMobHealth(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Mob on the playingfield
+	 * @param y - the Y position of specific Mob on the playingfield
+	 * @return Returns the speed of the Mob
+	 */
+	int getMobSpeed(int x, int y);
+	
+	/**
+	 * @param x - the X position of specific Mob on the playingfield
+	 * @param y - the Y position of specific Mob on the playingfield
+	 * @return Returns the money of the Mob
+	 */
+	int getMobMoney(int x, int y);
 
 }
