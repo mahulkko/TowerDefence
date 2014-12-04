@@ -2,10 +2,11 @@ package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
 import java.util.LinkedList;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;

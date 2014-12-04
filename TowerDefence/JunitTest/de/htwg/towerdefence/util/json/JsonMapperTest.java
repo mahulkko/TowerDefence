@@ -11,7 +11,7 @@ import org.junit.Test;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 
 public class JsonMapperTest {
 	

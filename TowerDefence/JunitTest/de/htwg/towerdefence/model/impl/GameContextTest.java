@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import junit.framework.TestCase;
 
 /**

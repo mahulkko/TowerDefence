@@ -5,9 +5,10 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 

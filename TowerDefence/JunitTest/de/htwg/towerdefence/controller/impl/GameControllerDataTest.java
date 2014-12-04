@@ -1,17 +1,20 @@
 package de.htwg.towerdefence.controller.impl;
 
 import junit.framework.TestCase;
+
 import java.io.IOException;
+
+import de.htwg.towerdefence.util.GameContext.GameData;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 
 public class GameControllerDataTest extends TestCase {
 	
-	GameControllerData data;
+	GameData data;
 	IControllableComponent component;
 	
 	
 	public void setUp() throws IOException {
-		data = new GameControllerData();
+		data = new GameData();
 		component = new ControllableComponentTest(1, "Test");
 	}
 	

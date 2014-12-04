@@ -8,7 +8,7 @@ import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
 import de.htwg.towerdefence.model.impl.Tower;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
@@ -40,12 +40,6 @@ public class GameController implements IGameController {
 		GameContext.getCheckWay().initWayPoints(11, 11);
 	}
 
-
-	/************************************************************
-	 * Public methods
-	 ***********************************************************/
-	
-	
 	/************************************************************
 	 * Observer methods
 	 ***********************************************************/

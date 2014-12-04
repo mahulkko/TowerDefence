@@ -1,8 +1,9 @@
 package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
+
 import de.htwg.towerdefence.model.ITower;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;

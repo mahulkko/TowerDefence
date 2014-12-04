@@ -1,6 +1,9 @@
-package de.htwg.towerdefence.util;
+package de.htwg.towerdefence.util.GameContext;
+
+import java.util.List;
 
 import org.apache.log4j.Logger;
+
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
@@ -29,6 +32,9 @@ public class GameContext {
     
     /** Current instance of check way */
     private static ICheckWay checkWay;
+    
+    /** List of all controllableComponents saved in the GameControllData */
+	private static List<GameData> controllableComponents;
     
 	
 	/************************************************************
@@ -65,6 +71,14 @@ public class GameContext {
 	public static void setCheckWay(ICheckWay cWay) {
 		log.info("Set new CheckWay instance in GameContext...");
 		checkWay = cWay;
+	}
+
+	public static List<GameData> getGameData() {
+		return controllableComponents;
+	}
+
+	public static void setGameData(List<GameData> Components) {
+		controllableComponents = Components;
 	}
 
 }

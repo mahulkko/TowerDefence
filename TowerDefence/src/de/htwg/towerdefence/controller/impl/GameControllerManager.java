@@ -2,7 +2,11 @@ package de.htwg.towerdefence.controller.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import de.htwg.towerdefence.util.GameContext.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameData;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObservable;
 import de.htwg.towerdefence.util.control.IObserver;
@@ -20,11 +24,6 @@ public class GameControllerManager implements IObservable{
 	
 	/** Logger for log4j connection */
     private static Logger log = Logger.getLogger("TowerDefence.Controller.GameControllerManager");
-	
-	/**
-	 * List of all controllableComponents saved in the GameControllData
-	 */
-	private List<GameControllerData> controllableComponents;
 	
 	/**
 	 * List of all Observer who wants to be updated
@@ -47,7 +46,7 @@ public class GameControllerManager implements IObservable{
 	public GameControllerManager() {
 		log.info("Started the GameControllerManager...");
 		sync = new Object();
-		controllableComponents = new LinkedList<GameControllerData>();
+		GameContext.setGameData(new LinkedList<GameData>());
 		observer = new LinkedList<IObserver>();
 		Thread update = new Thread(new updateComponents());
 		update.start();
@@ -61,10 +60,10 @@ public class GameControllerManager implements IObservable{
 	public void registerComponent(IControllableComponent component) {
 		synchronized(sync) {
 			log.info("Registered new ControllableComponent...");
-			GameControllerData data = new GameControllerData();
+			GameData data = new GameData();
 			data.setComponent(component);
 			data.setLastTime(System.currentTimeMillis());
-			this.controllableComponents.add(data);
+			GameContext.getGameData().add(data);
 		}
 	}
 	
@@ -74,10 +73,10 @@ public class GameControllerManager implements IObservable{
 	 */
 	public void unregisterComponent(IControllableComponent component) {
 		synchronized(sync) {
-			for (GameControllerData data: controllableComponents) {
+			for (GameData data: GameContext.getGameData()) {
 				if (data.getComponent() == component) {
 					log.info("Unregistered a ControllableComponent...");
-					controllableComponents.remove(data);
+					GameContext.getGameData().remove(data);
 				}
 			}
 		}
@@ -104,22 +103,22 @@ public class GameControllerManager implements IObservable{
 				synchronized(sync) {
 					
 					// Check for components that should be unregistered
-					List<GameControllerData> copyControllableComponents = new LinkedList<GameControllerData>(controllableComponents);
-					for (int i = 0; i < controllableComponents.size(); ++i) {
-						if (controllableComponents.get(i).getComponent().getUpdateStatus() == false) {
-							copyControllableComponents.remove(controllableComponents.get(i));
+					List<GameData> copyControllableComponents = new LinkedList<GameData>(GameContext.getGameData());
+					for (int i = 0; i < GameContext.getGameData().size(); ++i) {
+						if (GameContext.getGameData().get(i).getComponent().getUpdateStatus() == false) {
+							copyControllableComponents.remove(GameContext.getGameData().get(i));
 						}
 					}
-					controllableComponents = copyControllableComponents;
+					GameContext.setGameData(copyControllableComponents);
 					
 					
 					// Update the components
-					for (int i = 0; i < controllableComponents.size(); ++i) {
-						long dt = System.currentTimeMillis() - controllableComponents.get(i).getLastTime();
-		                if (controllableComponents.get(i).getComponent().update(dt)) {
+					for (int i = 0; i < GameContext.getGameData().size(); ++i) {
+						long dt = System.currentTimeMillis() - GameContext.getGameData().get(i).getLastTime();
+		                if (GameContext.getGameData().get(i).getComponent().update(dt)) {
 		                	check = true;
 		                }
-		                controllableComponents.get(i).setLastTime(System.currentTimeMillis());
+		                GameContext.getGameData().get(i).setLastTime(System.currentTimeMillis());
 					}
 				}
 				

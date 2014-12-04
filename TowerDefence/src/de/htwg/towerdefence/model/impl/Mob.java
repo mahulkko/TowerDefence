@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IMob;
-import de.htwg.towerdefence.util.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameContext;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;

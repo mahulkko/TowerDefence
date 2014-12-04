@@ -1,4 +1,4 @@
-package de.htwg.towerdefence.controller.impl;
+package de.htwg.towerdefence.util.GameContext;
 
 import de.htwg.towerdefence.util.control.IControllableComponent;
 
@@ -7,7 +7,7 @@ import de.htwg.towerdefence.util.control.IControllableComponent;
  * <br>
  * <b>GameControllerData</b>
  */
-public class GameControllerData {
+public class GameData {
 
 	/************************************************************
 	 * Private variables
@@ -32,7 +32,7 @@ public class GameControllerData {
 	/**
 	 * Standard constructor from the game controller data
 	 */
-	public GameControllerData() {
+	public GameData() {
 		lastTime = 0;
 	}
 	
