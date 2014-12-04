@@ -38,6 +38,9 @@ public class ControlGui extends JPanel {
 	/** JButton for Pause */
 	private JButton btnPause;
 	
+	/** JButton for Pause */
+	private JButton btnInfo;
+	
 	
 	/************************************************************
 	 * Public constructor
@@ -92,5 +95,16 @@ public class ControlGui extends JPanel {
 			}
 		});
 		add(btnPause);
+		
+		
+		btnInfo = new JButton("Show Info");
+		btnInfo.setBounds(352, 45, 89, 23);
+		btnInfo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guiState.setState(State.SHOWINFOS);
+			}
+		});
+		add(btnInfo);
 	}
 }

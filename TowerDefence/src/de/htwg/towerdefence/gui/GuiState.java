@@ -3,13 +3,13 @@ package de.htwg.towerdefence.gui;
 public class GuiState {
 	
 	public enum State {
-		SETTOWER, SHOWTOWER, UPGRADETOWER
+		SETTOWER, SHOWINFOS
 	}
 	
 	private State state;
 	
 	public GuiState() {
-		this.state = State.SHOWTOWER;
+		this.state = State.SHOWINFOS;
 	}
 	
 	public void setState(State state) {

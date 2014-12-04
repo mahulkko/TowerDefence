@@ -19,63 +19,42 @@ public class PropertiesGui extends JPanel{
 	private GuiState guiState;
 	private IGameController controller;
 	JLabel lblProperties;
-	JLabel lblSpeed;
-	JLabel lblDamage;
-	JLabel lblRange;
+	JLabel lblAttribute1;
+	JLabel lblAttribute2;
+	JLabel lblAttribute3;
 	JLabel lblCost;
 	JButton btnUpgrade;
+	
+	private int xCord;
+	private int yCord;
 	
 	public PropertiesGui(IGameController controller, GuiState guiState) {
 		this.controller = controller;
 		this.guiState = guiState;
 		init();
-		this.setPropertiesCost(200);
-		this.setPropertiesDamage(100);
-		this.setPropertiesRange(3);
-		this.setPropertiesSpeed(500);
-		this.setPropertiesText("Eigenschaften Tower");
-	}
-	
-	public void setPropertiesText(String properties) {
-		this.lblProperties.setText(properties);
-	}
-	
-	public void setPropertiesSpeed(int speed) {
-		this.lblSpeed.setText("Speed: " + String.valueOf(speed));
-	}
-	
-	public void setPropertiesDamage(int damage) {
-		this.lblDamage.setText("Damage: " + String.valueOf(damage));
-	}
-	
-	public void setPropertiesRange(int range) {
-		this.lblRange.setText("Range: " + String.valueOf(range));
-	}
-	
-	public void setPropertiesCost(int cost) {
-		this.lblCost.setText("Cost: " + String.valueOf(cost));
 	}
 	
 	private void init() {
 		lblProperties = new JLabel();
 		lblProperties.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblProperties.setBounds(10, 11, 171, 23);
+		lblProperties.setText("Eigenschaften:");
 		add(lblProperties);
 		
-		lblSpeed = new JLabel();
-		lblSpeed.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSpeed.setBounds(20, 36, 179, 23);
-		add(lblSpeed);
+		lblAttribute1 = new JLabel();
+		lblAttribute1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAttribute1.setBounds(20, 36, 179, 23);
+		add(lblAttribute1);
 		
-		lblDamage = new JLabel();
-		lblDamage.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblDamage.setBounds(20, 61, 179, 23);
-		add(lblDamage);
+		lblAttribute2 = new JLabel();
+		lblAttribute2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAttribute2.setBounds(20, 61, 179, 23);
+		add(lblAttribute2);
 		
-		lblRange = new JLabel();
-		lblRange.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblRange.setBounds(20, 86, 179, 23);
-		add(lblRange);
+		lblAttribute3 = new JLabel();
+		lblAttribute3.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblAttribute3.setBounds(20, 86, 179, 23);
+		add(lblAttribute3);
 		
 		lblCost = new JLabel();
 		lblCost.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -87,9 +66,28 @@ public class PropertiesGui extends JPanel{
 		btnUpgrade.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				guiState.setState(State.UPGRADETOWER);
+				controller.upgradeTower(xCord, yCord);
+				updateTower(xCord, yCord);
 			}
 		});
 		add(btnUpgrade);
+	}
+	
+	public void updateTower(int x, int y) {
+		this.xCord = x;
+		this.yCord = y;
+		lblProperties.setText("Tower Eigenschaften:");
+		lblAttribute1.setText("Speed: " + String.valueOf(controller.getTowerSpeed(x, y)));
+		lblAttribute2.setText("Damage: " + String.valueOf(controller.getTowerDamage(x, y)));
+		lblAttribute3.setText("Range: " + String.valueOf(controller.getTowerRange(x, y)));
+		lblCost.setText("Cost: " + String.valueOf(controller.getTowerCoast(x, y)));
+	}
+	
+	public void updateMob(int x, int y) {
+		lblProperties.setText("Mob Eigenschaften:");
+		lblAttribute1.setText("Health: " + String.valueOf(controller.getMobHealth(x, y)));
+		lblAttribute2.setText("Speed: " + String.valueOf(controller.getMobSpeed(x, y)));
+		lblAttribute3.setText("Money: " + String.valueOf(controller.getMobMoney(x, y)));
+		lblCost.setText("");
 	}
 }

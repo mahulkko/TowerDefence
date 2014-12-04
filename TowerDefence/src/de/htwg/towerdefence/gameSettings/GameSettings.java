@@ -32,10 +32,10 @@ public final class GameSettings {
 	private static final int TOWERRANGE = 3;
 	
 	/** Speed of the tower */
-	private static final int TOWERSPEED = 10;
+	private static final int TOWERSPEED = 1000;
 	
 	/** NumberOfShoot of the tower */
-	private static final int TOWERNUMBEROFSHOOT = 5;
+	private static final int TOWERNUMBEROFSHOOT = 1;
 	
 	/** Hitrate of the tower */
 	private static final double TOWERHITRATE = 1.0;
@@ -52,7 +52,7 @@ public final class GameSettings {
 	private static final int MOBHEALTH = 100;
 	
 	/** Speed of the mob */
-	private static final int MOBSPEED = 1000;
+	private static final int MOBSPEED = 500;
 	
 	/** Money the mob get*/
 	private static final int MOBMONEY = 50;

@@ -33,8 +33,8 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 	public TowerdefenceGui(IGameController controller) {
 		guiState = new GuiState(); 
 		
-		playingFieldGui = new PlayingFieldGui(controller, guiState, 450, 310);
 		propertiesGui = new PropertiesGui(controller, guiState);
+		playingFieldGui = new PlayingFieldGui(controller, guiState, propertiesGui, 450, 310);
 		controlGui = new ControlGui(controller, guiState);
 		playerGui = new PlayerGui(controller);
 		

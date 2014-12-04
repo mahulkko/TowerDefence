@@ -224,6 +224,12 @@ public class Tower extends ControllableComponent implements ITower {
 		}
     }
 	
+	@Override
+	public void upgrade() {
+		this.damage = (int) (this.damage * 1.5);
+		this.speed = (int) (this.speed * 1.2);
+	}
+	
 	
 	/************************************************************
 	 * Public ControllableComponent methods

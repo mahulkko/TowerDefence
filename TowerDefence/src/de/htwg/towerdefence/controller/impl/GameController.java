@@ -1,5 +1,7 @@
 package de.htwg.towerdefence.controller.impl;
 
+import java.util.List;
+
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
@@ -90,7 +92,6 @@ public class GameController implements IGameController {
 		return false;
 	}
 
-
 	@Override
 	public boolean isMobOnField(int x, int y) {
 		FieldType fiedltype = GameContext.getPlayingField().getTypeOf(new Coord(x, y));
@@ -101,21 +102,25 @@ public class GameController implements IGameController {
 	}
 	
 	@Override
-	public void setTowerToPostion(int x, int y) {
-		tower = new Tower(new Coord(x, y));
-		tower.setDamage(0);
-		// Check if Player has money for building 
-		if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
-			GameContext.getCheckWay().deleteWayPoint(x, y);
-			if (GameContext.getCheckWay().existWay(0, 0,GameContext.getPlayingField().getSizeX()-1, GameContext.getPlayingField().getSizeY()-1)) {
-				GameContext.getPlayingField().setTower(new Coord(x, y), tower);
-				manager.registerComponent((IControllableComponent)tower);
-				// Reduce Player Money for building one tower
-				GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() - tower.getCost());
-			} else {
-				GameContext.getCheckWay().addWayPoint(x, y);
+	public boolean setTowerToPostion(int x, int y) {
+		Coord coord = new Coord(x, y);
+		if(!GameContext.getPlayingField().isSetTower(coord)) {
+			tower = new Tower(coord);
+			// Check if Player has money for building 
+			if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
+				GameContext.getCheckWay().deleteWayPoint(x, y);
+				if (GameContext.getCheckWay().existWay(0, 0,GameContext.getPlayingField().getSizeX()-1, GameContext.getPlayingField().getSizeY()-1)) {
+					GameContext.getPlayingField().setTower(coord, tower);
+					manager.registerComponent((IControllableComponent)tower);
+					// Reduce Player Money for building one tower
+					GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() - tower.getCost());
+					return true;
+				} else {
+					GameContext.getCheckWay().addWayPoint(x, y);
+				}
 			}
 		}
+		return false;
 	}
 
 	@Override
@@ -183,6 +188,45 @@ public class GameController implements IGameController {
 	public int getTowerDamage(int x, int y) {
 		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
 		return tower.getDamage();
+	}
+
+	@Override
+	public int getTowerCoast(int x, int y) {
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
+		return tower.getCost();
+	}
+	
+	@Override
+	public void upgradeTower(int x, int y) {
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
+		if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
+			tower.upgrade();
+			GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() - tower.getCost());
+		}
+	}
+	
+	
+
+	/************************************************************
+	 * Mob methods
+	 ***********************************************************/
+	
+	@Override
+	public int getMobHealth(int x, int y) {
+		List<IMob> mob = GameContext.getPlayingField().getMobs(new Coord(x, y));
+		return mob.get(0).getHealth();
+	}
+
+	@Override
+	public int getMobSpeed(int x, int y) {
+		List<IMob> mob = GameContext.getPlayingField().getMobs(new Coord(x, y));
+		return mob.get(0).getSpeed();
+	}
+
+	@Override
+	public int getMobMoney(int x, int y) {
+		List<IMob> mob = GameContext.getPlayingField().getMobs(new Coord(x, y));
+		return mob.get(0).getMoneyValue();
 	}
 
 }
