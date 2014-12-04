@@ -55,6 +55,14 @@ public class GameController implements IGameController {
 	}
 	
 	/************************************************************
+	 * Run method
+	 ***********************************************************/
+	
+	public boolean pauseOrStartGame() {
+		return manager.changeRunningState();
+	}
+	
+	/************************************************************
 	 * Playingfield methods
 	 ***********************************************************/
 

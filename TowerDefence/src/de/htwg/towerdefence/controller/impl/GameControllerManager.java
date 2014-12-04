@@ -35,6 +35,11 @@ public class GameControllerManager implements IObservable{
 	 */
 	private Object sync;
 	
+	/**
+	 * Shows the state of the running Thread
+	 */
+	private boolean run;
+	
 	
 	/************************************************************
 	 * Public methods
@@ -46,6 +51,7 @@ public class GameControllerManager implements IObservable{
 	public GameControllerManager() {
 		log.info("Started the GameControllerManager...");
 		sync = new Object();
+		this.run = true;
 		GameContext.setGameData(new LinkedList<GameData>());
 		observer = new LinkedList<IObserver>();
 		Thread update = new Thread(new updateComponents());
@@ -82,6 +88,14 @@ public class GameControllerManager implements IObservable{
 		}
 	}
 	
+	/**
+	 * Stop or Starts the running game
+	 * @return the state of the running game
+	 */
+	public boolean changeRunningState() {
+		return this.run = !this.run;
+	}
+	
 	
 	/************************************************************
 	 * Inner Class for Thread
@@ -99,31 +113,34 @@ public class GameControllerManager implements IObservable{
 			log.info("Started the update prozess of the registered components");
 			while (true) {
 				
-				check = false;
-				synchronized(sync) {
+				if(run) {
 					
-					// Check for components that should be unregistered
-					List<GameData> copyControllableComponents = new LinkedList<GameData>(GameContext.getGameData());
-					for (int i = 0; i < GameContext.getGameData().size(); ++i) {
-						if (GameContext.getGameData().get(i).getComponent().getUpdateStatus() == false) {
-							copyControllableComponents.remove(GameContext.getGameData().get(i));
+					check = false;
+					synchronized(sync) {
+						
+						// Check for components that should be unregistered
+						List<GameData> copyControllableComponents = new LinkedList<GameData>(GameContext.getGameData());
+						for (int i = 0; i < GameContext.getGameData().size(); ++i) {
+							if (GameContext.getGameData().get(i).getComponent().getUpdateStatus() == false) {
+								copyControllableComponents.remove(GameContext.getGameData().get(i));
+							}
+						}
+						GameContext.setGameData(copyControllableComponents);
+						
+						
+						// Update the components
+						for (int i = 0; i < GameContext.getGameData().size(); ++i) {
+							long dt = System.currentTimeMillis() - GameContext.getGameData().get(i).getLastTime();
+			                if (GameContext.getGameData().get(i).getComponent().update(dt)) {
+			                	check = true;
+			                }
+			                GameContext.getGameData().get(i).setLastTime(System.currentTimeMillis());
 						}
 					}
-					GameContext.setGameData(copyControllableComponents);
 					
-					
-					// Update the components
-					for (int i = 0; i < GameContext.getGameData().size(); ++i) {
-						long dt = System.currentTimeMillis() - GameContext.getGameData().get(i).getLastTime();
-		                if (GameContext.getGameData().get(i).getComponent().update(dt)) {
-		                	check = true;
-		                }
-		                GameContext.getGameData().get(i).setLastTime(System.currentTimeMillis());
+					if (check) {
+						notifyObservers();
 					}
-				}
-				
-				if (check) {
-					notifyObservers();
 				}
 			}
 		}

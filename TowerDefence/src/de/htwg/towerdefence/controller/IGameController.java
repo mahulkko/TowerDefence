@@ -22,6 +22,11 @@ public interface IGameController {
 	 */
 	void removeObserver(IObserver s);
 	
+	/**
+	 * Stop or Starts the Game
+	 * @return
+	 */
+	public boolean pauseOrStartGame();
 	
 	// PlayingField
 	/**

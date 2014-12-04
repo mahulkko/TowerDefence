@@ -5,15 +5,20 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.htwg.towerdefence.controller.IGameController;
+import de.htwg.towerdefence.gui.GuiState.State;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 
 public class PlayingFieldGui extends JPanel implements MouseListener{
 
 	private static final long serialVersionUID = 4166754566794976199L;
+	
+	/** Instance of the GuiState */
+	private GuiState guiState;
 	
 	private IGameController controller;
 	private Coord coord;
@@ -23,8 +28,9 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
     private int spaceHeight;
     private int spaceWidth;
 	
-	public PlayingFieldGui(IGameController controller, int width, int height) {
+	public PlayingFieldGui(IGameController controller, GuiState guiState, int width, int height) {
 		this.controller = controller;
+		this.guiState = guiState;
 		coord = new Coord();
 		coord2 = new Coord();
 		this.width = width;
@@ -73,8 +79,19 @@ public class PlayingFieldGui extends JPanel implements MouseListener{
 	  }
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {		
-
+	public void mouseClicked(MouseEvent arg0) {	
+		int cordx = arg0.getX() / spaceWidth;
+		int cordy = arg0.getY() / spaceHeight;
+		
+		switch(guiState.getState()) {
+			case SETTOWER:
+				controller.setTowerToPostion(cordx, cordy);
+			case SHOWTOWER:
+				break;
+			case UPGRADETOWER:
+				break;
+		}
+		
 	}
 
 	@Override

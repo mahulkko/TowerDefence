@@ -1,8 +1,11 @@
 package de.htwg.towerdefence.gui;
 
 import java.awt.Font;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
 import de.htwg.towerdefence.controller.IGameController;
 
 /**
@@ -42,9 +45,6 @@ public class PlayerGui extends JPanel{
 	public PlayerGui(IGameController controller) {
 		this.controller = controller;
 		init();
-		this.setPlayerName("Martin");
-		this.setPlayerLife(10);
-		this.setPlayerMoney(9999);
 	}
 	
 	
@@ -57,6 +57,7 @@ public class PlayerGui extends JPanel{
 	 * @param playerName - Name of the player
 	 */
 	public void setPlayerName(String playerName) {
+		controller.setPlayerName(playerName);
 		lblPlayer.setText("Player: " + playerName);
 	}
 	
@@ -65,6 +66,7 @@ public class PlayerGui extends JPanel{
 	 * @param playerLife - Life of the player
 	 */
 	public void setPlayerLife(int playerLife) {
+		controller.setPlayerLife(playerLife);
 		lblLife.setText("Life: " + String.valueOf(playerLife));
 	}
 	
@@ -73,7 +75,18 @@ public class PlayerGui extends JPanel{
 	 * @param playerMoney - Money of the player
 	 */
 	public void setPlayerMoney(int playerMoney) {
-		this.lblMoneyTd.setText("Money: " + String.valueOf(playerMoney));
+		controller.setPlayerMoney(playerMoney);
+		lblMoneyTd.setText("Money: " + String.valueOf(playerMoney));
+	}
+	
+	public void updatePlayerData() {
+		lblPlayer.setText("Player: " + controller.getPlayerName());
+		lblLife.setText("Life: " + String.valueOf(controller.getPlayerLife()));
+		lblMoneyTd.setText("Money: " + String.valueOf(controller.getPlayerMoney()));
+		if(controller.getPlayerLife() == 0) {
+			controller.pauseOrStartGame();
+			JOptionPane.showMessageDialog(null, "Game Over !!!");
+		}
 	}
 	
 	
@@ -88,16 +101,19 @@ public class PlayerGui extends JPanel{
 		lblPlayer = new JLabel();
 		lblPlayer.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblPlayer.setBounds(10, 11, 189, 22);
+		lblPlayer.setText("Player: " + controller.getPlayerName());
 		add(lblPlayer);
 		
 		lblLife = new JLabel();
 		lblLife.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblLife.setBounds(10, 27, 189, 22);
+		lblLife.setText("Life: " + String.valueOf(controller.getPlayerLife()));
 		add(lblLife);
 		
 		lblMoneyTd = new JLabel();
 		lblMoneyTd.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblMoneyTd.setBounds(10, 44, 189, 22);
+		lblMoneyTd.setText("Money: " + String.valueOf(controller.getPlayerMoney()));
 		add(lblMoneyTd);
 	}
 }

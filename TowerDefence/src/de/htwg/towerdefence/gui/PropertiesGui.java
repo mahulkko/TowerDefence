@@ -1,14 +1,22 @@
 package de.htwg.towerdefence.gui;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import de.htwg.towerdefence.controller.IGameController;
+import de.htwg.towerdefence.gui.GuiState.State;
 
 public class PropertiesGui extends JPanel{
 
 	private static final long serialVersionUID = -4061801421456135727L;
+	
+	/** Instance of the GuiState */
+	private GuiState guiState;
 	private IGameController controller;
 	JLabel lblProperties;
 	JLabel lblSpeed;
@@ -17,8 +25,9 @@ public class PropertiesGui extends JPanel{
 	JLabel lblCost;
 	JButton btnUpgrade;
 	
-	public PropertiesGui(IGameController controller) {
+	public PropertiesGui(IGameController controller, GuiState guiState) {
 		this.controller = controller;
+		this.guiState = guiState;
 		init();
 		this.setPropertiesCost(200);
 		this.setPropertiesDamage(100);
@@ -75,6 +84,12 @@ public class PropertiesGui extends JPanel{
 		
 		btnUpgrade = new JButton("Upgrade");
 		btnUpgrade.setBounds(110, 279, 89, 23);
+		btnUpgrade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				guiState.setState(State.UPGRADETOWER);
+			}
+		});
 		add(btnUpgrade);
 	}
 }
