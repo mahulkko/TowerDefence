@@ -1,10 +1,12 @@
 package de.htwg.towerdefence.model;
 
+import de.htwg.towerdefence.util.serialize.Serialize;
+
 /**
  * <b>Interface IMob</b>
  * @author Christoph Knetschke and Martin Hulkkonen
  */
-public interface IMob {
+public interface IMob extends Serialize {
 	
 	/**
 	 * @return Returns the current health state of the mob

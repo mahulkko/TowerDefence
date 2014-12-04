@@ -3,6 +3,9 @@ package de.htwg.towerdefence.model.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.node.ObjectNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IMob;
@@ -163,5 +166,38 @@ public class Mob extends ControllableComponent implements IMob {
 			return true;
 		}
 		return false;
+	}
+	
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/		
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		
+		((ObjectNode)root).put("health", health);
+		((ObjectNode)root).put("speed", speed);
+		((ObjectNode)root).put("tmpSpeed", tmpSpeed);
+		((ObjectNode)root).put("coord", this.currendPos.serialize());
+		((ObjectNode)root).put("money", money);
+		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		
+		JsonNode health = node.path("health");
+		JsonNode speed = node.path("speed");
+		JsonNode tmpSpeed = node.path("tmpSpeed");
+		JsonNode coord = node.path("coord");
+		JsonNode money = node.path("money");
+		
+		this.health = health.getIntValue();
+		this.speed = speed.getIntValue();
+		this.tmpSpeed = tmpSpeed.getLongValue();
+		this.currendPos.deserialize(coord);
+		this.money = money.getIntValue();		
 	}
 }
