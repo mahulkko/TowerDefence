@@ -1,9 +1,8 @@
 package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
-
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;
@@ -12,9 +11,6 @@ import junit.framework.TestCase;
  * TestCase for Class mob
  */
 public class MobTest extends TestCase {
-	
-	/** GameContext - includes playing field and player */
-	IGameContext gameContext;
 	
 	/** Mob instance 1 */
 	IMob mob;
@@ -26,12 +22,11 @@ public class MobTest extends TestCase {
 	 * Set up the test
 	 */
 	public void setUp() throws IOException {
-		gameContext = new GameContext();
-		gameContext.setPlayer(new Player());
-		gameContext.setPlayingfield(new PlayingField(10, 10));
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(10, 10));
 		
-		mob = new Mob(gameContext, new Coord(0,0));
-		mob2 = new Mob(gameContext, new Coord(0,0), 100, 10, 50);
+		mob = new Mob(new Coord(0,0));
+		mob2 = new Mob(new Coord(0,0), 100, 10, 50);
 	}
 	
 	/**

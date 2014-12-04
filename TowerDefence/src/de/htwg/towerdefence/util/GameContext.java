@@ -1,13 +1,9 @@
-package de.htwg.towerdefence.model.impl;
+package de.htwg.towerdefence.util;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
-import de.htwg.towerdefence.model.way.impl.CheckWay;
 
 /**
  * <b>Mob Class</b>
@@ -16,7 +12,7 @@ import de.htwg.towerdefence.model.way.impl.CheckWay;
  * @author Christoph Knetschke and Martin Hulkkonen
  */
 
-public class GameContext implements IGameContext {
+public class GameContext {
 
 	/************************************************************
 	 * Private variables
@@ -26,16 +22,13 @@ public class GameContext implements IGameContext {
     private static Logger log = Logger.getLogger("TowerDefence.Model.GameContext");
     
     /** Current player */
-    @JsonDeserialize(as=Player.class)
-    private IPlayer player;
+    private static IPlayer player;
     
     /** Current playing field */
-    @JsonDeserialize(as=PlayingField.class)
-    private IPlayingField playingField;
+    private static IPlayingField playingField;
     
     /** Current instance of check way */
-    @JsonDeserialize(as=CheckWay.class)
-    private ICheckWay checkWay;
+    private static ICheckWay checkWay;
     
 	
 	/************************************************************
@@ -43,43 +36,35 @@ public class GameContext implements IGameContext {
 	 ***********************************************************/
 	
 	/**
-	 * Default constructor
+	 * Default private constructor
 	 */
-	public GameContext() {
-		log.info("Created new GameContext...");
-	}
+	private GameContext() { }
 	
-	@Override
-	public IPlayer getPlayer() {
+	public static IPlayer getPlayer() {
 		return player;
 	}
 
-	@Override
-	public void setPlayer(IPlayer player) {
+	public static void setPlayer(IPlayer p) {
 		log.info("Set new Player in GameContext...");
-		this.player = player;
+		player = p;
 	}
 
-	@Override
-	public IPlayingField getPlayingField() {
+	public static IPlayingField getPlayingField() {
 		return playingField;
 	}
 
-	@Override
-	public void setPlayingfield(IPlayingField playingField) {
+	public static void setPlayingfield(IPlayingField pField) {
 		log.info("Set new PlayingField in GameContext...");
-		this.playingField = playingField;
+		playingField = pField;
 	}
 
-	@Override
-	public ICheckWay getCheckWay() {
+	public static ICheckWay getCheckWay() {
 		return checkWay;
 	}
 
-	@Override
-	public void setCheckWay(ICheckWay checkWay) {
+	public static void setCheckWay(ICheckWay cWay) {
 		log.info("Set new CheckWay instance in GameContext...");
-		this.checkWay = checkWay;
+		checkWay = cWay;
 	}
 
 }

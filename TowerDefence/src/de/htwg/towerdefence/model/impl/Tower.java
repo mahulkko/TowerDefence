@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.GameHelper;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
@@ -61,9 +61,6 @@ public class Tower extends ControllableComponent implements ITower {
 	/** Hitrate of the tower. Hitrate is the change to deal a hit with max damage. */
 	private double hitrate; 
 	
-	/** Context of the game */
-	private IGameContext gameContext;
-	
 	
 	/************************************************************
 	 * Public constructor
@@ -72,14 +69,13 @@ public class Tower extends ControllableComponent implements ITower {
 	/**
 	 * Default constructor - initialize a tower with the default values
 	 */
-	public Tower(IGameContext gameContext, Coord position) {
+	public Tower(Coord position) {
 		this.damage = GameSettings.getTowerDamage();
 		this.range = GameSettings.getTowerRange();
 		this.speed = GameSettings.getTowerSpeed();
 		this.numberShoot = GameSettings.getTowerNumberOfShoot();
 		this.hitrate = GameSettings.getTowerHitRate();
 		this.cost = GameSettings.getTowerCost();
-		this.gameContext = gameContext;
 		this.position = position;
 		this.tmpCoord = new Coord();
 		log.info("Added new tower with default values from GameSettings");
@@ -93,14 +89,13 @@ public class Tower extends ControllableComponent implements ITower {
 	 * @param numberShoot - Number of shoot from the tower. With this parameter the tower can deal splash damage on each round.
 	 * @param hitrate - Hitrate of the tower. Hitrate is the change to deal a hit with max damage.
 	 */
-	public Tower(IGameContext gameContext, Coord position, int damage, int range, int speed, int numberShoot, double hitrate, int cost) {
+	public Tower(Coord position, int damage, int range, int speed, int numberShoot, double hitrate, int cost) {
 		this.damage = damage;
 		this.range = range;
 		this.speed = speed;
 		this.numberShoot = numberShoot;
 		this.hitrate = hitrate;
 		this.cost = cost;
-		this.gameContext = gameContext;
 		this.position = position;
 		this.tmpCoord = new Coord();
 		log.info("Added new tower with damage: " + this.damage + " | Range: " + this.range + " | Speed: " 
@@ -266,18 +261,18 @@ public class Tower extends ControllableComponent implements ITower {
 					this.tmpCoord.setY(y);
 				}
 				
-				List<IMob> mobs = this.gameContext.getPlayingField().getMobs(this.tmpCoord);
+				List<IMob> mobs = GameContext.getPlayingField().getMobs(this.tmpCoord);
 				if (mobs != null && mobs.size() > 0) {
 					if (mobs.get(0) != null) {
 						mobs.get(0).setHealth(mobs.get(0).getHealth() - this.calcDamage());
 						log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
 						if (mobs.get(0).isDead()) {
 							log.info("Mob is dead so delete it from the playingfield");
-							this.gameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
+							GameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
 							IControllableComponent component = (IControllableComponent)mobs.get(0);
 							component.unregisterSelf();
 							//  Player get Money for Mob
-							this.gameContext.getPlayer().setMoney(this.gameContext.getPlayer().getMoney() + mobs.get(0).getMoneyValue());
+							GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() + mobs.get(0).getMoneyValue());
 						}
 						return true;
 					}

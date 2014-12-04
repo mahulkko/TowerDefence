@@ -2,19 +2,15 @@ package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
 import java.util.LinkedList;
-
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;
 
 public class PlayingFieldTest extends TestCase {
-	
-	/** GameContext - includes playing field and player */
-	IGameContext gameContext;
 	
 	IPlayingField f;
 	IPlayingField field;
@@ -25,21 +21,20 @@ public class PlayingFieldTest extends TestCase {
 	
 	public void setUp() throws IOException {
 		
-		gameContext = new GameContext();
-		gameContext.setPlayer(new Player());
-		gameContext.setPlayingfield(new PlayingField(10, 10));
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(10, 10));
 		
 		this.f = new PlayingField();
 		this.field = new PlayingField(10,10);
 		this.f.initPlayingField(10, 10);
-		this.tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
-		this.mob1 = new Mob(gameContext, new Coord(0,0));
+		this.tower = new Tower(new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
+		this.mob1 = new Mob(new Coord(0,0));
 		this.mob1.setHealth(100);
 		this.mob1.setSpeed(2);
-		this.mob2 = new Mob(gameContext, new Coord(0,0));
+		this.mob2 = new Mob(new Coord(0,0));
 		this.mob2.setHealth(100);
 		this.mob2.setSpeed(2);
-		this.mob3 = new Mob(gameContext, new Coord(0,0));
+		this.mob3 = new Mob(new Coord(0,0));
 		this.mob3.setHealth(100);
 		this.mob3.setSpeed(2);
 	}
@@ -131,9 +126,6 @@ public class PlayingFieldTest extends TestCase {
 		assertEquals(mob2, this.f.deleteMob(new Coord(1,1), mob2));
 		assertEquals(null, this.f.deleteMob(new Coord(11,1), mob2));
 		assertEquals(null, this.f.deleteMob(new Coord(1,11), mob2));
-		
-		
-		
 	}
 }
 

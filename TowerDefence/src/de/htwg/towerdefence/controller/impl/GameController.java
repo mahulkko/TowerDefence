@@ -1,15 +1,14 @@
 package de.htwg.towerdefence.controller.impl;
 
 import de.htwg.towerdefence.controller.IGameController;
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
-import de.htwg.towerdefence.model.impl.GameContext;
 import de.htwg.towerdefence.model.impl.Mob;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
 import de.htwg.towerdefence.model.impl.Tower;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
@@ -28,21 +27,17 @@ public class GameController implements IGameController {
 	
 	/** Game controller manager */
 	private GameControllerManager manager;
-	
-	/** GameContext - includes playing field and player */
-	IGameContext gameContext;
-	
+		
 	IMob mob;
 	ITower tower;
 	
 	
 	public GameController() {
 		manager = new GameControllerManager();
-		gameContext = new GameContext();
-		gameContext.setPlayer(new Player());
-		gameContext.setPlayingfield(new PlayingField(11, 11));
-		gameContext.setCheckWay(new CheckWay());
-		gameContext.getCheckWay().initWayPoints(11, 11);
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(11, 11));
+		GameContext.setCheckWay(new CheckWay());
+		GameContext.getCheckWay().initWayPoints(11, 11);
 	}
 
 
@@ -71,22 +66,22 @@ public class GameController implements IGameController {
 
 	@Override
 	public int getSizeXOfPlayingField() {
-		return gameContext.getPlayingField().getSizeX();
+		return GameContext.getPlayingField().getSizeX();
 	}
 
 	@Override
 	public int getSizeYOfPlayingField() {
-		return gameContext.getPlayingField().getSizeY();
+		return GameContext.getPlayingField().getSizeY();
 	}
 	
 	@Override
 	public FieldType getTypeOfPlayingField(Coord coord) {
-		return gameContext.getPlayingField().getTypeOf(coord);
+		return GameContext.getPlayingField().getTypeOf(coord);
 	}
 	
 	@Override
 	public boolean isTowerOnField(int x, int y) {
-		FieldType fiedltype = gameContext.getPlayingField().getTypeOf(new Coord(x, y));
+		FieldType fiedltype = GameContext.getPlayingField().getTypeOf(new Coord(x, y));
 		if (FieldType.TOWER == fiedltype) {
 			return true;
 		}
@@ -96,7 +91,7 @@ public class GameController implements IGameController {
 
 	@Override
 	public boolean isMobOnField(int x, int y) {
-		FieldType fiedltype = gameContext.getPlayingField().getTypeOf(new Coord(x, y));
+		FieldType fiedltype = GameContext.getPlayingField().getTypeOf(new Coord(x, y));
 		if (FieldType.MOB == fiedltype) {
 			return true;
 		}
@@ -105,26 +100,26 @@ public class GameController implements IGameController {
 	
 	@Override
 	public void setTowerToPostion(int x, int y) {
-		tower = new Tower(gameContext, new Coord(x, y));
+		tower = new Tower(new Coord(x, y));
 		tower.setDamage(0);
 		// Check if Player has money for building 
-		if (gameContext.getPlayer().getMoney() >=  tower.getCost()) {
-			gameContext.getCheckWay().deleteWayPoint(x, y);
-			if (gameContext.getCheckWay().existWay(0, 0, this.gameContext.getPlayingField().getSizeX()-1, this.gameContext.getPlayingField().getSizeY()-1)) {
-				gameContext.getPlayingField().setTower(new Coord(x, y), tower);
+		if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
+			GameContext.getCheckWay().deleteWayPoint(x, y);
+			if (GameContext.getCheckWay().existWay(0, 0,GameContext.getPlayingField().getSizeX()-1, GameContext.getPlayingField().getSizeY()-1)) {
+				GameContext.getPlayingField().setTower(new Coord(x, y), tower);
 				manager.registerComponent((IControllableComponent)tower);
 				// Reduce Player Money for building one tower
-				gameContext.getPlayer().setMoney(gameContext.getPlayer().getMoney() - tower.getCost());
+				GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() - tower.getCost());
 			} else {
-				gameContext.getCheckWay().addWayPoint(x, y);
+				GameContext.getCheckWay().addWayPoint(x, y);
 			}
 		}
 	}
 
 	@Override
 	public void sendNewMobFromStart() {
-		mob = new Mob(gameContext, new Coord(0, 0));
-		gameContext.getPlayingField().setMob(new Coord(0, 0), mob);
+		mob = new Mob(new Coord(0, 0));
+		GameContext.getPlayingField().setMob(new Coord(0, 0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 	}
 
@@ -135,35 +130,35 @@ public class GameController implements IGameController {
 
 	@Override
 	public String setPlayerName(String playerName) {
-		gameContext.getPlayer().setName(playerName);
-		return gameContext.getPlayer().getName();
+		GameContext.getPlayer().setName(playerName);
+		return GameContext.getPlayer().getName();
 	}
 
 	@Override
 	public int setPlayerMoney(int playerMoney) {
-		gameContext.getPlayer().setMoney(playerMoney);
-		return gameContext.getPlayer().getMoney();
+		GameContext.getPlayer().setMoney(playerMoney);
+		return GameContext.getPlayer().getMoney();
 	}
 
 	@Override
 	public int setPlayerLife(int playerLife) {
-		gameContext.getPlayer().setLife(playerLife);
-		return gameContext.getPlayer().getLife();
+		GameContext.getPlayer().setLife(playerLife);
+		return GameContext.getPlayer().getLife();
 	}
 	
 	@Override
 	public String getPlayerName() {
-		return gameContext.getPlayer().getName();
+		return GameContext.getPlayer().getName();
 	}
 
 	@Override
 	public int getPlayerMoney() {
-		return gameContext.getPlayer().getMoney();
+		return GameContext.getPlayer().getMoney();
 	}
 
 	@Override
 	public int getPlayerLife() {
-		return gameContext.getPlayer().getLife();
+		return GameContext.getPlayer().getLife();
 	}
 	
 	/************************************************************
@@ -172,19 +167,19 @@ public class GameController implements IGameController {
 	
 	@Override
 	public int getTowerSpeed(int x, int y) {
-		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
 		return tower.getSpeed();
 	}
 
 	@Override
 	public int getTowerRange(int x, int y) {
-		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
 		return tower.getRange();
 	}
 
 	@Override
 	public int getTowerDamage(int x, int y) {
-		ITower tower = gameContext.getPlayingField().getTower(new Coord(x, y));
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
 		return tower.getDamage();
 	}
 

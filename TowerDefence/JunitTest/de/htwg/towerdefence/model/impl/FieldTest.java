@@ -5,10 +5,9 @@ import junit.framework.TestCase;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 
@@ -16,9 +15,6 @@ import de.htwg.towerdefence.util.way.Coord;
  * TestCase for Class field
  */
 public class FieldTest extends TestCase {
-	
-	/** GameContext - includes playing field and player */
-	IGameContext gameContext;
 	
 	/** Instance of the field */
 	Field field;
@@ -40,15 +36,14 @@ public class FieldTest extends TestCase {
 	 */
 	public void setUp() throws IOException {
 		
-		gameContext = new GameContext();
-		gameContext.setPlayer(new Player());
-		gameContext.setPlayingfield(new PlayingField(10, 10));
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(10, 10));
 		
 		field = new Field();
-		tower = new Tower(gameContext, new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
-		mob = new Mob(gameContext, new Coord(0,0));
-		mob2 = new Mob(gameContext, new Coord(0,0));
-		mob3 = new Mob(gameContext, new Coord(0,0));
+		tower = new Tower(new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
+		mob = new Mob(new Coord(0,0));
+		mob2 = new Mob(new Coord(0,0));
+		mob3 = new Mob(new Coord(0,0));
 	}
 	
 	/**

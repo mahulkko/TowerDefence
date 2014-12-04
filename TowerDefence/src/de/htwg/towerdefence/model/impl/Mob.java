@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
-import de.htwg.towerdefence.model.IGameContext;
 import de.htwg.towerdefence.model.IMob;
+import de.htwg.towerdefence.util.GameContext;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
@@ -41,9 +41,6 @@ public class Mob extends ControllableComponent implements IMob {
 	/** Money the mob get*/
 	private int money;
 	
-	/** Context of the game */
-	private IGameContext gameContext;
-	
 
 	/************************************************************
 	 * Public constructor
@@ -52,12 +49,11 @@ public class Mob extends ControllableComponent implements IMob {
 	/**
 	 * Default constructor - initialize a mob with the default values
 	 */
-	public Mob(IGameContext gameContext, Coord position) {
+	public Mob(Coord position) {
 		this.speed = GameSettings.getMobSpeed();
 		this.health = GameSettings.getMobHealth();
 		this.money = GameSettings.getMobMoney();
 		this.currendPos = position;
-		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
 		log.info("Added new mob with default values from GameSettings");
 	}
@@ -67,12 +63,11 @@ public class Mob extends ControllableComponent implements IMob {
 	 * @param health - Health of the mob
 	 * @param speed - speed of the mob
 	 */
-	public Mob(IGameContext gameContext, Coord position, int health, int speed, int money) {
+	public Mob(Coord position, int health, int speed, int money) {
 		this.health = health;
 		this.speed = speed;
 		this.money = money;
 		this.currendPos = position;
-		this.gameContext = gameContext;
 		this.tmpSpeed = this.speed;
 		log.info("Added new mob with health: " + this.health + " | Speed: " + this.speed);
 	}
@@ -149,17 +144,17 @@ public class Mob extends ControllableComponent implements IMob {
 		this.tmpSpeed = this.tmpSpeed - dt;
 		
 		if (this.tmpSpeed <= 0) {
-			gameContext.getCheckWay().existWay(this.currendPos.getX() , this.currendPos.getY(), this.gameContext.getPlayingField().getSizeX()-1, this.gameContext.getPlayingField().getSizeY()-1);
-			List<Coord> way = gameContext.getCheckWay().getShortesWay();
+			GameContext.getCheckWay().existWay(this.currendPos.getX() , this.currendPos.getY(), GameContext.getPlayingField().getSizeX()-1, GameContext.getPlayingField().getSizeY()-1);
+			List<Coord> way = GameContext.getCheckWay().getShortesWay();
 			
-			gameContext.getPlayingField().deleteMob(currendPos, this);
-			gameContext.getPlayingField().setMob(way.get(1), this);
+			GameContext.getPlayingField().deleteMob(currendPos, this);
+			GameContext.getPlayingField().setMob(way.get(1), this);
 			this.currendPos.setX(way.get(1).getX());
 			this.currendPos.setY(way.get(1).getY());
 			// Check if Mob has reached end of Playingfield, delete him and lost life
-			if (gameContext.getPlayingField().isMobAtEndOfPlayingfield(way.get(1), this)) {
-				gameContext.getPlayingField().deleteMob(way.get(1), this);
-				gameContext.getPlayer().setLife(gameContext.getPlayer().getLife() - 1);
+			if (GameContext.getPlayingField().isMobAtEndOfPlayingfield(way.get(1), this)) {
+				GameContext.getPlayingField().deleteMob(way.get(1), this);
+				GameContext.getPlayer().setLife(GameContext.getPlayer().getLife() - 1);
 				IControllableComponent component = (IControllableComponent)this;
 				component.unregisterSelf();
 			}

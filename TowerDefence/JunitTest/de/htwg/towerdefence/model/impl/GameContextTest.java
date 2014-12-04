@@ -1,8 +1,10 @@
 package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
+
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
+import de.htwg.towerdefence.util.GameContext;
 import junit.framework.TestCase;
 
 /**
@@ -16,14 +18,11 @@ public class GameContextTest extends TestCase {
     /** Current playing field */
     private IPlayingField playingField;
     
-    /** GameContext */
-    private GameContext context;
 	
 	/**
 	 * Set up the test
 	 */
 	public void setUp() throws IOException {
-		context = new GameContext();
 		player = new Player();
 		playingField = new PlayingField();
 	}
@@ -34,11 +33,11 @@ public class GameContextTest extends TestCase {
 	public void testDoc() {
 		
 		// Getter and Setter for player context
-		context.setPlayer(player);
-		assertEquals(player, context.getPlayer());
+		GameContext.setPlayer(player);
+		assertEquals(player, GameContext.getPlayer());
 		
 		// Getter and Setter for playing field context
-		context.setPlayingfield(playingField);
-		assertEquals(playingField, context.getPlayingField());
+		GameContext.setPlayingfield(playingField);
+		assertEquals(playingField, GameContext.getPlayingField());
 	}
 }
