@@ -1,12 +1,17 @@
 package de.htwg.towerdefence.util.way;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
+
+import de.htwg.towerdefence.util.serialize.Serialize;
 
 /**
 * <b>Class Coord</b>
 * @author Christoph Knetschke and Martin Hulkkonen
 */
-public class Coord {
+public class Coord implements Serialize{
 	
 	/************************************************************
 	 * Private variables
@@ -93,5 +98,28 @@ public class Coord {
 		}
 		log.info("Can't change coordinate y from " + this.y + " to " + y + " - Value must be positive");
 		return false;
+	}
+	
+
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/
+	
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		((ObjectNode)root).put("x", x);
+		((ObjectNode)root).put("y", y);
+		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		JsonNode x = node.path("x");
+		JsonNode y = node.path("y");
+		this.x = x.getIntValue();
+		this.y = y.getIntValue();
 	}
 }
