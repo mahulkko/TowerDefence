@@ -1,10 +1,12 @@
 package de.htwg.towerdefence.model;
 
+import de.htwg.towerdefence.util.serialize.Serialize;
+
 /**
  * <b>Interface IPlayer</b>
  * @author Christoph Knetschke and Martin Hulkkonen
  */
-public interface IPlayer {
+public interface IPlayer extends Serialize {
 	
 	/**
 	 * @return Returns the name of the player

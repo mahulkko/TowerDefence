@@ -1,7 +1,6 @@
 package de.htwg.towerdefence.controller.impl;
 
 import java.util.List;
-
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
@@ -34,7 +33,7 @@ public class GameController implements IGameController {
 	ITower tower;
 	
 	
-	public GameController() {
+	public GameController() {		
 		manager = new GameControllerManager();
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(11, 11));

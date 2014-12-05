@@ -1,6 +1,9 @@
 package de.htwg.towerdefence.model.impl;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IPlayer;
@@ -127,5 +130,33 @@ public class Player extends ControllableComponent implements IPlayer {
 	public boolean update(long dt) {
 		return false;
 		// TODO Auto-generated method stub
+	}
+	
+	
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/
+	
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		
+		((ObjectNode)root).put("name", name);
+		((ObjectNode)root).put("money", money);
+		((ObjectNode)root).put("life", life);		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		
+		JsonNode name = node.path("name");
+		JsonNode money = node.path("money");
+		JsonNode life = node.path("life");
+		
+		this.name = name.getTextValue();
+		this.money = money.getIntValue();
+		this.life = life.getIntValue();
 	}
 }
