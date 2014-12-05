@@ -75,6 +75,22 @@ public class Tower extends ControllableComponent implements ITower {
 	/**
 	 * Default constructor - initialize a tower with the default values
 	 */
+	public Tower() {
+		this.damage = GameSettings.getTowerDamage();
+		this.range = GameSettings.getTowerRange();
+		this.speed = GameSettings.getTowerSpeed();
+		this.numberShoot = GameSettings.getTowerNumberOfShoot();
+		this.hitrate = GameSettings.getTowerHitRate();
+		this.cost = GameSettings.getTowerCost();
+		this.position = new Coord(0,0);
+		this.tmpCoord = new Coord();
+		this.initTower = true;
+		log.info("Added new tower with default values from GameSettings");
+	}
+	
+	/**
+	 * Default constructor - initialize a tower with the default values
+	 */
 	public Tower(Coord position) {
 		this.damage = GameSettings.getTowerDamage();
 		this.range = GameSettings.getTowerRange();

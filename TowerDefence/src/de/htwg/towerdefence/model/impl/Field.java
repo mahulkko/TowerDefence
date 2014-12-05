@@ -4,16 +4,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.serialize.Serialize;
 
 /**
  * <b>Field class</b>
  * @author Christoph Knetschke and Martin Hulkkonen
  */
-public class Field {
+public class Field implements Serialize {
 	
 	/************************************************************
 	 * Private variables
@@ -223,6 +227,64 @@ public class Field {
 			return FieldType.MOB;
 		} else {
 			return FieldType.NONE;
+		}
+	}
+	
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/
+	
+	//private ITower tower;
+	//private List<IMob> mobs;
+	
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		JsonNode mobList = mapper.createObjectNode();
+		
+		if (tower != null) {
+			((ObjectNode)root).put("tower", this.tower.serialize());
+		}
+		
+		if (this.mobs.size() > 0) {
+		
+			for (int i = 0; i < this.mobs.size(); ++i) {
+				IMob m = this.mobs.get(i);
+				((ObjectNode)mobList).put(String.valueOf(i), m.serialize());
+			}
+			
+			((ObjectNode)root).put("mobList", mobList);
+			((ObjectNode)root).put("sizeMobList", this.mobs.size());
+		}
+		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		
+		this.tower = null;
+		this.mobs = new LinkedList<IMob>();
+		
+		if (node.has("tower")) {
+			JsonNode tower = node.path("tower");
+			this.tower = new Tower();
+			this.tower.deserialize(tower);
+		}
+		
+		if (node.has("mobList") && node.has("sizeMobList")) {
+			JsonNode sizeMobList = node.path("sizeMobList");
+			JsonNode mobList = node.path("mobList");
+			
+			int size = sizeMobList.getIntValue();
+			
+			for (int i = 0; i < size; ++i) {
+				IMob m = new Mob();
+				JsonNode mob = mobList.path(String.valueOf(i));
+				m.deserialize(mob);
+				this.mobs.add(m);
+			}
 		}
 	}
 }

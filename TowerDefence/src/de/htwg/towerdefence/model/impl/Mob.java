@@ -52,6 +52,18 @@ public class Mob extends ControllableComponent implements IMob {
 	/**
 	 * Default constructor - initialize a mob with the default values
 	 */
+	public Mob() {
+		this.speed = GameSettings.getMobSpeed();
+		this.health = GameSettings.getMobHealth();
+		this.money = GameSettings.getMobMoney();
+		this.currendPos = new Coord(0,0);
+		this.tmpSpeed = this.speed;
+		log.info("Added new mob with default values from GameSettings");
+	}
+	
+	/**
+	 * Default constructor - initialize a mob with the default values
+	 */
 	public Mob(Coord position) {
 		this.speed = GameSettings.getMobSpeed();
 		this.health = GameSettings.getMobHealth();

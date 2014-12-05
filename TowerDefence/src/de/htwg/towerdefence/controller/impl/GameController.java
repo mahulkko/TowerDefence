@@ -1,9 +1,13 @@
 package de.htwg.towerdefence.controller.impl;
 
 import java.util.List;
+
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
+import de.htwg.towerdefence.model.impl.Field;
 import de.htwg.towerdefence.model.impl.Mob;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
@@ -33,7 +37,28 @@ public class GameController implements IGameController {
 	ITower tower;
 	
 	
-	public GameController() {		
+	public GameController() {
+		
+		/*
+		
+		Field f = new Field();
+		Field ff = new Field();
+		f.setTower(new Tower());
+		
+		System.out.println(f.serialize());
+		JsonNode node = f.serialize();
+		ff.deserialize(node);
+		
+		System.out.println(ff.serialize());
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
 		manager = new GameControllerManager();
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(11, 11));
