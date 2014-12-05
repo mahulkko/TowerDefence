@@ -1,14 +1,16 @@
 package de.htwg.towerdefence.model;
 
 import java.util.List;
+
 import de.htwg.towerdefence.util.enums.FieldType;
+import de.htwg.towerdefence.util.serialize.Serialize;
 import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * <b>Interface IPlayingField</b>
  * @author Christoph Knetschke and Martin Hulkkonen
  */
-public interface IPlayingField {
+public interface IPlayingField extends Serialize{
 	
 	/**
 	 * <b>Initialize the playing field</b>

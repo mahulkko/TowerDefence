@@ -3,6 +3,9 @@ package de.htwg.towerdefence.model.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
@@ -364,4 +367,49 @@ public class PlayingField implements IPlayingField {
  		}
  		return false;
  	}
+ 	
+ 	
+ 	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/
+	
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		JsonNode fieldArray = mapper.createObjectNode();
+		
+		for (int i = 0; i < this.sizeY; ++i) {
+			JsonNode row = mapper.createObjectNode();
+			for (int j = 0; j < this.sizeX; ++j) {
+				((ObjectNode)row).put(String.valueOf(j), this.field[i][j].serialize());
+			}
+			((ObjectNode)fieldArray).put("row" + String.valueOf(i), row);
+		}
+		
+		((ObjectNode)root).put("sizeX", sizeX);
+		((ObjectNode)root).put("sizeY", sizeY);
+		((ObjectNode)root).put("fieldArray", fieldArray);
+		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		
+		JsonNode sizeX = node.path("sizeX");
+		JsonNode sizeY = node.path("sizeY");
+		JsonNode fieldArray = node.path("fieldArray");
+		
+		this.sizeX = sizeX.getIntValue();
+		this.sizeY = sizeY.getIntValue();
+		init();
+		
+		for (int i = 0; i < this.sizeY; ++i) {
+			JsonNode row = fieldArray.path("row" + String.valueOf(i));
+			for (int j = 0; j < this.sizeX; ++j) {
+				this.field[i][j].deserialize(row.path(String.valueOf(j)));
+			}
+		}
+	}
 }

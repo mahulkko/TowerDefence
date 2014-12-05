@@ -234,9 +234,6 @@ public class Field implements Serialize {
 	 * Public Serialize methods
 	 ***********************************************************/
 	
-	//private ITower tower;
-	//private List<IMob> mobs;
-	
 	@Override
 	public JsonNode serialize() {
 		ObjectMapper mapper = new ObjectMapper();

@@ -40,6 +40,34 @@ public class GameController implements IGameController {
 	public GameController() {
 		
 		/*
+		PlayingField p = new PlayingField(5,5);
+		PlayingField pp = new PlayingField(1,1);
+		p.setMob(new Coord(1,1), new Mob());
+		p.setMob(new Coord(2,2), new Mob());
+		p.setMob(new Coord(3,3), new Mob());
+		
+		p.setTower(new Coord(1,2), new Tower());
+		p.setTower(new Coord(1,3), new Tower());
+		p.setTower(new Coord(2,1), new Tower());
+		p.setTower(new Coord(3,1), new Tower());
+		
+		System.out.println(p.serialize());
+		
+		pp.deserialize(p.serialize());
+		
+		System.out.println(p.serialize());
+		
+		if (p.serialize().toString().equals(pp.serialize().toString() ))
+			System.out.println("!!!!!!!!!!!!GLEICH!!!!!!!!");
+		
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
 		
 		Field f = new Field();
 		Field ff = new Field();
