@@ -3,6 +3,9 @@ package de.htwg.towerdefence.model.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IMob;
@@ -53,14 +56,15 @@ public class Tower extends ControllableComponent implements ITower {
 	private int cost;
 	
 	/** Position of the tower */
-	Coord position;
+	private Coord position;
 	
 	/** Temporary Coord for request */
-	Coord tmpCoord;
+	private Coord tmpCoord;
 
 	/** Hitrate of the tower. Hitrate is the change to deal a hit with max damage. */
 	private double hitrate; 
 	
+	/** Init Tower **/
 	boolean initTower;
 	
 	
@@ -295,5 +299,53 @@ public class Tower extends ControllableComponent implements ITower {
 			}
 		}
 		return false;
+	}
+	
+	
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/	
+	
+	@Override
+	public JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		
+		((ObjectNode)root).put("damage", damage);
+		((ObjectNode)root).put("range", range);
+		((ObjectNode)root).put("tmpSpeed", tmpSpeed);
+		((ObjectNode)root).put("speed", speed);
+		((ObjectNode)root).put("numberShoot", numberShoot);
+		((ObjectNode)root).put("cost", cost);
+		((ObjectNode)root).put("position", position.serialize());
+		((ObjectNode)root).put("tmpCoord", tmpCoord.serialize());
+		((ObjectNode)root).put("hitrate", hitrate);
+		
+		return root;
+	}
+
+	@Override
+	public void deserialize(JsonNode node) {
+		
+		JsonNode damage = node.path("damage");
+		JsonNode range = node.path("range");
+		JsonNode tmpSpeed = node.path("tmpSpeed");
+		JsonNode speed = node.path("speed");
+		JsonNode numberShoot = node.path("numberShoot");
+		JsonNode cost = node.path("cost");
+		JsonNode position = node.path("position");
+		JsonNode tmpCoord = node.path("tmpCoord");
+		JsonNode hitrate = node.path("hitrate");
+		
+		this.damage = damage.getIntValue();
+		this.range = range.getIntValue();
+		this.tmpSpeed = tmpSpeed.getLongValue();
+		this.speed = speed.getIntValue();
+		this.numberShoot = numberShoot.getIntValue();
+		this.cost = cost.getIntValue();
+		this.position.deserialize(position);
+		this.tmpCoord.deserialize(tmpCoord);
+		this.hitrate = hitrate.getDoubleValue();
+		this.initTower = true;	
 	}
 }

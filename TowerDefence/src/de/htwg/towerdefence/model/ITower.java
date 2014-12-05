@@ -1,10 +1,12 @@
 package de.htwg.towerdefence.model;
 
+import de.htwg.towerdefence.util.serialize.Serialize;
+
 /**
  * <b>Interface ITower</b>
  * @author Christoph Knetschke and Martin Hulkkonen
  */
-public interface ITower {
+public interface ITower extends Serialize {
 	
 	/**
 	 * @return Returns the max damage that the tower can make
