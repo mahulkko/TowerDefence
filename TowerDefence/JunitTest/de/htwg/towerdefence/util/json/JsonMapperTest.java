@@ -25,6 +25,12 @@ public class JsonMapperTest {
 	}
 	
 	@Test
+	public void createPlayer() {
+		String jsonString = mapper.convertObjectToJsonString(new CheckWay());
+		System.out.println(jsonString);
+	}
+	
+	@Test
 	public void createAndloadJsonObject() {
 		// Serialize GameContext
 		//String jsonString = mapper.convertObjectToJsonString(gameContext);
