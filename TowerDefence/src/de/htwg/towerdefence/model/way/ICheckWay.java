@@ -1,6 +1,8 @@
 package de.htwg.towerdefence.model.way;
 
 import java.util.List;
+
+import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.util.way.Coord;
 
 /**
@@ -63,4 +65,9 @@ public interface ICheckWay {
 	 */
 	boolean addWayPoint(int x, int y);
 	
+	/**
+	 * <b>Initialize the CheckWay Context with the values of a playing field</b>
+	 * @param field - Playingfield with the state
+	 */
+	void initCheckWayWithPlayingField(IPlayingField field);
 }

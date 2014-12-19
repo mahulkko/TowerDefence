@@ -2,6 +2,8 @@ package de.htwg.towerdefence.model.way.impl;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
 import de.htwg.towerdefence.model.way.IGraph;
 import de.htwg.towerdefence.util.way.Coord;
@@ -106,5 +108,20 @@ public class CheckWay implements ICheckWay {
 			return c;
 		}
 		return null;
+	}
+
+	@Override
+	public void initCheckWayWithPlayingField(IPlayingField field) {
+		this.initWayPoints(field.getSizeX(), field.getSizeY());
+		Coord coord = new Coord();
+		for(int y = 0; y < field.getSizeY(); ++y) {
+			for(int x = 0; x < field.getSizeX(); ++x) {
+				coord.setX(x);
+				coord.setY(y);
+				if(field.isSetTower(coord)) {
+					this.deleteWayPoint(x, y);
+				}
+			}
+		}
 	}
 }
