@@ -11,6 +11,37 @@ import de.htwg.towerdefence.util.way.Coord;
  */
 public interface IGameController {
 	
+	// Wui 
+	
+	/**
+	 * @param currentGameContext - get the current GameContext of a WUI
+	 * @return Returns the new GameContext as JsonString
+	 */
+	String updateGameContext(String currentGameContext);
+	
+	/**
+	 * Stop or Starts the Game
+	 * @param currentGameContext - get the current GameContext of a WUI
+	 * @return Returns the new GameContext as JsonString
+	 */
+	String pauseOrStartGame(String currentGameContext);
+	
+	/**
+	 * @param currentGameContext - get the current GameContext of a WUI
+	 * @param x - the X position of new Tower on the Playingfield
+	 * @param y - the Y position of new Tower on the Playingfield
+	 * @return Returns the new GameContext as JsonString
+	 */
+	String setTowerToPostion(String currentGameContext, int x, int y);
+	
+	/**
+	 * Creates a new Mob on the start of the Playingfield
+	 * @param currentGameContext - get the current GameContext of a WUI
+	 * @return Returns the new GameContext as JsonString
+	 */
+	String sendNewMobFromStart(String currentGameContext);
+	
+	
 	// Gui and tui
 	/**
 	 * @param s - add a View Object that implements IObserver to the Controller
@@ -26,7 +57,7 @@ public interface IGameController {
 	 * Stop or Starts the Game
 	 * @return
 	 */
-	public boolean pauseOrStartGame();
+	boolean pauseOrStartGame();
 	
 	// PlayingField
 	/**
@@ -161,5 +192,4 @@ public interface IGameController {
 	 * @return Returns the money of the Mob
 	 */
 	int getMobMoney(int x, int y);
-
 }

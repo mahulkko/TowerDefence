@@ -2,12 +2,9 @@ package de.htwg.towerdefence.controller.impl;
 
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
-
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
-import de.htwg.towerdefence.model.impl.Field;
 import de.htwg.towerdefence.model.impl.Mob;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.model.impl.PlayingField;
@@ -39,17 +36,10 @@ public class GameController implements IGameController {
 	
 	public GameController() {
 		
-		/*
 		PlayingField p = new PlayingField(5,5);
 		PlayingField pp = new PlayingField(1,1);
-		p.setMob(new Coord(1,1), new Mob());
-		p.setMob(new Coord(2,2), new Mob());
-		p.setMob(new Coord(3,3), new Mob());
-		
-		p.setTower(new Coord(1,2), new Tower());
-		p.setTower(new Coord(1,3), new Tower());
-		p.setTower(new Coord(2,1), new Tower());
-		p.setTower(new Coord(3,1), new Tower());
+		p.setTower(new Coord(2,2), new Tower());
+
 		
 		System.out.println(p.serialize());
 		
@@ -106,12 +96,6 @@ public class GameController implements IGameController {
 	@Override
 	public void removeObserver(IObserver s) {
 		manager.removeObserver(s);
-	}
-	
-	public String getGameContext(String oldGameContext) {
-		String beispiel = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"4\":{}},\"row2\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{},\"3\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
-		System.out.println(beispiel);
-		return beispiel;
 	}
 	
 	/************************************************************
@@ -285,6 +269,41 @@ public class GameController implements IGameController {
 	public int getMobMoney(int x, int y) {
 		List<IMob> mob = GameContext.getPlayingField().getMobs(new Coord(x, y));
 		return mob.get(0).getMoneyValue();
+	}
+	
+	/************************************************************
+	 * Wui methods
+	 ***********************************************************/
+	String gameContextEmpty = "{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}";
+	String gameContextWithTowerOn2_2 = "{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}";
+	String gameContextWithTowerAndMobs = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"4\":{}},\"row2\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{},\"3\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
+	
+	@Override
+	public String updateGameContext(String currentGameContext) {
+		System.out.println("GAMECONTROLLER  Update! \n"
+				+ " OldGameContext : " + currentGameContext);
+		return gameContextEmpty;
+	}
+
+	@Override
+	public String pauseOrStartGame(String currentGameContext) {
+		System.out.println("GAMECONTROLLER  PauseGame! \n"
+				+ " OldGameContext: " + currentGameContext);
+		return gameContextEmpty;
+	}
+
+	@Override
+	public String setTowerToPostion(String currentGameContext, int x, int y) {
+		System.out.println("GAMECONTROLLER  SetTower! to x= "+x + " y= "+y + "\n"
+				+ " OldGameContext: " + currentGameContext);
+		return gameContextWithTowerOn2_2;
+	}
+
+	@Override
+	public String sendNewMobFromStart(String currentGameContext) {
+		System.out.println("GAMECONTROLLER  SendMobs! \n"
+				+ " OldGameContext: " + currentGameContext);
+		return gameContextWithTowerAndMobs;
 	}
 
 }
