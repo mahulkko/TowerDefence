@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
+import de.htwg.towerdefence.util.control.IControllableComponent;
 
 /**
  * <b>Mob Class</b>
@@ -80,5 +81,8 @@ public class GameContext {
 	public static void setGameData(List<GameData> Components) {
 		controllableComponents = Components;
 	}
-
+	
+	public static boolean isComponentInGameData(IControllableComponent component) {
+		return controllableComponents.contains(component);
+	}
 }
