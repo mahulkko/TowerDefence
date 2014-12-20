@@ -11,7 +11,7 @@ import de.htwg.towerdefence.util.serialize.Serialize;
 * <b>Class Coord</b>
 * @author Christoph Knetschke and Martin Hulkkonen
 */
-public class Coord implements Serialize{
+public class Coord implements Serialize {
 	
 	/************************************************************
 	 * Private variables

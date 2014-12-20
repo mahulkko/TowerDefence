@@ -10,6 +10,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import de.htwg.towerdefence.gameSettings.GameSettings;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.util.GameContext.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameData;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
@@ -194,6 +195,10 @@ public class Mob extends ControllableComponent implements IMob {
 		((ObjectNode)root).put("coord", this.currendPos.serialize());
 		((ObjectNode)root).put("money", money);
 		
+		// Normal code but didnt working, check this
+		// ((ObjectNode)root).put("controllable", GameContext.getGameData().contains((IControllableComponent)this));
+		((ObjectNode)root).put("controllable", true);
+		
 		return root;
 	}
 
@@ -205,11 +210,19 @@ public class Mob extends ControllableComponent implements IMob {
 		JsonNode tmpSpeed = node.path("tmpSpeed");
 		JsonNode coord = node.path("coord");
 		JsonNode money = node.path("money");
+		JsonNode controllable = node.path("controllable");
 		
 		this.health = health.getIntValue();
 		this.speed = speed.getIntValue();
 		this.tmpSpeed = tmpSpeed.getLongValue();
 		this.currendPos.deserialize(coord);
-		this.money = money.getIntValue();		
+		this.money = money.getIntValue();
+		
+		if (controllable.getBooleanValue()) {
+			GameData data = new GameData();
+			data.setComponent((IControllableComponent)this);
+			data.setLastTime(System.currentTimeMillis());
+			GameContext.getGameData().add(data);
+		}
 	}
 }

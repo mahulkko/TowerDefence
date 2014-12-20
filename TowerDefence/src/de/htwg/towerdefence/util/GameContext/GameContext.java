@@ -1,12 +1,17 @@
 package de.htwg.towerdefence.util.GameContext;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
 
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
+import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 
 /**
@@ -84,5 +89,28 @@ public class GameContext {
 	
 	public static boolean isComponentInGameData(IControllableComponent component) {
 		return controllableComponents.contains(component);
+	}
+	
+	/************************************************************
+	 * Public Serialize methods
+	 ***********************************************************/
+	
+	public static JsonNode serialize() {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode root = mapper.createObjectNode();
+		((ObjectNode)root).put("player", player.serialize());
+		((ObjectNode)root).put("playingField", playingField.serialize());
+		
+		return root;
+	}
+
+	public static void deserialize(JsonNode node) {
+		GameContext.setGameData(new LinkedList<GameData>());
+		JsonNode player = node.path("player");
+		JsonNode playingField = node.path("playingField");
+		GameContext.player.deserialize(player);
+		GameContext.playingField.deserialize(playingField);	
+		checkWay = new CheckWay();
+		checkWay.initCheckWayWithPlayingField(GameContext.playingField);
 	}
 }

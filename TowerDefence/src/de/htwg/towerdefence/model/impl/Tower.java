@@ -12,6 +12,7 @@ import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
 import de.htwg.towerdefence.util.GameHelper;
 import de.htwg.towerdefence.util.GameContext.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameData;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
 import de.htwg.towerdefence.util.way.Coord;
@@ -337,6 +338,10 @@ public class Tower extends ControllableComponent implements ITower {
 		((ObjectNode)root).put("tmpCoord", tmpCoord.serialize());
 		((ObjectNode)root).put("hitrate", hitrate);
 		
+		// Normal code but didnt working, check this
+		// ((ObjectNode)root).put("controllable", GameContext.getGameData().contains((IControllableComponent)this));
+		((ObjectNode)root).put("controllable", true);
+		
 		return root;
 	}
 
@@ -352,6 +357,7 @@ public class Tower extends ControllableComponent implements ITower {
 		JsonNode position = node.path("position");
 		JsonNode tmpCoord = node.path("tmpCoord");
 		JsonNode hitrate = node.path("hitrate");
+		JsonNode controllable = node.path("controllable");
 		
 		this.damage = damage.getIntValue();
 		this.range = range.getIntValue();
@@ -362,6 +368,13 @@ public class Tower extends ControllableComponent implements ITower {
 		this.position.deserialize(position);
 		this.tmpCoord.deserialize(tmpCoord);
 		this.hitrate = hitrate.getDoubleValue();
-		this.initTower = true;	
+		this.initTower = true;
+		
+		if (controllable.getBooleanValue()) {
+			GameData data = new GameData();
+			data.setComponent((IControllableComponent)this);
+			data.setLastTime(System.currentTimeMillis());
+			GameContext.getGameData().add(data);
+		}
 	}
 }

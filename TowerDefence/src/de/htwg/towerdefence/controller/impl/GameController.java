@@ -2,6 +2,8 @@ package de.htwg.towerdefence.controller.impl;
 
 import java.util.List;
 
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
@@ -36,6 +38,12 @@ public class GameController implements IGameController {
 	
 	public GameController() {
 		
+		manager = new GameControllerManager();
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(11, 11));
+		GameContext.setCheckWay(new CheckWay());
+		GameContext.getCheckWay().initWayPoints(11, 11);
+		
 		PlayingField p = new PlayingField(5,5);
 		PlayingField pp = new PlayingField(1,1);
 		p.setTower(new Coord(2,2), new Tower());
@@ -51,7 +59,7 @@ public class GameController implements IGameController {
 			System.out.println("!!!!!!!!!!!!GLEICH!!!!!!!!");
 		
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(0);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,11 +85,11 @@ public class GameController implements IGameController {
 		}
 		*/
 		
-		manager = new GameControllerManager();
-		GameContext.setPlayer(new Player());
-		GameContext.setPlayingfield(new PlayingField(11, 11));
-		GameContext.setCheckWay(new CheckWay());
-		GameContext.getCheckWay().initWayPoints(11, 11);
+		
+		manager.changeRunningState();
+		JsonNode game = GameContext.serialize();
+		GameContext.deserialize(game);
+		manager.changeRunningState();
 	}
 
 	/************************************************************
@@ -103,6 +111,10 @@ public class GameController implements IGameController {
 	 ***********************************************************/
 	
 	public boolean pauseOrStartGame() {
+		// Test for the serialization and deserialization
+//		manager.changeRunningState();
+//		JsonNode game = GameContext.serialize();
+//		GameContext.deserialize(game);
 		return manager.changeRunningState();
 	}
 	
@@ -305,5 +317,4 @@ public class GameController implements IGameController {
 				+ " OldGameContext: " + currentGameContext);
 		return gameContextWithTowerAndMobs;
 	}
-
 }
