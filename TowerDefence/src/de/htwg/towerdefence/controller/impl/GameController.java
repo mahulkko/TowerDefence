@@ -3,6 +3,7 @@ package de.htwg.towerdefence.controller.impl;
 import java.util.List;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.model.IMob;
@@ -109,6 +110,26 @@ public class GameController implements IGameController {
 	/************************************************************
 	 * Run method
 	 ***********************************************************/
+	
+	public String createNewGame() {
+		manager = new GameControllerManager();
+		GameContext.setPlayer(new Player());
+		GameContext.setPlayingfield(new PlayingField(11, 11));
+		GameContext.setCheckWay(new CheckWay());
+		GameContext.getCheckWay().initWayPoints(11, 11);
+		JsonNode game = GameContext.serialize();
+		return game.toString();
+	}
+	
+	public String createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY) {
+		manager = new GameControllerManager();
+		GameContext.setPlayer(new Player(playerName, life, money));
+		GameContext.setPlayingfield(new PlayingField(playingfieldSizeX, playingfieldSizeY));
+		GameContext.setCheckWay(new CheckWay());
+		GameContext.getCheckWay().initWayPoints(playingfieldSizeX, playingfieldSizeY);
+		JsonNode game = GameContext.serialize();
+		return game.toString();
+	}
 	
 	public boolean pauseOrStartGame() {
 		// Test for the serialization and deserialization
@@ -286,35 +307,54 @@ public class GameController implements IGameController {
 	/************************************************************
 	 * Wui methods
 	 ***********************************************************/
-	String gameContextEmpty = "{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}";
-	String gameContextWithTowerOn2_2 = "{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}";
-	String gameContextWithTowerAndMobs = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"4\":{}},\"row2\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{},\"3\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
+	
+//	String gameContextEmpty = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
+//	String gameContextWithTowerOn2_2 = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
+//	String gameContextWithTowerAndMobs = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"4\":{}},\"row2\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{},\"3\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
 	
 	@Override
-	public String updateGameContext(String currentGameContext) {
-		System.out.println("GAMECONTROLLER  Update! \n"
-				+ " OldGameContext : " + currentGameContext);
-		return gameContextEmpty;
+	public JsonNode updateGameContext(JsonNode currentGameContext) {
+		// TODO Update Mob bewegungen usw.
+		
+		GameContext.deserialize(currentGameContext);
+		
+		JsonNode newGameContext = GameContext.serialize();
+		
+		return newGameContext;
 	}
 
 	@Override
-	public String pauseOrStartGame(String currentGameContext) {
-		System.out.println("GAMECONTROLLER  PauseGame! \n"
-				+ " OldGameContext: " + currentGameContext);
-		return gameContextEmpty;
+	public JsonNode pauseOrStartGame(JsonNode currentGameContext) {
+		// TODO Update Mob bewegungen usw.
+		GameContext.deserialize(currentGameContext);
+		
+		pauseOrStartGame();
+		
+		JsonNode newGameContext = GameContext.serialize();
+		
+		return newGameContext;
 	}
 
 	@Override
-	public String setTowerToPostion(String currentGameContext, int x, int y) {
-		System.out.println("GAMECONTROLLER  SetTower! to x= "+x + " y= "+y + "\n"
-				+ " OldGameContext: " + currentGameContext);
-		return gameContextWithTowerOn2_2;
+	public JsonNode setTowerToPostion(JsonNode currentGameContext, int x, int y) {
+	
+		GameContext.deserialize(currentGameContext);
+		
+		setTowerToPostion(x, y);
+		
+		JsonNode newGameContext = GameContext.serialize();
+		
+		return newGameContext;
 	}
 
+	// TODO UNÖTIG
 	@Override
-	public String sendNewMobFromStart(String currentGameContext) {
-		System.out.println("GAMECONTROLLER  SendMobs! \n"
-				+ " OldGameContext: " + currentGameContext);
-		return gameContextWithTowerAndMobs;
+	public JsonNode sendNewMobFromStart(JsonNode currentGameContext) {
+		
+		GameContext.deserialize(currentGameContext);
+		
+		JsonNode newGameContext = GameContext.serialize();
+		
+		return newGameContext;
 	}
 }

@@ -1,5 +1,7 @@
 package de.htwg.towerdefence.controller;
 
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
@@ -11,20 +13,23 @@ import de.htwg.towerdefence.util.way.Coord;
  */
 public interface IGameController {
 	
+	String createNewGame();
+	
+	
 	// Wui 
 	
 	/**
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
 	 */
-	String updateGameContext(String currentGameContext);
+	JsonNode updateGameContext(JsonNode currentGameContext);
 	
 	/**
 	 * Stop or Starts the Game
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
 	 */
-	String pauseOrStartGame(String currentGameContext);
+	JsonNode pauseOrStartGame(JsonNode currentGameContext);
 	
 	/**
 	 * @param currentGameContext - get the current GameContext of a WUI
@@ -32,14 +37,14 @@ public interface IGameController {
 	 * @param y - the Y position of new Tower on the Playingfield
 	 * @return Returns the new GameContext as JsonString
 	 */
-	String setTowerToPostion(String currentGameContext, int x, int y);
+	JsonNode setTowerToPostion(JsonNode currentGameContext, int x, int y);
 	
 	/**
 	 * Creates a new Mob on the start of the Playingfield
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
 	 */
-	String sendNewMobFromStart(String currentGameContext);
+	JsonNode sendNewMobFromStart(JsonNode currentGameContext);
 	
 	
 	// Gui and tui
