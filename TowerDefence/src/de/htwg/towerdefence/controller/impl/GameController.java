@@ -107,24 +107,24 @@ public class GameController implements IGameController {
 	 * Run method
 	 ***********************************************************/
 	
-	public String createNewGame() {
+	public JsonNode createNewGame() {
 		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(11, 11));
 		GameContext.setCheckWay(new CheckWay());
 		GameContext.getCheckWay().initWayPoints(11, 11);
 		JsonNode game = GameContext.serialize();
-		return game.toString();
+		return game;
 	}
 	
-	public String createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY) {
+	public JsonNode createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY) {
 		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player(playerName, life, money));
 		GameContext.setPlayingfield(new PlayingField(playingfieldSizeX, playingfieldSizeY));
 		GameContext.setCheckWay(new CheckWay());
 		GameContext.getCheckWay().initWayPoints(playingfieldSizeX, playingfieldSizeY);
 		JsonNode game = GameContext.serialize();
-		return game.toString();
+		return game;
 	}
 	
 	public boolean pauseOrStartGame() {
@@ -317,7 +317,7 @@ public class GameController implements IGameController {
 		// TODO Update Mob bewegungen usw.
 		
 		GameContext.deserialize(currentGameContext);
-		
+		this.updateGameContext();
 		JsonNode newGameContext = GameContext.serialize();
 		
 		return newGameContext;

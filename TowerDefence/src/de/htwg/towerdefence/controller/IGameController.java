@@ -13,7 +13,7 @@ import de.htwg.towerdefence.util.way.Coord;
  */
 public interface IGameController {
 	
-	String createNewGame();
+	JsonNode createNewGame();
 	
 	
 	// Wui 
