@@ -32,14 +32,16 @@ public class GameController implements IGameController {
 	
 	/** Game controller manager */
 	private GameControllerManager manager;
+	
+	private boolean local;
 		
 	IMob mob;
 	ITower tower;
 	
 	
-	public GameController() {
-		
-		manager = new GameControllerManager();
+	public GameController(boolean local) {
+		this.local = local;
+		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(11, 11));
 		GameContext.setCheckWay(new CheckWay());
@@ -85,12 +87,6 @@ public class GameController implements IGameController {
 			e.printStackTrace();
 		}
 		*/
-		
-		
-		manager.changeRunningState();
-		JsonNode game = GameContext.serialize();
-		GameContext.deserialize(game);
-		manager.changeRunningState();
 	}
 
 	/************************************************************
@@ -112,7 +108,7 @@ public class GameController implements IGameController {
 	 ***********************************************************/
 	
 	public String createNewGame() {
-		manager = new GameControllerManager();
+		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(11, 11));
 		GameContext.setCheckWay(new CheckWay());
@@ -122,7 +118,7 @@ public class GameController implements IGameController {
 	}
 	
 	public String createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY) {
-		manager = new GameControllerManager();
+		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player(playerName, life, money));
 		GameContext.setPlayingfield(new PlayingField(playingfieldSizeX, playingfieldSizeY));
 		GameContext.setCheckWay(new CheckWay());
@@ -203,6 +199,10 @@ public class GameController implements IGameController {
 		mob = new Mob(new Coord(0, 0));
 		GameContext.getPlayingField().setMob(new Coord(0, 0), mob);
 		manager.registerComponent((IControllableComponent)mob);
+	}
+	
+	public void updateGameContext() {
+		this.manager.update();
 	}
 
 	

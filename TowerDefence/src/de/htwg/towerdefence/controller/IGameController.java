@@ -64,6 +64,8 @@ public interface IGameController {
 	 */
 	boolean pauseOrStartGame();
 	
+	void updateGameContext();
+	
 	// PlayingField
 	/**
 	 * @return Returns the X length of the current Playingfield

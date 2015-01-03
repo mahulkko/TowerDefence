@@ -11,7 +11,7 @@ public class GameControllerManagerTest extends TestCase {
 	IControllableComponent component2;
 	
 	public void setUp() throws IOException {
-		manager = new GameControllerManager();
+		manager = new GameControllerManager(true);
 		component = new ControllableComponentTest(1, "Test");
 		component2 = new ControllableComponentTest(1, "Test");
 	}

@@ -8,7 +8,7 @@ public class GameControllerTest extends TestCase {
 	GameController controller;	
 
 	public void setUp() throws IOException {
-		controller = new GameController();
+		controller = new GameController(true);
 	}
 	
 	public void testDoc() {
