@@ -90,7 +90,7 @@ public class GameControllerManager implements IObservable{
 	}
 	
 	public void update() {
-		
+		System.out.println("Call Update Funtion");
 		check = false;
 			// Check for components that should be unregistered
 			List<GameData> copyControllableComponents = new LinkedList<GameData>(GameContext.getGameData());
@@ -106,6 +106,7 @@ public class GameControllerManager implements IObservable{
 			for (int i = 0; i < GameContext.getGameData().size(); ++i) {
 				long dt = System.currentTimeMillis() - GameContext.getGameData().get(i).getLastTime();
                 if (GameContext.getGameData().get(i).getComponent().update(dt)) {
+                	System.out.println("Update Controllable Components " + i);
                 	check = true;
                 }
                 GameContext.getGameData().get(i).setLastTime(System.currentTimeMillis());
@@ -115,12 +116,6 @@ public class GameControllerManager implements IObservable{
 			notifyObservers();
 		}
 		
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	
@@ -139,6 +134,12 @@ public class GameControllerManager implements IObservable{
 				
 				if(run) {
 					update();
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}

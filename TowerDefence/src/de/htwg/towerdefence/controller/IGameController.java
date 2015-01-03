@@ -1,6 +1,9 @@
 package de.htwg.towerdefence.controller;
 
+import java.io.IOException;
+
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
@@ -21,30 +24,36 @@ public interface IGameController {
 	/**
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
 	 */
-	JsonNode updateGameContext(JsonNode currentGameContext);
+	JsonNode updateGameContext(String currentGameContext) throws JsonProcessingException, IOException;
 	
 	/**
 	 * Stop or Starts the Game
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
 	 */
-	JsonNode pauseOrStartGame(JsonNode currentGameContext);
+	JsonNode pauseOrStartGame(String currentGameContext);
 	
 	/**
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @param x - the X position of new Tower on the Playingfield
 	 * @param y - the Y position of new Tower on the Playingfield
 	 * @return Returns the new GameContext as JsonString
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
 	 */
-	JsonNode setTowerToPostion(JsonNode currentGameContext, int x, int y);
+	JsonNode setTowerToPostion(String currentGameContext, int x, int y) throws JsonProcessingException, IOException;
 	
 	/**
 	 * Creates a new Mob on the start of the Playingfield
 	 * @param currentGameContext - get the current GameContext of a WUI
 	 * @return Returns the new GameContext as JsonString
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
 	 */
-	JsonNode sendNewMobFromStart(JsonNode currentGameContext);
+	JsonNode sendNewMobFromStart(String currentGameContext) throws JsonProcessingException, IOException;
 	
 	
 	// Gui and tui

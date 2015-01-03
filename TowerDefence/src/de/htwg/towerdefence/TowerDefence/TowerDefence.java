@@ -45,7 +45,7 @@ public class TowerDefence {
 		
 		
 		//---------------------------------
-		controller = new GameController(false);
+		controller = new GameController(true);
 		tui = new TowerdefenceTui(controller);
 		gui = new TowerdefenceGui(controller);
 		controller.addObserver(tui);

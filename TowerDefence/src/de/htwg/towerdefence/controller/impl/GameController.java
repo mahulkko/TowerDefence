@@ -1,8 +1,10 @@
 package de.htwg.towerdefence.controller.impl;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import de.htwg.towerdefence.controller.IGameController;
@@ -41,52 +43,9 @@ public class GameController implements IGameController {
 	
 	public GameController(boolean local) {
 		this.local = local;
-		manager = new GameControllerManager(local);
-		GameContext.setPlayer(new Player());
-		GameContext.setPlayingfield(new PlayingField(11, 11));
-		GameContext.setCheckWay(new CheckWay());
-		GameContext.getCheckWay().initWayPoints(11, 11);
-		
-		PlayingField p = new PlayingField(5,5);
-		PlayingField pp = new PlayingField(1,1);
-		p.setTower(new Coord(2,2), new Tower());
-
-		
-		System.out.println(p.serialize());
-		
-		pp.deserialize(p.serialize());
-		
-		System.out.println(p.serialize());
-		
-		if (p.serialize().toString().equals(pp.serialize().toString() ))
-			System.out.println("!!!!!!!!!!!!GLEICH!!!!!!!!");
-		
-		try {
-			Thread.sleep(0);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(local) {
+			createNewGame();
 		}
-		
-		/*
-		
-		Field f = new Field();
-		Field ff = new Field();
-		f.setTower(new Tower());
-		
-		System.out.println(f.serialize());
-		JsonNode node = f.serialize();
-		ff.deserialize(node);
-		
-		System.out.println(ff.serialize());
-		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 	}
 
 	/************************************************************
@@ -110,9 +69,9 @@ public class GameController implements IGameController {
 	public JsonNode createNewGame() {
 		manager = new GameControllerManager(local);
 		GameContext.setPlayer(new Player());
-		GameContext.setPlayingfield(new PlayingField(11, 11));
+		GameContext.setPlayingfield(new PlayingField(5, 5));
 		GameContext.setCheckWay(new CheckWay());
-		GameContext.getCheckWay().initWayPoints(11, 11);
+		GameContext.getCheckWay().initWayPoints(5, 5);
 		JsonNode game = GameContext.serialize();
 		return game;
 	}
@@ -202,6 +161,7 @@ public class GameController implements IGameController {
 	}
 	
 	public void updateGameContext() {
+		System.out.println("Call UpdateManger in GameController");
 		this.manager.update();
 	}
 
@@ -306,55 +266,48 @@ public class GameController implements IGameController {
 	
 	/************************************************************
 	 * Wui methods
+	 * @throws IOException 
+	 * @throws JsonProcessingException 
 	 ***********************************************************/
 	
-//	String gameContextEmpty = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
-//	String gameContextWithTowerOn2_2 = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row2\":{\"0\":{},\"1\":{},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
-//	String gameContextWithTowerAndMobs = "{\"player\":{\"name\":\"Player\",\"money\":1000,\"life\":10,\"updateStatus\":true},\"playingField\":{\"sizeX\":5,\"sizeY\":5,\"fieldArray\":{\"row0\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}},\"row1\":{\"0\":{},\"1\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"2\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"3\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"4\":{}},\"row2\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"3\":{},\"4\":{}},\"row3\":{\"0\":{},\"1\":{\"tower\":{\"damage\":10,\"range\":3,\"tmpSpeed\":0,\"speed\":1000,\"numberShoot\":1,\"cost\":100,\"position\":{\"x\":0,\"y\":0},\"tmpCoord\":{\"x\":0,\"y\":0},\"hitrate\":1.0}},\"2\":{},\"3\":{\"mobList\":{\"0\":{\"health\":100,\"speed\":500,\"tmpSpeed\":500,\"coord\":{\"x\":0,\"y\":0},\"money\":50}},\"sizeMobList\":1},\"4\":{}},\"row4\":{\"0\":{},\"1\":{},\"2\":{},\"3\":{},\"4\":{}}}}}";
-	
 	@Override
-	public JsonNode updateGameContext(JsonNode currentGameContext) {
+	public JsonNode updateGameContext(String currentGameContext) throws JsonProcessingException, IOException {
 		// TODO Update Mob bewegungen usw.
-		
-		GameContext.deserialize(currentGameContext);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode currentGameContextNode = mapper.readTree(currentGameContext);
+		GameContext.deserialize(currentGameContextNode);
 		this.updateGameContext();
-		JsonNode newGameContext = GameContext.serialize();
-		
-		return newGameContext;
+		System.out.println("Update in GameController");
+		JsonNode newGameContextNode = GameContext.serialize();
+		return newGameContextNode;
 	}
 
 	@Override
-	public JsonNode pauseOrStartGame(JsonNode currentGameContext) {
-		// TODO Update Mob bewegungen usw.
-		GameContext.deserialize(currentGameContext);
-		
-		pauseOrStartGame();
-		
-		JsonNode newGameContext = GameContext.serialize();
-		
-		return newGameContext;
-	}
-
-	@Override
-	public JsonNode setTowerToPostion(JsonNode currentGameContext, int x, int y) {
-	
-		GameContext.deserialize(currentGameContext);
-		
+	public JsonNode setTowerToPostion(String currentGameContext, int x, int y) throws JsonProcessingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode currentGameContextNode = mapper.readTree(currentGameContext);
+		GameContext.deserialize(currentGameContextNode);
 		setTowerToPostion(x, y);
-		
-		JsonNode newGameContext = GameContext.serialize();
-		
-		return newGameContext;
+		JsonNode newGameContextNode = GameContext.serialize();
+		return newGameContextNode;
 	}
 
 	// TODO UNÖTIG
 	@Override
-	public JsonNode sendNewMobFromStart(JsonNode currentGameContext) {
-		
-		GameContext.deserialize(currentGameContext);
-		
-		JsonNode newGameContext = GameContext.serialize();
-		
-		return newGameContext;
+	public JsonNode sendNewMobFromStart(String currentGameContext) throws JsonProcessingException, IOException {
+		System.out.println("Send Mob in GameController");
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode currentGameContextNode = mapper.readTree(currentGameContext);
+		GameContext.deserialize(currentGameContextNode);
+		sendNewMobFromStart();
+		JsonNode newGameContextNode = GameContext.serialize();
+		return newGameContextNode;
 	}
+
+	@Override
+	public JsonNode pauseOrStartGame(String currentGameContext) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }
