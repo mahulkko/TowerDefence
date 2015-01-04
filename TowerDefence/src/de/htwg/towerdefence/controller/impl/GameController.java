@@ -35,11 +35,10 @@ public class GameController implements IGameController {
 	/** Game controller manager */
 	private GameControllerManager manager;
 	
-	private boolean local;
-		
-	IMob mob;
-	ITower tower;
+	/** Wave Controll manager */
+	private WaveControllManager waveManager;
 	
+	private boolean local;	
 	
 	public GameController(boolean local) {
 		this.local = local;
@@ -68,6 +67,8 @@ public class GameController implements IGameController {
 	
 	public JsonNode createNewGame() {
 		manager = new GameControllerManager(local);
+		waveManager = new WaveControllManager(this);
+		manager.registerComponent(waveManager);
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(5, 5));
 		GameContext.setCheckWay(new CheckWay());
@@ -89,8 +90,8 @@ public class GameController implements IGameController {
 	public boolean pauseOrStartGame() {
 		// Test for the serialization and deserialization
 		manager.changeRunningState();
-		JsonNode game = GameContext.serialize();
-		GameContext.deserialize(game);
+		//JsonNode game = GameContext.serialize();
+		//GameContext.deserialize(game);
 		return manager.changeRunningState();
 	}
 	
@@ -135,7 +136,7 @@ public class GameController implements IGameController {
 	public boolean setTowerToPostion(int x, int y) {
 		Coord coord = new Coord(x, y);
 		if(!GameContext.getPlayingField().isSetTower(coord)) {
-			tower = new Tower(coord);
+			Tower tower = new Tower(coord);
 			// Check if Player has money for building 
 			if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
 				GameContext.getCheckWay().deleteWayPoint(x, y);
@@ -155,7 +156,7 @@ public class GameController implements IGameController {
 
 	@Override
 	public void sendNewMobFromStart() {
-		mob = new Mob(new Coord(0, 0));
+		Mob mob = new Mob(new Coord(0, 0));
 		GameContext.getPlayingField().setMob(new Coord(0, 0), mob);
 		manager.registerComponent((IControllableComponent)mob);
 	}

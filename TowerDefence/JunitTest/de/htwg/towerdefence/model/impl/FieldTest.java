@@ -6,9 +6,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.ITower;
+import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.GameContext.GameContext;
+import de.htwg.towerdefence.util.GameContext.GameData;
 import de.htwg.towerdefence.util.enums.FieldType;
 import de.htwg.towerdefence.util.way.Coord;
 
@@ -39,9 +43,14 @@ public class FieldTest extends TestCase {
 		
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(10, 10));
+		GameContext.setCheckWay(new CheckWay());
+		GameContext.getCheckWay().initWayPoints(10, 10);
+		GameContext.setGameData(new LinkedList<GameData>());
 		
 		field = new Field();
 		tower = new Tower(new Coord(0,0), 1, 1, 1, 1, 1.0, 100);
+		
+		
 		mob = new Mob(new Coord(0,0));
 		mob2 = new Mob(new Coord(0,0));
 		mob3 = new Mob(new Coord(0,0));
@@ -100,11 +109,18 @@ public class FieldTest extends TestCase {
 		list.add(mob3);
 		
 		assertEquals(true, field.setTower(tower));
+		
+		JsonNode node = field.serialize();
+		//field.deserialize(node);
+		
 		assertEquals(false, field.setListMob(list));
 		assertEquals(tower, field.deleteTower());
 		
 		assertEquals(true, field.setListMob(list));
 		assertEquals(list, field.getMobs());
+		
+		JsonNode node2 = field.serialize();
+		field.deserialize(node2);
 		
 		assertEquals(true, field.deleteAllMobs());
 		

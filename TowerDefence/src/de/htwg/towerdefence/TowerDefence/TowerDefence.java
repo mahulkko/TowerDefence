@@ -43,13 +43,21 @@ public class TowerDefence {
 		 */
 		TowerdefenceGui gui;
 		
+		/**
+		 * GUI
+		 */
+		//TowerdefenceGui gui2;
+		
+		
 		
 		//---------------------------------
 		controller = new GameController(true);
 		tui = new TowerdefenceTui(controller);
 		gui = new TowerdefenceGui(controller);
+		//gui2 = new TowerdefenceGui(controller);
 		controller.addObserver(tui);
 		controller.addObserver(gui);
+		//controller.addObserver(gui2);
 	}
 }
 

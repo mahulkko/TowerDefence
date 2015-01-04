@@ -3,6 +3,8 @@ package de.htwg.towerdefence.model.impl;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.model.IMob;
 import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.ITower;
@@ -123,6 +125,9 @@ public class PlayingFieldTest extends TestCase {
 		assertEquals(mob2, this.f.getMob(new Coord(1,1), mob2));
 		assertEquals(null, this.f.getMob(new Coord(11,1), mob2));
 		assertEquals(null, this.f.getMob(new Coord(1,11), mob2));
+		
+		//JsonNode node = this.f.serialize();
+		//this.f.deserialize(node);
 		
 		assertEquals(mob2, this.f.deleteMob(new Coord(1,1), mob2));
 		assertEquals(null, this.f.deleteMob(new Coord(11,1), mob2));

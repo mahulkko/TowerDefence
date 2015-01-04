@@ -2,6 +2,8 @@ package de.htwg.towerdefence.model.impl;
 
 import java.io.IOException;
 
+import org.codehaus.jackson.JsonNode;
+
 import de.htwg.towerdefence.model.IPlayer;
 import de.htwg.towerdefence.model.impl.Player;
 import de.htwg.towerdefence.util.control.impl.ControllableComponent;
@@ -49,6 +51,9 @@ public class PlayerTest extends TestCase {
 		
 		// Get money
 		assertEquals(100, player2.getMoney());
+		
+		JsonNode node = player1.serialize();
+		player1.deserialize(node);
 		
 		ControllableComponent component = (ControllableComponent) player1;
 		component.update(0);
