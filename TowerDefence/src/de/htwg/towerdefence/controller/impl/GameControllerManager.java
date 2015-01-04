@@ -90,7 +90,6 @@ public class GameControllerManager implements IObservable{
 	}
 	
 	public void update() {
-		System.out.println("Call Update Funtion");
 		check = false;
 			// Check for components that should be unregistered
 			List<GameData> copyControllableComponents = new LinkedList<GameData>(GameContext.getGameData());

@@ -195,10 +195,10 @@ public class Mob extends ControllableComponent implements IMob {
 		((ObjectNode)root).put("coord", this.currendPos.serialize());
 		((ObjectNode)root).put("money", money);
 		
-		// Normal code but didnt working, check this
-		// ((ObjectNode)root).put("controllable", GameContext.getGameData().contains((IControllableComponent)this));
-		((ObjectNode)root).put("controllable", true);
-		
+		if (GameContext.isComponentInGameData((IControllableComponent)this)) {
+			((ObjectNode)root).put("controllable", true);
+			((ObjectNode)root).put("lastTime", GameContext.getGameData((IControllableComponent)this).getLastTime());
+		}
 		return root;
 	}
 
@@ -219,9 +219,10 @@ public class Mob extends ControllableComponent implements IMob {
 		this.money = money.getIntValue();
 		
 		if (controllable.getBooleanValue()) {
+			JsonNode lastTime = node.path("lastTime");
 			GameData data = new GameData();
 			data.setComponent((IControllableComponent)this);
-			data.setLastTime(System.currentTimeMillis());
+			data.setLastTime(lastTime.asLong());
 			GameContext.getGameData().add(data);
 		}
 	}

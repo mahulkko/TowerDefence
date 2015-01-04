@@ -338,10 +338,10 @@ public class Tower extends ControllableComponent implements ITower {
 		((ObjectNode)root).put("tmpCoord", tmpCoord.serialize());
 		((ObjectNode)root).put("hitrate", hitrate);
 		
-		// Normal code but didnt working, check this
-		// ((ObjectNode)root).put("controllable", GameContext.getGameData().contains((IControllableComponent)this));
-		((ObjectNode)root).put("controllable", true);
-		
+		if (GameContext.isComponentInGameData((IControllableComponent)this)) {
+			((ObjectNode)root).put("controllable", true);
+			((ObjectNode)root).put("lastTime", GameContext.getGameData((IControllableComponent)this).getLastTime());
+		}		
 		return root;
 	}
 
@@ -371,9 +371,10 @@ public class Tower extends ControllableComponent implements ITower {
 		this.initTower = true;
 		
 		if (controllable.getBooleanValue()) {
+			JsonNode lastTime = node.path("lastTime");
 			GameData data = new GameData();
 			data.setComponent((IControllableComponent)this);
-			data.setLastTime(System.currentTimeMillis());
+			data.setLastTime(lastTime.asLong());
 			GameContext.getGameData().add(data);
 		}
 	}

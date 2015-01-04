@@ -87,8 +87,22 @@ public class GameContext {
 		controllableComponents = Components;
 	}
 	
+	public static GameData getGameData(IControllableComponent component) {
+		for (int i = 0; i < controllableComponents.size(); ++i) {
+			if (controllableComponents.get(i).getComponent() == component) {
+				return controllableComponents.get(i);
+			}
+		}
+		return null;
+	}
+	
 	public static boolean isComponentInGameData(IControllableComponent component) {
-		return controllableComponents.contains(component);
+		for (int i = 0; i < controllableComponents.size(); ++i) {
+			if (controllableComponents.get(i).getComponent() == component) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	/************************************************************

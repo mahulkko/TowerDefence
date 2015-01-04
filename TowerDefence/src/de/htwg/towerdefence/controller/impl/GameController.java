@@ -88,9 +88,9 @@ public class GameController implements IGameController {
 	
 	public boolean pauseOrStartGame() {
 		// Test for the serialization and deserialization
-//		manager.changeRunningState();
-//		JsonNode game = GameContext.serialize();
-//		GameContext.deserialize(game);
+		manager.changeRunningState();
+		JsonNode game = GameContext.serialize();
+		GameContext.deserialize(game);
 		return manager.changeRunningState();
 	}
 	
