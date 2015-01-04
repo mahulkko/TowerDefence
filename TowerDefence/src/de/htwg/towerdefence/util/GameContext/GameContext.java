@@ -39,6 +39,9 @@ public class GameContext {
     /** Current instance of check way */
     private static ICheckWay checkWay;
     
+    /** Instance of the WaveControllManager */
+    private static WaveControllManager controllManager;
+    
     /** List of all controllableComponents saved in the GameControllData */
 	private static List<GameData> controllableComponents;
     
@@ -78,6 +81,18 @@ public class GameContext {
 		log.info("Set new CheckWay instance in GameContext...");
 		checkWay = cWay;
 	}
+	
+	public static WaveControllManager getControllManager() {
+		return controllManager;
+	}
+
+	public static void setControllManager(WaveControllManager controllManager) {
+		GameContext.controllManager = controllManager;
+		GameData data = new GameData();
+		data.setComponent(GameContext.controllManager);
+		data.setLastTime(System.currentTimeMillis());
+		GameContext.getGameData().add(data);
+	}
 
 	public static List<GameData> getGameData() {
 		return controllableComponents;
@@ -114,6 +129,7 @@ public class GameContext {
 		JsonNode root = mapper.createObjectNode();
 		((ObjectNode)root).put("player", player.serialize());
 		((ObjectNode)root).put("playingField", playingField.serialize());
+		((ObjectNode)root).put("WaveControllManager", controllManager.serialize());
 		
 		return root;
 	}
@@ -122,8 +138,11 @@ public class GameContext {
 		GameContext.setGameData(new LinkedList<GameData>());
 		JsonNode player = node.path("player");
 		JsonNode playingField = node.path("playingField");
+		JsonNode WaveControll = node.path("WaveControllManager");
 		GameContext.player.deserialize(player);
-		GameContext.playingField.deserialize(playingField);	
+		GameContext.playingField.deserialize(playingField);
+		GameContext.controllManager.deserialize(WaveControll);
+		
 		checkWay = new CheckWay();
 		checkWay.initCheckWayWithPlayingField(GameContext.playingField);
 	}

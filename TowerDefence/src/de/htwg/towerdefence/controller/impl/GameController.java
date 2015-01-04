@@ -16,6 +16,7 @@ import de.htwg.towerdefence.model.impl.PlayingField;
 import de.htwg.towerdefence.model.impl.Tower;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.GameContext.GameContext;
+import de.htwg.towerdefence.util.GameContext.WaveControllManager;
 import de.htwg.towerdefence.util.control.IControllableComponent;
 import de.htwg.towerdefence.util.control.IObserver;
 import de.htwg.towerdefence.util.enums.FieldType;
@@ -34,9 +35,6 @@ public class GameController implements IGameController {
 	
 	/** Game controller manager */
 	private GameControllerManager manager;
-	
-	/** Wave Controll manager */
-	private WaveControllManager waveManager;
 	
 	private boolean local;	
 	
@@ -67,12 +65,11 @@ public class GameController implements IGameController {
 	
 	public JsonNode createNewGame() {
 		manager = new GameControllerManager(local);
-		waveManager = new WaveControllManager(this);
-		manager.registerComponent(waveManager);
 		GameContext.setPlayer(new Player());
 		GameContext.setPlayingfield(new PlayingField(5, 5));
 		GameContext.setCheckWay(new CheckWay());
 		GameContext.getCheckWay().initWayPoints(5, 5);
+		GameContext.setControllManager(new WaveControllManager());
 		JsonNode game = GameContext.serialize();
 		return game;
 	}
@@ -83,6 +80,7 @@ public class GameController implements IGameController {
 		GameContext.setPlayingfield(new PlayingField(playingfieldSizeX, playingfieldSizeY));
 		GameContext.setCheckWay(new CheckWay());
 		GameContext.getCheckWay().initWayPoints(playingfieldSizeX, playingfieldSizeY);
+		GameContext.setControllManager(new WaveControllManager());
 		JsonNode game = GameContext.serialize();
 		return game;
 	}
