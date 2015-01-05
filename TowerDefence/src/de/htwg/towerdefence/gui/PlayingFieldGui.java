@@ -58,8 +58,7 @@ public class PlayingFieldGui extends JPanel implements MouseListener {
 	}
 
 	@Override
-	  protected void paintComponent( Graphics g )
-	  {
+	  protected void paintComponent( Graphics g ) {
 	    super.paintComponent( g );
 	    paintPlayingField(g);
 	    
@@ -86,34 +85,41 @@ public class PlayingFieldGui extends JPanel implements MouseListener {
 		switch(guiState.getState()) {
 			case SETTOWER:
 				controller.setTowerToPostion(cordx, cordy);
+				break;
 			case SHOWINFOS:
-				if (controller.isTowerOnField(cordx, cordy)) {
-					propertiesGui.updateTower(cordx, cordy);
-				} 
-				else if (controller.isMobOnField(cordx, cordy)) {
-					propertiesGui.updateMob(cordx, cordy);
-				}
+				showInfos(cordx, cordy);
+				break;
+			default:
+				// Do nothing
 				break;
 		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		
+		// Nothing do do in here
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		
+		// Nothing do do in here
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		
+		// Nothing do do in here
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		
+		// Nothing do do in here
+	}
+	
+	private void showInfos(int cordx, int cordy) {
+		if (controller.isTowerOnField(cordx, cordy)) {
+			propertiesGui.updateTower(cordx, cordy);
+		} else if (controller.isMobOnField(cordx, cordy)) {
+			propertiesGui.updateMob(cordx, cordy);
+		}
 	}
 }

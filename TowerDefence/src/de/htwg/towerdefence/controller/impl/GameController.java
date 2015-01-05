@@ -309,4 +309,19 @@ public class GameController implements IGameController {
 		return null;
 	}
 	
+	public JsonNode upgradeTower(String currentGameContext, int x, int y) throws JsonProcessingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode currentGameContextNode = mapper.readTree(currentGameContext);
+		GameContext.deserialize(currentGameContextNode);
+		
+		ITower tower = GameContext.getPlayingField().getTower(new Coord(x, y));
+		if (GameContext.getPlayer().getMoney() >=  tower.getCost()) {
+			tower.upgrade();
+			GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() - tower.getCost());
+		}
+		
+		JsonNode newGameContextNode = GameContext.serialize();
+		return newGameContextNode;
+	}
+	
 }

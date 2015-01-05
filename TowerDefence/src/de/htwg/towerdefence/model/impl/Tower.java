@@ -36,7 +36,7 @@ public class Tower extends ControllableComponent implements ITower {
 	private static final double HALF = 0.5;
 
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Tower");
+    private static final Logger log = Logger.getLogger("TowerDefence.Model.Tower");
 
 	/** Damage of the tower */
 	private int damage;
@@ -270,8 +270,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.tmpSpeed = this.tmpSpeed - dt;
 		if (this.tmpSpeed <= 0) {
 			for(int i = 0; i < this.numberShoot; ++i) {
-				if (shootOnMob())
-				{
+				if (shootOnMob()) {
 					check = true;
 				}
 			}
@@ -298,20 +297,18 @@ public class Tower extends ControllableComponent implements ITower {
 				}
 				
 				List<IMob> mobs = GameContext.getPlayingField().getMobs(this.tmpCoord);
-				if (mobs != null && mobs.size() > 0) {
-					if (mobs.get(0) != null) {
-						mobs.get(0).setHealth(mobs.get(0).getHealth() - this.calcDamage());
-						log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
-						if (mobs.get(0).isDead()) {
-							log.info("Mob is dead so delete it from the playingfield");
-							GameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
-							IControllableComponent component = (IControllableComponent)mobs.get(0);
-							component.unregisterSelf();
-							//  Player get Money for Mob
-							GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() + mobs.get(0).getMoneyValue());
-						}
-						return true;
+				if (mobs != null && !mobs.isEmpty() && mobs.get(0) != null) {
+					mobs.get(0).setHealth(mobs.get(0).getHealth() - this.calcDamage());
+					log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
+					if (mobs.get(0).isDead()) {
+						log.info("Mob is dead so delete it from the playingfield");
+						GameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
+						IControllableComponent component = (IControllableComponent)mobs.get(0);
+						component.unregisterSelf();
+						//  Player get Money for Mob
+						GameContext.getPlayer().setMoney(GameContext.getPlayer().getMoney() + mobs.get(0).getMoneyValue());
 					}
+					return true;
 				}
 			}
 		}
@@ -348,29 +345,29 @@ public class Tower extends ControllableComponent implements ITower {
 	@Override
 	public void deserialize(JsonNode node) {
 		
-		JsonNode damage = node.path("damage");
-		JsonNode range = node.path("range");
-		JsonNode tmpSpeed = node.path("tmpSpeed");
-		JsonNode speed = node.path("speed");
-		JsonNode numberShoot = node.path("numberShoot");
-		JsonNode cost = node.path("cost");
-		JsonNode position = node.path("position");
-		JsonNode tmpCoord = node.path("tmpCoord");
-		JsonNode hitrate = node.path("hitrate");
-		JsonNode controllable = node.path("controllable");
+		JsonNode damageNode = node.path("damage");
+		JsonNode rangeNode = node.path("range");
+		JsonNode tmpSpeedNode = node.path("tmpSpeed");
+		JsonNode speedNode = node.path("speed");
+		JsonNode numberShootNode = node.path("numberShoot");
+		JsonNode costNode = node.path("cost");
+		JsonNode positionNode = node.path("position");
+		JsonNode tmpCoordNode = node.path("tmpCoord");
+		JsonNode hitrateNode = node.path("hitrate");
+		JsonNode controllableNode = node.path("controllable");
 		
-		this.damage = damage.getIntValue();
-		this.range = range.getIntValue();
-		this.tmpSpeed = tmpSpeed.getLongValue();
-		this.speed = speed.getIntValue();
-		this.numberShoot = numberShoot.getIntValue();
-		this.cost = cost.getIntValue();
-		this.position.deserialize(position);
-		this.tmpCoord.deserialize(tmpCoord);
-		this.hitrate = hitrate.getDoubleValue();
+		this.damage = damageNode.getIntValue();
+		this.range = rangeNode.getIntValue();
+		this.tmpSpeed = tmpSpeedNode.getLongValue();
+		this.speed = speedNode.getIntValue();
+		this.numberShoot = numberShootNode.getIntValue();
+		this.cost = costNode.getIntValue();
+		this.position.deserialize(positionNode);
+		this.tmpCoord.deserialize(tmpCoordNode);
+		this.hitrate = hitrateNode.getDoubleValue();
 		this.initTower = true;
 		
-		if (controllable.getBooleanValue()) {
+		if (controllableNode.getBooleanValue()) {
 			JsonNode lastTime = node.path("lastTime");
 			GameData data = new GameData();
 			data.setComponent((IControllableComponent)this);

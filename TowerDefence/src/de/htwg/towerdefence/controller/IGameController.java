@@ -56,6 +56,12 @@ public interface IGameController {
 	 */
 	JsonNode sendNewMobFromStart(String currentGameContext) throws JsonProcessingException, IOException;
 	
+	/**
+	 * @param x - the X position of specific Tower on the playingfield
+	 * @param y - the Y position of specific Tower on the playingfield
+	 */
+	JsonNode upgradeTower(String currentGameContext, int x, int y) throws JsonProcessingException, IOException;
+	
 	
 	// Gui and tui
 	/**
