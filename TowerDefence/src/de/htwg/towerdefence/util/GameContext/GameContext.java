@@ -13,6 +13,7 @@ import de.htwg.towerdefence.model.IPlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
 import de.htwg.towerdefence.model.way.impl.CheckWay;
 import de.htwg.towerdefence.util.control.IControllableComponent;
+import de.htwg.towerdefence.util.way.Coord;
 
 /**
  * <b>Mob Class</b>
@@ -130,6 +131,16 @@ public class GameContext {
 		((ObjectNode)root).put("player", player.serialize());
 		((ObjectNode)root).put("playingField", playingField.serialize());
 		((ObjectNode)root).put("WaveControllManager", controllManager.serialize());
+		
+		JsonNode way = mapper.createObjectNode();
+		GameContext.getCheckWay().existWay(0 , 0, GameContext.getPlayingField().getSizeX()-1, GameContext.getPlayingField().getSizeY()-1);
+		List<Coord> shortestWay = GameContext.checkWay.getShortesWay();
+		
+		for (int i = 0; i < shortestWay.size(); ++i) {
+			((ObjectNode)way).put("WayPoint" + i, shortestWay.get(i).serialize());
+		}
+		
+		((ObjectNode)root).put("ShortestWay", way);
 		
 		return root;
 	}
