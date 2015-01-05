@@ -24,7 +24,7 @@ public class Field implements Serialize {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Field");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.Field");
     
 	/** Instance of the tower for the field */
 	private ITower tower;
@@ -41,7 +41,7 @@ public class Field implements Serialize {
 	 * Default constructor of the field
 	 */
 	public Field() {
-		log.info("Initialize the field");
+		LOG.info("Initialize the field");
 		this.tower = null;
 		this.mobs = new LinkedList<IMob>();
 	}
@@ -59,10 +59,10 @@ public class Field implements Serialize {
 	public boolean setTower(ITower tower) {
 		if (!this.isSetTower() && this.getNumberOfMobs() == 0) {
 			this.tower = tower;
-			log.info("Added a new tower on the field");
+			LOG.info("Added a new tower on the field");
 			return true;
 		}
-		log.info("Can't add a new tower on the field - Field is not empty");
+		LOG.info("Can't add a new tower on the field - Field is not empty");
 		return false;
 	}
 
@@ -82,10 +82,10 @@ public class Field implements Serialize {
 		if (this.tower != null) {
 			ITower tmp = this.tower;
 			this.tower = null;
-			log.info("Deleted tower on the field");
+			LOG.info("Deleted tower on the field");
 			return tmp;
 		}
-		log.info("Can't delete the tower on the field - There is no tower instance");
+		LOG.info("Can't delete the tower on the field - There is no tower instance");
 		return null;
 	}
 	
@@ -108,10 +108,10 @@ public class Field implements Serialize {
 	public boolean setMob(IMob mob) {
 		if (!this.isSetTower()) {
 			this.mobs.add(mob);
-			log.info("Set a new mob on the field");
+			LOG.info("Set a new mob on the field");
 			return true;
 		}
-		log.info("Can't set a new mob on the field - Field is not empty");
+		LOG.info("Can't set a new mob on the field - Field is not empty");
 		return false;
 	}
 	
@@ -123,11 +123,11 @@ public class Field implements Serialize {
 		for (int i = 0; i < this.mobs.size(); ++i) {
 			IMob m = this.mobs.get(i);
 			if (m == mob) {
-				log.info("Found Mob on the field");
+				LOG.info("Found Mob on the field");
 				return m;
 			}
 		}
-		log.info("Can't find the Mob on the field");
+		LOG.info("Can't find the Mob on the field");
  		return null;
  	}
 	
@@ -140,11 +140,11 @@ public class Field implements Serialize {
 			IMob m = this.mobs.get(i);
 			if (m == mob) {
 				this.mobs.remove(i);
-				log.info("Found Mob on the field and deleted it");
+				LOG.info("Found Mob on the field and deleted it");
 				return m;
 			}
 		}
-		log.info("Can't find the Mob on the field so nothing to delete");
+		LOG.info("Can't find the Mob on the field so nothing to delete");
  		return null;
  	}
  	
@@ -164,10 +164,10 @@ public class Field implements Serialize {
 	public boolean setListMob(List<IMob> mobs) {
 		if (!this.isSetTower()) {
 			this.mobs.addAll(mobs);
-			log.info("Set a new list of mobs on the field");
+			LOG.info("Set a new list of mobs on the field");
 			return true;
 		}
-		log.info("Can't set a new list mob on the field - Field is not empty");
+		LOG.info("Can't set a new list mob on the field - Field is not empty");
 		return false;
 	}
 
@@ -193,10 +193,10 @@ public class Field implements Serialize {
 	public boolean deleteAllMobs() {
 		if (!this.mobs.isEmpty()) {
 			this.mobs.clear();
-			log.info("Delete all mobs on the field");
+			LOG.info("Delete all mobs on the field");
 			return true;
 		}
-		log.info("Can't delete mobs on the field - No mobs exist");
+		LOG.info("Can't delete mobs on the field - No mobs exist");
 		return false;
 	}
 	
@@ -213,7 +213,7 @@ public class Field implements Serialize {
 				del = true;
 			}
 		}
-		log.info("Delete all dead mobs on the field");
+		LOG.info("Delete all dead mobs on the field");
 		return del;
 	}
 
@@ -244,7 +244,7 @@ public class Field implements Serialize {
 			((ObjectNode)root).put("tower", this.tower.serialize());
 		}
 		
-		if (this.mobs.size() > 0) {
+		if (!this.mobs.isEmpty()) {
 		
 			for (int i = 0; i < this.mobs.size(); ++i) {
 				IMob m = this.mobs.get(i);
@@ -265,9 +265,9 @@ public class Field implements Serialize {
 		this.mobs = new LinkedList<IMob>();
 		
 		if (node.has("tower")) {
-			JsonNode tower = node.path("tower");
+			JsonNode towerNode = node.path("tower");
 			this.tower = new Tower();
-			this.tower.deserialize(tower);
+			this.tower.deserialize(towerNode);
 		}
 		
 		if (node.has("mobList") && node.has("sizeMobList")) {

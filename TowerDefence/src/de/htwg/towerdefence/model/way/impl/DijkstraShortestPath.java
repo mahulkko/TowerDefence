@@ -97,7 +97,7 @@ public class DijkstraShortestPath<V> {
 				distances.put(v,dist);
 			}
 		}
-		return all.size() != 0;
+		return !all.isEmpty();
 	}
 	
 	public double getDistance() {
@@ -113,14 +113,14 @@ public class DijkstraShortestPath<V> {
 	
 	public List<V> getShortestPath() {
 		if(shortestpath.isEmpty()) {
-			return null;
+			return new LinkedList<V>();
 		}		
 		return shortestpath;
 	}
 	
 	public List<V> getShortestPathTo(V g) {
 		if(all.isEmpty()) {
-			return null;
+			return new LinkedList<V>();
 		}		
 		return all.get(g);
 	}

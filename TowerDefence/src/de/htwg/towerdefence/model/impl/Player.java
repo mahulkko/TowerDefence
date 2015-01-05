@@ -34,7 +34,7 @@ public class Player extends ControllableComponent implements IPlayer {
 	private int life;
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Player");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.Player");
 	
     
     /************************************************************
@@ -48,7 +48,7 @@ public class Player extends ControllableComponent implements IPlayer {
 		this.name = GameSettings.getPlayerName(); 
 		this.life = GameSettings.getPlayerLife();
 		this.money = GameSettings.getPlayerMoney();
-		log.info("Added new Player with default values from GameSettings");
+		LOG.info("Added new Player with default values from GameSettings");
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class Player extends ControllableComponent implements IPlayer {
 		this.name = playerName;
 		this.life = life;
 		this.money = money;
-		log.info("Added new Player with name: " + this.name + " | Life: " + this.life + " | Money: " + this.money);
+		LOG.info("Added new Player with name: " + this.name + " | Life: " + this.life + " | Money: " + this.money);
 	}
 	
 	
@@ -83,7 +83,7 @@ public class Player extends ControllableComponent implements IPlayer {
 	 * @param name - Set the name of the player
 	 */
 	public void setName(String name) {
-		log.info("Set Player: "+ this.name + " to " + name);
+		LOG.info("Set Player: "+ this.name + " to " + name);
 		this.name = name;
 	}
 	
@@ -100,7 +100,7 @@ public class Player extends ControllableComponent implements IPlayer {
 	 * @param money - Set the money of the player
 	 */
 	public void setMoney(int money) {
-		log.info("Set Money: "+ this.money + " to " + money + " | Player: " + this.name);
+		LOG.info("Set Money: "+ this.money + " to " + money + " | Player: " + this.name);
 		this.money = money;
 	}
 	
@@ -117,7 +117,7 @@ public class Player extends ControllableComponent implements IPlayer {
 	 * @param life - Set the life of the player
 	 */
 	public void setLife(int life) {
-		log.info("Set Life: "+ this.life + " to " + life + " | Player: " + this.name);
+		LOG.info("Set Life: "+ this.life + " to " + life + " | Player: " + this.name);
 		this.life = life;
 	}
 
@@ -151,12 +151,12 @@ public class Player extends ControllableComponent implements IPlayer {
 	@Override
 	public void deserialize(JsonNode node) {
 		
-		JsonNode name = node.path("name");
-		JsonNode money = node.path("money");
-		JsonNode life = node.path("life");
+		JsonNode nameNode = node.path("name");
+		JsonNode moneyNode = node.path("money");
+		JsonNode lifeNode = node.path("life");
 		
-		this.name = name.getTextValue();
-		this.money = money.getIntValue();
-		this.life = life.getIntValue();
+		this.name = nameNode.getTextValue();
+		this.money = moneyNode.getIntValue();
+		this.life = lifeNode.getIntValue();
 	}
 }

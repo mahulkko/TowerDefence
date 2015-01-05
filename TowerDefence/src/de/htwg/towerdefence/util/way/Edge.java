@@ -13,7 +13,7 @@ public class Edge<V> {
 	 ***********************************************************/
 
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Util.Edge");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Util.Edge");
     
 	/** Start node */
 	private final V source; 
@@ -35,7 +35,7 @@ public class Edge<V> {
 	 * @param target - Finish node
 	 */
 	public Edge(V source, V target) {
-		log.info("Created a new Edge with the standart weight of 1.0");
+		LOG.info("Created a new Edge with the standart weight of 1.0");
 		this.source = source;
 		this.target = target;
 		this.weight = 1.0;
@@ -48,7 +48,7 @@ public class Edge<V> {
 	 * @param weight - Weight of the edge
 	 */
 	public Edge(V source, V target, double weight) {
-		log.info("Created a new Edge with a weight of " + weight);
+		LOG.info("Created a new Edge with a weight of " + weight);
 	    this.source = source;
 	    this.target = target;
 	    this.weight = weight;

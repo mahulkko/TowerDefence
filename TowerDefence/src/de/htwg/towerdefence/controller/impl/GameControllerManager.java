@@ -23,7 +23,7 @@ public class GameControllerManager implements IObservable{
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Controller.GameControllerManager");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Controller.GameControllerManager");
 	
 	/**
 	 * List of all Observer who wants to be updated
@@ -47,7 +47,7 @@ public class GameControllerManager implements IObservable{
 	 * Standard constructor from the game controller manager
 	 */
 	public GameControllerManager(boolean local) {
-		log.info("Started the GameControllerManager...");
+		LOG.info("Started the GameControllerManager...");
 		this.run = local;
 		GameContext.setGameData(new LinkedList<GameData>());
 		observer = new LinkedList<IObserver>();
@@ -61,7 +61,7 @@ public class GameControllerManager implements IObservable{
 	 * @param component - Component where should be updated
 	 */
 	public void registerComponent(IControllableComponent component) {
-		log.info("Registered new ControllableComponent...");
+		LOG.info("Registered new ControllableComponent...");
 		GameData data = new GameData();
 		data.setComponent(component);
 		data.setLastTime(System.currentTimeMillis());
@@ -75,7 +75,7 @@ public class GameControllerManager implements IObservable{
 	public void unregisterComponent(IControllableComponent component) {
 		for (GameData data: GameContext.getGameData()) {
 			if (data.getComponent() == component) {
-				log.info("Unregistered a ControllableComponent...");
+				LOG.info("Unregistered a ControllableComponent...");
 				GameContext.getGameData().remove(data);
 			}
 		}
@@ -86,7 +86,8 @@ public class GameControllerManager implements IObservable{
 	 * @return the state of the running game
 	 */
 	public boolean changeRunningState() {
-		return this.run = !this.run;
+		this.run = !this.run;
+		return this.run;
 	}
 	
 	public void update() {
@@ -105,7 +106,6 @@ public class GameControllerManager implements IObservable{
 			for (int i = 0; i < GameContext.getGameData().size(); ++i) {
 				long dt = System.currentTimeMillis() - GameContext.getGameData().get(i).getLastTime();
                 if (GameContext.getGameData().get(i).getComponent().update(dt)) {
-                	System.out.println("Update Controllable Components " + i);
                 	check = true;
                 }
                 GameContext.getGameData().get(i).setLastTime(System.currentTimeMillis());
@@ -128,7 +128,7 @@ public class GameControllerManager implements IObservable{
 		 * Runs the update cycles from every registered component
 		 */
 		public void run() {
-			log.info("Started the update prozess of the registered components");
+			LOG.info("Started the update prozess of the registered components");
 			while (true) {
 				
 				if(run) {
@@ -136,7 +136,7 @@ public class GameControllerManager implements IObservable{
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
-						log.info("Timer error");
+						LOG.info("Timer error");
 					}
 				}
 			}

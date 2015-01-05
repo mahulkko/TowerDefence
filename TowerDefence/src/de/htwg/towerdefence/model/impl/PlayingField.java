@@ -1,5 +1,6 @@
 package de.htwg.towerdefence.model.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -26,7 +27,7 @@ public class PlayingField implements IPlayingField {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.PlayingField");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.PlayingField");
     
     /** Playing field array */
 
@@ -49,7 +50,7 @@ public class PlayingField implements IPlayingField {
  	 * Default constructor of the playing field
  	 */
  	public PlayingField() {
- 		log.info("Created a new PlayingField without initializing");
+ 		LOG.info("Created a new PlayingField without initializing");
  		this.sizeX = 0;
  		this.sizeY = 0;
  	}
@@ -60,7 +61,7 @@ public class PlayingField implements IPlayingField {
  	 * @param sizeY
  	 */
  	public PlayingField(int sizeX, int sizeY) {
- 		log.info("Created a new PlayingField with initializing");
+ 		LOG.info("Created a new PlayingField with initializing");
  		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.init();
@@ -78,7 +79,7 @@ public class PlayingField implements IPlayingField {
 	 * @param sizeY - Size of the playing field on y
 	 */
     public void initPlayingField(int sizeX, int sizeY) {
- 		log.info("Initialized the PlayingField with size-X: " + sizeX + "and size-y: " + sizeY);
+ 		LOG.info("Initialized the PlayingField with size-X: " + sizeX + "and size-y: " + sizeY);
  		this.sizeX = sizeX;
 		this.sizeY = sizeY;
     	this.init();
@@ -95,10 +96,10 @@ public class PlayingField implements IPlayingField {
 	public boolean setTower(Coord coord, ITower tower) {
  		if (checkSize(coord.getX(), coord.getY())) {
  		// TODO Check if way is free to set a Tower
- 			log.info("Added a new tower on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Added a new tower on field: " + coord.getX() + " | " + coord.getY());
  			return this.field[coord.getY()][coord.getX()].setTower(tower);
 		}
- 		log.error("Can't add a new tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't add a new tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 	    return false;
 	}
 	
@@ -125,10 +126,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public ITower deleteTower(Coord coord) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Deleted tower on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Deleted tower on field: " + coord.getX() + " | " + coord.getY());
 		    return this.field[coord.getY()][coord.getX()].deleteTower();
 		}
- 		log.error("Can't delete tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't delete tower on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
 	}
 	
@@ -156,10 +157,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public boolean setMob(Coord coord, IMob mob) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Added a new mob on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Added a new mob on field: " + coord.getX() + " | " + coord.getY());
 		    return this.field[coord.getY()][coord.getX()].setMob(mob);
 		}
- 		log.error("Can't add a new mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't add a new mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return false;
 	}
  	
@@ -172,10 +173,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public IMob getMob(Coord coord, IMob mob) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Get mob on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Get mob on field: " + coord.getX() + " | " + coord.getY());
 		    return this.field[coord.getY()][coord.getX()].getMob(mob);
 		}
- 		log.error("Can't get mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't get mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
  	}
 	
@@ -188,10 +189,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public IMob deleteMob(Coord coord, IMob mob) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Delete mob on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Delete mob on field: " + coord.getX() + " | " + coord.getY());
 		    return this.field[coord.getY()][coord.getX()].deleteMob(mob);
 		}
- 		log.error("Can't delete mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't delete mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return null;
  	}
  	
@@ -205,12 +206,12 @@ public class PlayingField implements IPlayingField {
  	public boolean isMobAtEndOfPlayingfield(Coord coord, IMob mob) {
  		if (checkSize(coord.getX(), coord.getY())) {
  			if (coord.getX() == (this.sizeX-1) && coord.getY() == (this.sizeY-1)) {
- 				log.info("Mob is on the end of playingfield: " + coord.getX() + " | " + coord.getY());
+ 				LOG.info("Mob is on the end of playingfield: " + coord.getX() + " | " + coord.getY());
  	 			return true;
  			}
  			return false;
  		}
- 		log.error("Can't check if mob is on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't check if mob is on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return false;
 	}
  	
@@ -223,10 +224,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public boolean isSetMob(Coord coord, IMob mob) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Search mob on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Search mob on field: " + coord.getX() + " | " + coord.getY());
 		    return this.field[coord.getY()][coord.getX()].isSetMob(mob);
 		}
- 		log.error("Can't find mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't find mob on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
 		return false;
  	}
 	
@@ -240,10 +241,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public boolean setListMob(Coord coord, List<IMob> mobs) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Added a new list of mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Added a new list of mobs on field: " + coord.getX() + " | " + coord.getY());
  			return this.field[coord.getY()][coord.getX()].setListMob(mobs);
  		}
- 		log.error("Can't add a new list of mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't add a new list of mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -258,7 +259,7 @@ public class PlayingField implements IPlayingField {
  		if (checkSize(coord.getX(), coord.getY())) {
 		    return this.field[coord.getY()][coord.getX()].getMobs();
 		}
-		return null;
+		return new LinkedList<IMob>();
 	}
 	
  	@Override
@@ -284,10 +285,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public boolean deleteAllMobs(Coord coord) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Delete all mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Delete all mobs on field: " + coord.getX() + " | " + coord.getY());
  			return this.field[coord.getY()][coord.getX()].deleteAllMobs();
  		}
- 		log.error("Can't delete all mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't delete all mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -300,10 +301,10 @@ public class PlayingField implements IPlayingField {
 	 */
 	public boolean deleteDeadMobs(Coord coord) {
  		if (checkSize(coord.getX(), coord.getY())) {
- 			log.info("Delete all dead mobs on field: " + coord.getX() + " | " + coord.getY());
+ 			LOG.info("Delete all dead mobs on field: " + coord.getX() + " | " + coord.getY());
  			return this.field[coord.getY()][coord.getX()].deleteDeadMobs();
  		}
- 		log.error("Can't delete all dead mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
+ 		LOG.error("Can't delete all dead mobs on field: " + coord.getX() + " | " + coord.getY() + " - Size is out of the playing field");
  		return false;
 	}
 	
@@ -346,7 +347,7 @@ public class PlayingField implements IPlayingField {
  	 * Initialize the playing field
  	 */
  	private void init() {
- 		log.info("Initialize the playing field");
+ 		LOG.info("Initialize the playing field");
 		this.field = new Field[sizeY][sizeX];
 		for (int i = 0; i < this.sizeY; ++i) {
 			for (int j = 0; j < this.sizeX; ++j) {
@@ -397,16 +398,16 @@ public class PlayingField implements IPlayingField {
 	@Override
 	public void deserialize(JsonNode node) {
 		
-		JsonNode sizeX = node.path("sizeX");
-		JsonNode sizeY = node.path("sizeY");
-		JsonNode fieldArray = node.path("fieldArray");
+		JsonNode sizeXNode = node.path("sizeX");
+		JsonNode sizeYNode = node.path("sizeY");
+		JsonNode fieldArrayNode = node.path("fieldArray");
 		
-		this.sizeX = sizeX.getIntValue();
-		this.sizeY = sizeY.getIntValue();
+		this.sizeX = sizeXNode.getIntValue();
+		this.sizeY = sizeYNode.getIntValue();
 		init();
 		
 		for (int i = 0; i < this.sizeY; ++i) {
-			JsonNode row = fieldArray.path("row" + String.valueOf(i));
+			JsonNode row = fieldArrayNode.path("row" + String.valueOf(i));
 			for (int j = 0; j < this.sizeX; ++j) {
 				this.field[i][j].deserialize(row.path(String.valueOf(j)));
 			}

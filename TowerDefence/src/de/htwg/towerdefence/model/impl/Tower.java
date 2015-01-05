@@ -36,7 +36,7 @@ public class Tower extends ControllableComponent implements ITower {
 	private static final double HALF = 0.5;
 
 	/** Logger for log4j connection */
-    private static final Logger log = Logger.getLogger("TowerDefence.Model.Tower");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.Tower");
 
 	/** Damage of the tower */
 	private int damage;
@@ -86,7 +86,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.position = new Coord(0,0);
 		this.tmpCoord = new Coord();
 		this.initTower = true;
-		log.info("Added new tower with default values from GameSettings");
+		LOG.info("Added new tower with default values from GameSettings");
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.position = position;
 		this.tmpCoord = new Coord();
 		this.initTower = true;
-		log.info("Added new tower with default values from GameSettings");
+		LOG.info("Added new tower with default values from GameSettings");
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class Tower extends ControllableComponent implements ITower {
 		this.cost = cost;
 		this.position = position;
 		this.tmpCoord = new Coord();
-		log.info("Added new tower with damage: " + this.damage + " | Range: " + this.range + " | Speed: " 
+		LOG.info("Added new tower with damage: " + this.damage + " | Range: " + this.range + " | Speed: " 
 				+ this.speed + " | Number of Shoot: " + this.numberShoot + " | Hitrate: " + this.hitrate);
 	}
 	
@@ -299,9 +299,9 @@ public class Tower extends ControllableComponent implements ITower {
 				List<IMob> mobs = GameContext.getPlayingField().getMobs(this.tmpCoord);
 				if (mobs != null && !mobs.isEmpty() && mobs.get(0) != null) {
 					mobs.get(0).setHealth(mobs.get(0).getHealth() - this.calcDamage());
-					log.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
+					LOG.info("Found mob and reduced the health: Mob health are now " + mobs.get(0).getHealth() + "%");
 					if (mobs.get(0).isDead()) {
-						log.info("Mob is dead so delete it from the playingfield");
+						LOG.info("Mob is dead so delete it from the playingfield");
 						GameContext.getPlayingField().deleteMob(this.tmpCoord, mobs.get(0));
 						IControllableComponent component = (IControllableComponent)mobs.get(0);
 						component.unregisterSelf();

@@ -80,16 +80,16 @@ public class WaveControllManager extends ControllableComponent implements Serial
 
 	@Override
 	public  void deserialize(JsonNode node) {
-		JsonNode speed = node.path("speed");
-		JsonNode tmpSpeed = node.path("tmpSpeed");
-		JsonNode firstWaitTime = node.path("firstWaitTime");
-		JsonNode controllable = node.path("controllable");
+		JsonNode speedNode = node.path("speed");
+		JsonNode tmpSpeedNode = node.path("tmpSpeed");
+		JsonNode firstWaitTimeNode = node.path("firstWaitTime");
+		JsonNode controllableNode = node.path("controllable");
 		
-		this.speed = speed.asLong();
-		this.tmpSpeed = tmpSpeed.asLong();
-		this.firstWaitTime = firstWaitTime.asLong();
+		this.speed = speedNode.asLong();
+		this.tmpSpeed = tmpSpeedNode.asLong();
+		this.firstWaitTime = firstWaitTimeNode.asLong();
 		
-		if (controllable.getBooleanValue()) {
+		if (controllableNode.getBooleanValue()) {
 			JsonNode lastTime = node.path("lastTime");
 			GameData data = new GameData();
 			data.setComponent((IControllableComponent)this);

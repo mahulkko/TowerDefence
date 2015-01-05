@@ -28,7 +28,7 @@ public class Mob extends ControllableComponent implements IMob {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.Mob");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.Mob");
     
     /** Current health of the mob */
 	private int health;	
@@ -59,7 +59,7 @@ public class Mob extends ControllableComponent implements IMob {
 		this.money = GameSettings.getMobMoney();
 		this.currendPos = new Coord(0,0);
 		this.tmpSpeed = this.speed;
-		log.info("Added new mob with default values from GameSettings");
+		LOG.info("Added new mob with default values from GameSettings");
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public class Mob extends ControllableComponent implements IMob {
 		this.money = GameSettings.getMobMoney();
 		this.currendPos = position;
 		this.tmpSpeed = this.speed;
-		log.info("Added new mob with default values from GameSettings");
+		LOG.info("Added new mob with default values from GameSettings");
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Mob extends ControllableComponent implements IMob {
 		this.money = money;
 		this.currendPos = position;
 		this.tmpSpeed = this.speed;
-		log.info("Added new mob with health: " + this.health + " | Speed: " + this.speed);
+		LOG.info("Added new mob with health: " + this.health + " | Speed: " + this.speed);
 	}
 	
 	
@@ -205,20 +205,20 @@ public class Mob extends ControllableComponent implements IMob {
 	@Override
 	public void deserialize(JsonNode node) {
 		
-		JsonNode health = node.path("health");
-		JsonNode speed = node.path("speed");
-		JsonNode tmpSpeed = node.path("tmpSpeed");
-		JsonNode coord = node.path("coord");
-		JsonNode money = node.path("money");
-		JsonNode controllable = node.path("controllable");
+		JsonNode healthNode = node.path("health");
+		JsonNode speedNode = node.path("speed");
+		JsonNode tmpSpeedNode = node.path("tmpSpeed");
+		JsonNode coordNode = node.path("coord");
+		JsonNode moneyNode = node.path("money");
+		JsonNode controllableNode = node.path("controllable");
 		
-		this.health = health.getIntValue();
-		this.speed = speed.getIntValue();
-		this.tmpSpeed = tmpSpeed.getLongValue();
-		this.currendPos.deserialize(coord);
-		this.money = money.getIntValue();
+		this.health = healthNode.getIntValue();
+		this.speed = speedNode.getIntValue();
+		this.tmpSpeed = tmpSpeedNode.getLongValue();
+		this.currendPos.deserialize(coordNode);
+		this.money = moneyNode.getIntValue();
 		
-		if (controllable.getBooleanValue()) {
+		if (controllableNode.getBooleanValue()) {
 			JsonNode lastTime = node.path("lastTime");
 			GameData data = new GameData();
 			data.setComponent((IControllableComponent)this);

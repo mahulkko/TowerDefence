@@ -26,7 +26,7 @@ public class TowerdefenceTui implements IObserver{
 	private Coord coord;
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Tui.TowerdefenceTui"); 
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Tui.TowerdefenceTui"); 
 	
     
     /************************************************************
@@ -38,7 +38,7 @@ public class TowerdefenceTui implements IObserver{
      * @param controller - Needs the GameController of the current game
      */
 	public TowerdefenceTui (IGameController controller) {
-		log.info("Started the tui");
+		LOG.info("Started the tui");
 		this.controller = controller;
 		output = new StringBuilder();
 		coord = new Coord();
@@ -54,7 +54,7 @@ public class TowerdefenceTui implements IObserver{
 	 * @return Returns the String of the playing field
 	 */
 	public String TuiToString() {
-		log.info("Build the TuiString");
+		LOG.info("Build the TuiString");
 		output.setLength(0);
 		for (int i = 0; i < controller.getSizeXOfPlayingField(); ++i) {
 			output.append("###");	
@@ -94,7 +94,7 @@ public class TowerdefenceTui implements IObserver{
 	 */
 	@Override
 	public void update() {
-		log.info("Update the tui");
-		System.out.print(TuiToString());
+		LOG.info("Update the tui");
+		LOG.info("\n" + TuiToString());
 	}
 }

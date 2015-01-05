@@ -12,6 +12,10 @@ import de.htwg.towerdefence.tui.TowerdefenceTui;
  * <b>TowerDefence - Main Class</b>
  */
 public class TowerDefence {
+	
+	public TowerDefence() {
+		// Nothing to do in here
+	}
 
 	/************************************************************
 	 * Main function
@@ -46,7 +50,12 @@ public class TowerDefence {
 		/**
 		 * GUI
 		 */
-		//TowerdefenceGui gui2;
+		TowerdefenceGui gui2;
+		
+		/**
+		 * Set it true for a second test gui
+		 */
+		boolean secondGui = false;
 		
 		
 		
@@ -54,10 +63,13 @@ public class TowerDefence {
 		controller = new GameController(true);
 		tui = new TowerdefenceTui(controller);
 		gui = new TowerdefenceGui(controller);
-		//gui2 = new TowerdefenceGui(controller);
 		controller.addObserver(tui);
 		controller.addObserver(gui);
-		//controller.addObserver(gui2);
+		
+		if (secondGui) {
+			gui2 = new TowerdefenceGui(controller);
+			controller.addObserver(gui2);
+		}
 	}
 }
 

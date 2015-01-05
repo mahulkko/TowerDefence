@@ -18,7 +18,7 @@ public class Coord implements Serialize {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Util.Coord");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Util.Coord");
     
 	/** X - Coordinate */
     private int x;
@@ -35,7 +35,7 @@ public class Coord implements Serialize {
      * Default constructor of the coordinate
      */
 	public Coord() {
-		log.info("Created a new coordinate with x: 0 and y: 0");
+		LOG.info("Created a new coordinate with x: 0 and y: 0");
 		this.x = 0;
 		this.y = 0;
 	}
@@ -46,7 +46,7 @@ public class Coord implements Serialize {
 	 * @param y - Y Coordinate
 	 */
 	public Coord(int x, int y) {
-		log.info("Created a new coordinate with x: "+ x +" and y: " + y);
+		LOG.info("Created a new coordinate with x: "+ x +" and y: " + y);
 		this.x = x;
 		this.y = y;
 	}
@@ -74,7 +74,7 @@ public class Coord implements Serialize {
 			this.x = x;
 			return true;
 		}
-		log.info("Can't change coordinate x from " + this.x + " to " + x + " - Value must be positive");
+		LOG.info("Can't change coordinate x from " + this.x + " to " + x + " - Value must be positive");
 		return false;
 	}
 	 
@@ -96,7 +96,7 @@ public class Coord implements Serialize {
 			this.y = y;
 			return true;
 		}
-		log.info("Can't change coordinate y from " + this.y + " to " + y + " - Value must be positive");
+		LOG.info("Can't change coordinate y from " + this.y + " to " + y + " - Value must be positive");
 		return false;
 	}
 	
@@ -117,9 +117,9 @@ public class Coord implements Serialize {
 
 	@Override
 	public void deserialize(JsonNode node) {
-		JsonNode x = node.path("x");
-		JsonNode y = node.path("y");
-		this.x = x.getIntValue();
-		this.y = y.getIntValue();
+		JsonNode xNode = node.path("x");
+		JsonNode yNode = node.path("y");
+		this.x = xNode.getIntValue();
+		this.y = yNode.getIntValue();
 	}
 }

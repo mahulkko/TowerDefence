@@ -29,7 +29,7 @@ public class GameContext {
 	 ***********************************************************/
 	
 	/** Logger for log4j connection */
-    private static Logger log = Logger.getLogger("TowerDefence.Model.GameContext");
+    private static final Logger LOG = Logger.getLogger("TowerDefence.Model.GameContext");
     
     /** Current player */
     private static IPlayer player;
@@ -54,14 +54,16 @@ public class GameContext {
 	/**
 	 * Default private constructor
 	 */
-	private GameContext() { }
+	private GameContext() { 
+		
+	}
 	
 	public static IPlayer getPlayer() {
 		return player;
 	}
 
 	public static void setPlayer(IPlayer p) {
-		log.info("Set new Player in GameContext...");
+		LOG.info("Set new Player in GameContext...");
 		player = p;
 	}
 
@@ -70,7 +72,7 @@ public class GameContext {
 	}
 
 	public static void setPlayingfield(IPlayingField pField) {
-		log.info("Set new PlayingField in GameContext...");
+		LOG.info("Set new PlayingField in GameContext...");
 		playingField = pField;
 	}
 
@@ -79,7 +81,7 @@ public class GameContext {
 	}
 
 	public static void setCheckWay(ICheckWay cWay) {
-		log.info("Set new CheckWay instance in GameContext...");
+		LOG.info("Set new CheckWay instance in GameContext...");
 		checkWay = cWay;
 	}
 	
@@ -99,8 +101,8 @@ public class GameContext {
 		return controllableComponents;
 	}
 
-	public static void setGameData(List<GameData> Components) {
-		controllableComponents = Components;
+	public static void setGameData(List<GameData> components) {
+		controllableComponents = components;
 	}
 	
 	public static GameData getGameData(IControllableComponent component) {
@@ -149,10 +151,10 @@ public class GameContext {
 		GameContext.setGameData(new LinkedList<GameData>());
 		JsonNode player = node.path("player");
 		JsonNode playingField = node.path("playingField");
-		JsonNode WaveControll = node.path("WaveControllManager");
+		JsonNode waveControll = node.path("WaveControllManager");
 		GameContext.player.deserialize(player);
 		GameContext.playingField.deserialize(playingField);
-		GameContext.controllManager.deserialize(WaveControll);
+		GameContext.controllManager.deserialize(waveControll);
 		
 		checkWay = new CheckWay();
 		checkWay.initCheckWayWithPlayingField(GameContext.playingField);

@@ -86,10 +86,7 @@ public class GameController implements IGameController {
 	}
 	
 	public boolean pauseOrStartGame() {
-		// Test for the serialization and deserialization
 		manager.changeRunningState();
-		//JsonNode game = GameContext.serialize();
-		//GameContext.deserialize(game);
 		return manager.changeRunningState();
 	}
 	
@@ -160,7 +157,6 @@ public class GameController implements IGameController {
 	}
 	
 	public void updateGameContext() {
-		System.out.println("Call UpdateManger in GameController");
 		this.manager.update();
 	}
 
@@ -276,7 +272,6 @@ public class GameController implements IGameController {
 		JsonNode currentGameContextNode = mapper.readTree(currentGameContext);
 		GameContext.deserialize(currentGameContextNode);
 		this.updateGameContext();
-		System.out.println("Update in GameController");
 		JsonNode newGameContextNode = GameContext.serialize();
 		return newGameContextNode;
 	}
