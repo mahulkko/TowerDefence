@@ -9,14 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.htwg.towerdefence.controller.IGameController;
-import de.htwg.towerdefence.gui.GuiState.State;
 
 public class PropertiesGui extends JPanel{
 
 	private static final long serialVersionUID = -4061801421456135727L;
 	
 	/** Instance of the GuiState */
-	private GuiState guiState;
 	private IGameController controller;
 	JLabel lblProperties;
 	JLabel lblAttribute1;
@@ -30,7 +28,6 @@ public class PropertiesGui extends JPanel{
 	
 	public PropertiesGui(IGameController controller, GuiState guiState) {
 		this.controller = controller;
-		this.guiState = guiState;
 		init();
 	}
 	

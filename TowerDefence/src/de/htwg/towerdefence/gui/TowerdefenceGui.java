@@ -5,16 +5,11 @@ import javax.swing.border.EmptyBorder;
 
 import de.htwg.towerdefence.controller.IGameController;
 import de.htwg.towerdefence.util.control.IObserver;
-import javax.swing.JLabel;
-import java.awt.Panel;
 import java.awt.Color;
-import java.awt.Font;
-import javax.swing.JButton;
 
 public class TowerdefenceGui extends JFrame implements IObserver{
 
 	private static final long serialVersionUID = -8113018678873313054L;
-	private IGameController controller;
 	private PlayingFieldGui playingFieldGui;
 	private PropertiesGui propertiesGui;
 	private ControlGui controlGui;
@@ -26,6 +21,11 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 	private JPanel controlPanel;
 	private JPanel playerPanel;
 	private GuiState guiState;
+	
+	private static final int WIDTH = 450;
+	private static final int HEIGHT = 310;
+	private static final int BORDER = 5;
+	private static final int BOUNDS = 0;
 
 	/**
 	 * Create the frame.
@@ -34,7 +34,7 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 		guiState = new GuiState(); 
 		
 		propertiesGui = new PropertiesGui(controller, guiState);
-		playingFieldGui = new PlayingFieldGui(controller, guiState, propertiesGui, 450, 310);
+		playingFieldGui = new PlayingFieldGui(controller, guiState, propertiesGui, WIDTH, HEIGHT);
 		controlGui = new ControlGui(controller, guiState);
 		playerGui = new PlayerGui(controller);
 		
@@ -43,14 +43,14 @@ public class TowerdefenceGui extends JFrame implements IObserver{
 		setBounds(100, 100, 688, 447);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(70, 130, 180));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(BORDER, BORDER, BORDER, BORDER));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		// PlayingField
 		playingFieldPanel = playingFieldGui;
 		playingFieldPanel.setBackground(new Color(255, 255, 255));
-		playingFieldPanel.setBounds(0, 0, 450, 310);
+		playingFieldPanel.setBounds(BOUNDS, BOUNDS, WIDTH, HEIGHT);
 		contentPane.add(playingFieldPanel);
 		playingFieldPanel.setLayout(null);
 		
