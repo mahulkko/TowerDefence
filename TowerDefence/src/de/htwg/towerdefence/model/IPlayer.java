@@ -37,4 +37,14 @@ public interface IPlayer extends Serialize {
 	 * @param life - Set the life of the player
 	 */
 	void setLife(int life);
+	
+	/**
+	 * @return Returns the email adress of the player
+	 */
+	String getEmailAdress();
+	
+	/**
+	 * @param email - Set the email adress of the player
+	 */
+	void setEmailAdress(String email);
 }

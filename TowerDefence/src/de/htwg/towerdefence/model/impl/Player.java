@@ -22,16 +22,16 @@ public class Player extends ControllableComponent implements IPlayer {
 	 ***********************************************************/
 	
 	/** Name of the player */
-
 	private String name;
 	
 	/** Money of the player */
-
 	private int money;
 	
 	/** Life of the player */
-
 	private int life;
+	
+	/** Email adress of the player */
+	private String email;
 	
 	/** Logger for log4j connection */
     private static final Logger LOG = Logger.getLogger("TowerDefence.Model.Player");
@@ -48,6 +48,7 @@ public class Player extends ControllableComponent implements IPlayer {
 		this.name = GameSettings.getPlayerName(); 
 		this.life = GameSettings.getPlayerLife();
 		this.money = GameSettings.getPlayerMoney();
+		this.email = "";
 		LOG.info("Added new Player with default values from GameSettings");
 	}
 	
@@ -57,11 +58,12 @@ public class Player extends ControllableComponent implements IPlayer {
 	 * @param life - Life of the player
 	 * @param money - Money of the player 
 	 */
-	public Player(String playerName, int life, int money) {
+	public Player(String playerName, int life, int money, String email) {
 		this.name = playerName;
 		this.life = life;
 		this.money = money;
-		LOG.info("Added new Player with name: " + this.name + " | Life: " + this.life + " | Money: " + this.money);
+		this.email = email;
+		LOG.info("Added new Player with name: " + this.name + " | Life: " + this.life + " | Money: " + this.money + " | Email: " + this.email);
 	}
 	
 	
@@ -120,6 +122,17 @@ public class Player extends ControllableComponent implements IPlayer {
 		LOG.info("Set Life: "+ this.life + " to " + life + " | Player: " + this.name);
 		this.life = life;
 	}
+	
+	@Override
+	public String getEmailAdress() {
+		return this.email;
+	}
+
+	@Override
+	public void setEmailAdress(String email) {
+		LOG.info("Set Email: "+ this.email + " to " + email + " | Player: " + this.name);
+		this.email = email;
+	}
 
 	
 	/************************************************************
@@ -144,7 +157,8 @@ public class Player extends ControllableComponent implements IPlayer {
 		
 		((ObjectNode)root).put("name", name);
 		((ObjectNode)root).put("money", money);
-		((ObjectNode)root).put("life", life);		
+		((ObjectNode)root).put("life", life);
+		((ObjectNode)root).put("email", email);
 		return root;
 	}
 
@@ -154,9 +168,11 @@ public class Player extends ControllableComponent implements IPlayer {
 		JsonNode nameNode = node.path("name");
 		JsonNode moneyNode = node.path("money");
 		JsonNode lifeNode = node.path("life");
+		JsonNode emailNode = node.path("email");
 		
 		this.name = nameNode.getTextValue();
 		this.money = moneyNode.getIntValue();
 		this.life = lifeNode.getIntValue();
+		this.email = emailNode.asText();
 	}
 }

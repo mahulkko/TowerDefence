@@ -25,7 +25,7 @@ public class GameControllerTest extends TestCase {
 
 	public void setUp() throws IOException {
 		controller = new GameController(true);
-		controller.createNewGame("test", 10, 1000, 10, 10);
+		controller.createNewGame("test", 10, 1000,"", 10, 10);
 		tui = new TowerdefenceTui(controller);
 		gui = new TowerdefenceGui(controller);
 	}

@@ -74,9 +74,9 @@ public class GameController implements IGameController {
 		return game;
 	}
 	
-	public JsonNode createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY) {
+	public JsonNode createNewGame(String playerName, int life, int money, String email, int playingfieldSizeX,  int playingfieldSizeY) {
 		manager = new GameControllerManager(local);
-		GameContext.setPlayer(new Player(playerName, life, money));
+		GameContext.setPlayer(new Player(playerName, life, money, email));
 		GameContext.setPlayingfield(new PlayingField(playingfieldSizeX, playingfieldSizeY));
 		GameContext.setCheckWay(new CheckWay());
 		GameContext.getCheckWay().initWayPoints(playingfieldSizeX, playingfieldSizeY);

@@ -18,7 +18,7 @@ public interface IGameController {
 	
 	JsonNode createNewGame();
 	
-	JsonNode createNewGame(String playerName, int life, int money, int playingfieldSizeX,  int playingfieldSizeY);
+	JsonNode createNewGame(String playerName, int life, int money, String email, int playingfieldSizeX,  int playingfieldSizeY);
 	
 	// Wui 
 	

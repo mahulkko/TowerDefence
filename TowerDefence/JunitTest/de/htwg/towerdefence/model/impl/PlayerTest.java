@@ -23,7 +23,7 @@ public class PlayerTest extends TestCase {
 	/** Set up the test */
 	public void setUp() throws IOException {
 		player1 = new Player();
-		player2 = new Player("test", 10, 100);
+		player2 = new Player("test", 10, 100,"");
 	}
 	
 	/** Tests for the player */
