@@ -83,5 +83,6 @@ public class MobTest extends TestCase {
 		ControllableComponent component = (ControllableComponent) mob;
 		component.update(0);
 		component.update(10000);
+		component.unregisterSelf();
 	}
 }

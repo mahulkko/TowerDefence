@@ -25,4 +25,8 @@ public class ControllableComponentTest implements IControllableComponent {
 	public void unregisterSelf() {
 		
 	}
+	
+	public void testDoc() {
+		// nothing to do in here right now
+	}
 }

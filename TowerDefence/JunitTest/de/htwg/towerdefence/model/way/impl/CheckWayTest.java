@@ -1,6 +1,9 @@
 package de.htwg.towerdefence.model.way.impl;
 
 import java.io.IOException;
+
+import de.htwg.towerdefence.model.IPlayingField;
+import de.htwg.towerdefence.model.impl.PlayingField;
 import de.htwg.towerdefence.model.way.ICheckWay;
 import de.htwg.towerdefence.util.way.Coord;
 import junit.framework.TestCase;
@@ -8,13 +11,18 @@ import junit.framework.TestCase;
 public class CheckWayTest extends TestCase {
 	
 	ICheckWay w;
+	IPlayingField field;
 	
 	public void setUp() throws IOException {
 		this.w = new CheckWay();
 		this.w.initWayPoints(10, 10);
+		this.field = new PlayingField(10,10);
 	}
 	
 	public void testDoc() {
+		
+		// Init with playingfield
+		this.w.initCheckWayWithPlayingField(field);
 		
 		// Delete Edges
 		assertEquals(false,this.w.deleteWayPoint(10, 120));
@@ -42,9 +50,9 @@ public class CheckWayTest extends TestCase {
 		
 		// Get Shortest path
 		assertEquals(false,this.w.existWay(0, 0, 22, 22));
-		assertEquals(null,this.w.getShortesWay());
 		assertEquals(true,this.w.existWay(0, 0, 9, 9));
 		this.w.getShortesWay();
+		
 		
 	}
 }

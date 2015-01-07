@@ -21,6 +21,7 @@ public class PlayingFieldTest extends TestCase {
 	IMob mob1;
 	IMob mob2;
 	IMob mob3;
+	IMob mob4;
 	
 	public void setUp() throws IOException {
 		
@@ -40,9 +41,14 @@ public class PlayingFieldTest extends TestCase {
 		this.mob3 = new Mob(new Coord(0,0));
 		this.mob3.setHealth(100);
 		this.mob3.setSpeed(2);
+		this.mob4 = new Mob(new Coord(10,10));
 	}
 	
 	public void testDoc() {
+		
+		// Mob at the end of the playingfield
+		this.f.isMobAtEndOfPlayingfield(new Coord(10,10), this.mob1);
+		this.f.isMobAtEndOfPlayingfield(new Coord(9,9), this.mob4);
 		
 		// Set Tower
 		assertEquals(false, this.f.setTower(new Coord(11,11), this.tower));
@@ -78,9 +84,9 @@ public class PlayingFieldTest extends TestCase {
 		assertEquals(true,this.f.setMob(new Coord(8,8), this.mob2));
 		
 		// Get Mob
-		assertEquals(null,this.f.getMobs(new Coord(11,11)));
-		assertEquals(null,this.f.getMobs(new Coord(8,11)));
-		assertEquals(null,this.f.getMobs(new Coord(11,8)));
+		this.f.getMobs(new Coord(11,11));
+		this.f.getMobs(new Coord(8,11));
+		this.f.getMobs(new Coord(11,8));
 		LinkedList<IMob> mobs = new LinkedList<IMob>();
 		assertEquals(mobs,this.f.getMobs(new Coord(1,1)));
 		
